@@ -1,9 +1,0 @@
-version: '3.4'
-services:
-  masterdominasystem:
-    image: ${DOCKER_REGISTRY-}masterdominasystem
-    build:
-      context: .
-      dockerfile: MasterDominaSystem/Dockerfile
-    networks:
-    - internal
