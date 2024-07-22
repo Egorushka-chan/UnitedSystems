@@ -1,38 +1,6 @@
 version: '3.4'
 
-# services:
-#   wardrobeonline.webapi:
-#     image: ${DOCKER_REGISTRY-}wardrobeonlinewebapi
-#     build:
-#       context: .
-#       dockerfile: WardrobeOnline.WebApi/Dockerfile
-
 services:
-  postgres:
-    container_name: PostgreSQL
-    image: postgres:latest
-    environment:
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    healthcheck:
-      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d wardrobe'"]
-      interval: "10s"
-    volumes:
-    - db-data:/dockerDBData
-    networks:
-    - internal
-    ports:
-    - 3000:5432
-
-  redis:
-    container_name: RedisServer
-    image: redis:7.2.5
-    networks:
-    - internal
-    healthcheck:
-      test: /healthchecks/redis.sh
-      interval: "10s"
-  
   wardrobeonline.webapi:
     container_name: WardrobeWebApi
     image: ${DOCKER_REGISTRY-}wardrobeonlinewebapi
@@ -43,15 +11,3 @@ services:
     - internal
     env_file:
      - ./.env
-    volumes:
-    - api-data:/logs
-    depends_on:
-      postgres:
-        condition: service_healthy
-     
-networks:
-  internal: {}
-
-volumes:
-  db-data: {}
-  api-data: {}
