@@ -1,12 +1,13 @@
 version: '3.4'
-include:
-  - path:    
-    - ../MasterDominaSystem/docker-compose.yml 
-    - ../WardrobeOnline.WebApi/docker-compose.yml
-    - ../ManyEntitiesSender/docker-compose.yml
+# include:
+#   - path:    
+#     - ../MasterDominaSystem/docker-compose.yml 
+#     - ../WardrobeOnline.WebApi/docker-compose.yml
+#     - ../ManyEntitiesSender/docker-compose.yml
   
 services:
-  RabbitMQ:
+  rabbit:
+    container_name: RabbitMQ
     image: rabbitmq:3.10.7-management
     ports:
     - 15672:15672
@@ -37,6 +38,36 @@ services:
     healthcheck:
       test: /healthchecks/redis.sh
       interval: "10s"
+
+  manyentitiessender:
+    container_name: SenderWebApi
+    image: ${DOCKER_REGISTRY-}manyentitiessender
+    build:
+      context: .
+      dockerfile: ../ManyEntitiesSender/ManyEnitiesSender/Dockerfile
+    networks:
+    - internal
+    env_file:
+    - ./.env
+  
+  masterdominasystem:
+    image: ${DOCKER_REGISTRY-}masterdominasystem
+    build:
+      context: .
+      dockerfile: ../MasterDominaSystem/MasterDominaSystem/Dockerfile
+    networks:
+    - internal
+
+  wardrobeonline.webapi:
+    container_name: WardrobeWebApi
+    image: ${DOCKER_REGISTRY-}wardrobeonlinewebapi
+    build:
+      context: .
+      dockerfile: ../WardrobeOnline.WebApi/WardrobeOnline.WebApi/Dockerfile
+    networks:
+    - internal
+    env_file:
+     - ./.env
 
 networks:
   internal: {}
