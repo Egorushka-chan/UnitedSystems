@@ -1,23 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using System.Text.Json;
 
 using ManyEntitiesSender.BPL.Abstraction;
+using ManyEntitiesSender.PL.Enums;
+using ManyEntitiesSender.PL.Settings;
+
+using RabbitMQ.Client;
 
 namespace ManyEntitiesSender.BPL.Implementation
 {
-    public class RabbitSender : IBrokerSender
+    internal class RabbitSender : IBrokerSender
     {
-        public void Send(string message)
+        private BrokerSettings brokerSettings;
+        internal RabbitSender(BrokerSettings option) 
         {
-            throw new NotImplementedException();
+            brokerSettings = option;
         }
 
-        public Task SendAsync(string message, CancellationToken cancellationToken = default)
+        public void Send(string message, RabbitQueueType queueType)
         {
-            throw new NotImplementedException();
+            var factory = new ConnectionFactory();
+            using (var connection = factory.CreateConnection("RabbitMQ"))
+            using (var channel = connection.CreateModel()) {
+                var queue = channel.QueueDeclare(
+                        queue: RabbitQueue.Name(queueType),
+                        durable: false,
+                        exclusive: false);
+                var body = Encoding.UTF8.GetBytes(message);
+                channel.BasicPublish("", routingKey: queue.QueueName, body: body);
+            }
+        }
+
+        public void Send(object obj, RabbitQueueType queueType)
+        {
+            string serial = JsonSerializer.Serialize(obj);
+            Send(serial, queueType);
         }
     }
 }

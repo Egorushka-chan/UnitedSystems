@@ -10,8 +10,8 @@ services:
     container_name: RabbitMQ
     image: rabbitmq:3.10.7-management
     environment:
-    - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER} 
-    - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    - RABBITMQ_DEFAULT_USER=${Broker__RabbitMQ__User} 
+    - RABBITMQ_DEFAULT_PASS=${Broker__RabbitMQ__Password}
     ports:
     - 15672:15672
     networks:
@@ -54,6 +54,7 @@ services:
     - ./.env
   
   masterdominasystem:
+    container_name: MasterDomainSystem
     image: ${DOCKER_REGISTRY-}masterdominasystem
     build:
       context: .
@@ -62,6 +63,9 @@ services:
     - internal
     env_file:
     - ./.env
+    depends_on:
+    - postgres
+    - rabbit
 
   wardrobeonline.webapi:
     container_name: WardrobeWebApi

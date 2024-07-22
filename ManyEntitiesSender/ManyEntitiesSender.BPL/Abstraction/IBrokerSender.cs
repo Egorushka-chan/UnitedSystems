@@ -1,8 +1,10 @@
-﻿namespace ManyEntitiesSender.BPL.Abstraction
+﻿using ManyEntitiesSender.PL.Enums;
+
+namespace ManyEntitiesSender.BPL.Abstraction
 {
     public interface IBrokerSender
     {
-        public Task SendAsync(string message, CancellationToken cancellationToken = default);
-        public void Send(string message);
+        public void Send(string message, RabbitQueueType queueType);
+        void Send(object obj, RabbitQueueType queueType);
     }
 }

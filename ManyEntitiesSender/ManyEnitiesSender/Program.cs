@@ -3,6 +3,7 @@ using ManyEntitiesSender.BLL.Settings;
 using ManyEntitiesSender.BPL;
 using ManyEntitiesSender.DAL;
 using ManyEntitiesSender.Middleware;
+using ManyEntitiesSender.PL.Settings;
 using ManyEntitiesSender.RAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,4 +67,8 @@ void AddOptions(WebApplicationBuilder builder)
 
     builder.Services.Configure<RedisSettings>(
         builder.Configuration.GetSection("Redis"));
+
+    // RabbitMQ
+    builder.Services.Configure<BrokerSettings>(
+        builder.Configuration.GetSection("Broker:Rabbit"));
 }

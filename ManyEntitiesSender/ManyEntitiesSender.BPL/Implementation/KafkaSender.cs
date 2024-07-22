@@ -15,7 +15,17 @@ namespace ManyEntitiesSender.BPL.Implementation
             throw new NotImplementedException();
         }
 
+        public void Send(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task SendAsync(string message, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendAsync(object obj, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
