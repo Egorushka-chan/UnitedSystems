@@ -10,9 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManyEntitiesSender", "ManyE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MasterDominaSystem", "MasterDominaSystem", "{0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WardrobeOnline.WebApi", "WardrobeOnline.WebApi", "{EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WardrobeOnline", "WardrobeOnline", "{EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}"
 	ProjectSection(SolutionItems) = preProject
-		WardrobeOnline.WebApi\README.md = WardrobeOnline.WebApi\README.md
+		WardrobeOnline\README.md = WardrobeOnline\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{D9C595D0-7327-4883-B74F-39527A2BD0E7}"
@@ -28,13 +28,13 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "MasterDom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem", "MasterDominaSystem\MasterDominaSystem\MasterDominaSystem.csproj", "{E061D02D-1A85-4215-9850-0FCEBDC7AFF1}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "WardrobeOnline.WebApi\docker-compose.dcproj", "{48B13D81-7177-438E-82CB-B76EFA404147}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "WardrobeOnline\docker-compose.dcproj", "{48B13D81-7177-438E-82CB-B76EFA404147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.WebApi", "WardrobeOnline.WebApi\WardrobeOnline.WebApi\WardrobeOnline.WebApi.csproj", "{75791A70-3F97-444A-9B88-DB353E582AE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.WebApi", "WardrobeOnline\WardrobeOnline.WebApi\WardrobeOnline.WebApi.csproj", "{75791A70-3F97-444A-9B88-DB353E582AE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.DAL", "WardrobeOnline.WebApi\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj", "{58DE0ED2-0897-449C-B85C-C7C371377FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.DAL", "WardrobeOnline\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj", "{58DE0ED2-0897-449C-B85C-C7C371377FF6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.BLL", "WardrobeOnline.WebApi\WardrobeOnline.BLL\WardrobeOnline.BLL.csproj", "{8BED21CC-9FF7-41AA-8B49-F0B099383F5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.BLL", "WardrobeOnline\WardrobeOnline.BLL\WardrobeOnline.BLL.csproj", "{8BED21CC-9FF7-41AA-8B49-F0B099383F5B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "ManyEntitiesSender\docker-compose.dcproj", "{A732FA1D-4C18-427F-BDEA-D60C55F52379}"
 EndProject
@@ -47,6 +47,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.PL", "ManyEntitiesSender\ManyEntitiesSender.PL\ManyEntitiesSender.PL.csproj", "{C4B791B5-9320-411C-9D77-F8BD074AA9B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.RAL", "ManyEntitiesSender\ManyEntitiesSender.RAL\ManyEntitiesSender.RAL.csproj", "{5065D913-962E-4283-B6AD-94CB2E9C7B10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterDominaSystem.RMQL", "MasterDominaSystem\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj", "{F52BBD57-5B0A-41C9-AC14-512A13807B47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{814DFD69-5802-4DC4-971C-A44EAF8CDF8C} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{C4B791B5-9320-411C-9D77-F8BD074AA9B6} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
+		{F52BBD57-5B0A-41C9-AC14-512A13807B47} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}
