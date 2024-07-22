@@ -1,0 +1,45 @@
+version: '3.4'
+include:
+  - path:    
+    - ../MasterDominaSystem/docker-compose.yml 
+    - ../WardrobeOnline.WebApi/docker-compose.yml
+    - ../ManyEntitiesSender/docker-compose.yml
+  
+services:
+  RabbitMQ:
+    image: rabbitmq:3.10.7-management
+    ports:
+    - 15672:15672
+    networks:
+    - internal
+
+  postgres:
+    container_name: PostgreSQL
+    image: postgres:latest
+    environment:
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d wardrobe'"]
+      interval: "10s"
+    volumes:
+    - ./postgres-data:/var/lib/postgresql/data
+    networks:
+    - internal
+    ports:
+    - 3000:5432
+
+  redis:
+    container_name: RedisServer
+    image: redis:7.2.5
+    networks:
+    - internal
+    healthcheck:
+      test: /healthchecks/redis.sh
+      interval: "10s"
+
+networks:
+  internal: {}
+
+volumes:
+  db-data: {}

@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManyEntitiesSender", "ManyEntitiesSender", "{161AD461-35EE-40F2-A0B8-D80ED3B3A88D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MasterDominaSystem", "MasterDominaSystem", "{0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WardrobeOnline.WebApi", "WardrobeOnline.WebApi", "{EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{D9C595D0-7327-4883-B74F-39527A2BD0E7}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "Docker\docker-compose.dcproj", "{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{AAE50F85-2481-44AB-B6F4-C2F2887B84C4}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3} = {D9C595D0-7327-4883-B74F-39527A2BD0E7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}
+	EndGlobalSection
+EndGlobal

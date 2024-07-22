@@ -1,0 +1,12 @@
+version: '3.4'
+include:
+  - path: C:\Users\User2024\source\repos\ManyEnitiesSender\docker-compose.yml
+
+services:
+  masterdominasystem:
+    image: ${DOCKER_REGISTRY-}masterdominasystem
+    build:
+      context: .
+      dockerfile: MasterDominaSystem/Dockerfile
+    networks:
+    - internal
