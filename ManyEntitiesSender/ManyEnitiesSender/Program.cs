@@ -35,7 +35,7 @@ app.Run();
 
 void AddDataAccessLayer(WebApplicationBuilder builder)
 {
-    string? connectionString = builder.Configuration["ConnectionString:Postgres"];
+    string? connectionString = builder.Configuration["ConnectionString:Postgres"]?.Replace("###","package");
     if (string.IsNullOrEmpty(connectionString)) {
         connectionString = "Host=localhost;Port=3000;Database=packages;Username=root;Password=tobacco";
     }

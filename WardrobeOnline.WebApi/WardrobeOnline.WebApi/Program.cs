@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Связь с остальными слоями
 
-string connectionString = builder.Configuration["ConnectionStrings:Postgresql"];
+string? connectionString = builder.Configuration["ConnectionString:Postgres"]?.Replace("###","wardrobe");
 
 builder.Services.Configure<ImageSetting>(
     builder.Configuration.GetSection("ImageSetting"));
