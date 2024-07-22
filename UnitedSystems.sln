@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.RAL", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.RMQL", "MasterDominaSystem\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj", "{F52BBD57-5B0A-41C9-AC14-512A13807B47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManyEntitiesSender.BPL", "ManyEntitiesSender\ManyEntitiesSender.BPL\ManyEntitiesSender.BPL.csproj", "{07464460-07E9-4B98-9FA3-8F56E30BC3A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F52BBD57-5B0A-41C9-AC14-512A13807B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07464460-07E9-4B98-9FA3-8F56E30BC3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07464460-07E9-4B98-9FA3-8F56E30BC3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07464460-07E9-4B98-9FA3-8F56E30BC3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07464460-07E9-4B98-9FA3-8F56E30BC3A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +116,7 @@ Global
 		{C4B791B5-9320-411C-9D77-F8BD074AA9B6} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{F52BBD57-5B0A-41C9-AC14-512A13807B47} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
+		{07464460-07E9-4B98-9FA3-8F56E30BC3A4} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}

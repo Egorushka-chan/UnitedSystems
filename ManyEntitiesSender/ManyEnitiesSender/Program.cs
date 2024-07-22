@@ -1,7 +1,9 @@
 using ManyEntitiesSender.BLL;
 using ManyEntitiesSender.BLL.Settings;
+using ManyEntitiesSender.BPL;
 using ManyEntitiesSender.DAL;
 using ManyEntitiesSender.Middleware;
+using ManyEntitiesSender.RAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 AddDataAccessLayer(builder);
+AddRedisLayer(builder);
 AddBusinessLayer(builder);
 AddOptions(builder);
 
@@ -45,6 +48,15 @@ void AddDataAccessLayer(WebApplicationBuilder builder)
 void AddBusinessLayer(WebApplicationBuilder builder)
 {
     builder.Services.InjectBLL();
+}
+
+void AddRedisLayer(WebApplicationBuilder builder)
+{
+    builder.Services.InjectRAL();
+}
+void AddBrokerLayer(WebApplicationBuilder builder)
+{
+    builder.Services.InjectBPL();
 }
 
 void AddOptions(WebApplicationBuilder builder)
