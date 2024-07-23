@@ -20,6 +20,7 @@ namespace ManyEntitiesSender.BPL.Implementation
         public void Send(string message, RabbitQueueType queueType)
         {
             var factory = new ConnectionFactory();
+            
             using (var connection = factory.CreateConnection("RabbitMQ"))
             using (var channel = connection.CreateModel()) {
                 var queue = channel.QueueDeclare(

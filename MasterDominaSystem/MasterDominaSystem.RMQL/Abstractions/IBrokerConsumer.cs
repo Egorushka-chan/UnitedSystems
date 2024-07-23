@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using MasterDominaSystem.RMQL.Models;
 
+using RabbitMQ.Client.Events;
+
 namespace MasterDominaSystem.RMQL.Abstractions
 {
     public interface IBrokerConsumer : IDisposable
@@ -14,6 +16,6 @@ namespace MasterDominaSystem.RMQL.Abstractions
         /// Этот метод будет вызываться каждый раз, когда приходит новый объект
         /// </summary>
         /// <returns></returns>
-        Task<string> HandleMessage(CancellationToken cancellationToken = default);
+        void ConfigureMessageHandler(EventHandler<BasicDeliverEventArgs> handler);
     }
 }

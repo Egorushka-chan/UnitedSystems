@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MasterDominaSystem.RMQL.Models.Enums;
+
 namespace MasterDominaSystem.RMQL.Models
 {
     public static class RabbitDescriptor
@@ -16,9 +18,5 @@ namespace MasterDominaSystem.RMQL.Models
         public static string GetQueueName(RabbitQueueType rabbitQueue) => queues[(int)rabbitQueue];
     }
 
-    public enum RabbitQueueType
-    {
-        ConsumerMES = 1,
-        ConsumerWOnline = 2
-    }
+    
 }

@@ -23,11 +23,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-ConfigureConsumers();
-
 app.Run();
-
-void ConfigureConsumers()
-{
-    throw new NotImplementedException();
-}

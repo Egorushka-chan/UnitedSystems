@@ -5,27 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ManyEntitiesSender.BPL.Abstraction;
+using ManyEntitiesSender.PL.Enums;
 
 namespace ManyEntitiesSender.BPL.Implementation
 {
     public class KafkaSender : IBrokerSender
     {
-        public void Send(string message)
+        public void Send(string message, RabbitQueueType queueType)
         {
             throw new NotImplementedException();
         }
 
-        public void Send(object obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SendAsync(string message, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SendAsync(object obj, CancellationToken cancellationToken = default)
+        public void Send(object obj, RabbitQueueType queueType)
         {
             throw new NotImplementedException();
         }
