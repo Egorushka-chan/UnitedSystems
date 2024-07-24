@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonLibrary\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
     <ProjectReference Include="..\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@ namespace ManyEntitiesSender.BPL
     {
         public static void InjectBPL(this IServiceCollection services)
         {
-            services.AddScoped<IBrokerSender, RabbitSender>();
+            services.AddScoped<IMDMSender, RabbitMDMSender>();
         }
     }
 }

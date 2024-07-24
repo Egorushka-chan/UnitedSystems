@@ -6,6 +6,7 @@ namespace ManyEntitiesSender.PL.Settings
     {
         public string User { get; set; } = "root";
         public string Password { get; set; } = "tobacco";
+        public string ConnectionString { get; set; } = "RabbitMQ";
         BrokerSettings IOptions<BrokerSettings>.Value => this;
     }
 }

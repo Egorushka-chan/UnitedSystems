@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ManyEntitiesSender.BPL.Abstraction;
 
-using ManyEntitiesSender.BPL.Abstraction;
-using ManyEntitiesSender.PL.Enums;
+using UnitedSystems.CommonLibrary.Queries;
 
 namespace ManyEntitiesSender.BPL.Implementation
 {
-    public class KafkaSender : IBrokerSender
+    public class KafkaSender : IMDMSender
     {
-        public void Send(string message, RabbitQueueType queueType)
+        public void Send(string message)
         {
             throw new NotImplementedException();
         }
 
-        public void Send(object obj, RabbitQueueType queueType)
+        public void Send(object obj)
         {
             throw new NotImplementedException();
         }

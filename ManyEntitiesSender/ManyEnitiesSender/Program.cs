@@ -15,10 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+AddOptions(builder);
+
 AddDataAccessLayer(builder);
 AddRedisLayer(builder);
 AddBusinessLayer(builder);
-AddOptions(builder);
 
 var app = builder.Build();
 
@@ -70,5 +71,5 @@ void AddOptions(WebApplicationBuilder builder)
 
     // RabbitMQ
     builder.Services.Configure<BrokerSettings>(
-        builder.Configuration.GetSection("Broker:Rabbit"));
+        builder.Configuration.GetSection("Broker:RabbitMQ"));
 }

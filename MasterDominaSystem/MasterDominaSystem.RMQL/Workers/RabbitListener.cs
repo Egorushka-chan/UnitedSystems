@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 
 using RabbitMQ.Client;
 
+using UnitedSystems.CommonLibrary.Queries;
+
 namespace MasterDominaSystem.RMQL.Workers
 {
     public class RabbitListener(IServiceProvider serviceProvider, ILogger<RabbitListener> logger) : BackgroundService
@@ -20,12 +22,35 @@ namespace MasterDominaSystem.RMQL.Workers
 
             using var connection = factory.CreateConnection("RabbitMQ");
 
-            var consumerMES = new RabbitDefaultConsumer<MessageFromMES>(connection.CreateModel(), _serviceProvider);
-            var consumerWO = new RabbitEventConsumer<MessageFromMES>(connection.CreateModel(), _serviceProvider);
+            var consumeChannel = connection.CreateModel();
+            string mesQueue = QueueEnumConverter.GetChannelName(QueueType.MESToMDM);
+            string woQueue = QueueEnumConverter.GetChannelName(QueueType.WOtoMDM);
 
-            while (!stoppingToken.IsCancellationRequested)
+            consumeChannel.QueueDeclare(
+                queue: mesQueue,
+                durable: false,
+                exclusive: true,
+                autoDelete: true);
+
+            consumeChannel.QueueDeclare(
+                queue: woQueue,
+                durable: false,
+                exclusive: true,
+                autoDelete: true);
+
+
+            while (!stoppingToken.IsCancellationRequested) 
             {
-                
+                var consumerMES = new RabbitEventConsumer<ConsumerableMessageFromMES>(connection.CreateModel(), _serviceProvider);
+                var consumerWO = new RabbitEventConsumer<ConsumerableMessageFromWO>(connection.CreateModel(), _serviceProvider);
+
+                consumeChannel.BasicConsume(mesQueue, true, consumerMES);
+                consumeChannel.BasicConsume(woQueue, true, consumerWO);
+
+                while (!stoppingToken.IsCancellationRequested)
+                {
+
+                }
             }
         }
 

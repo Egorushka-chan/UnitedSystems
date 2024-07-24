@@ -14,10 +14,10 @@ namespace WardrobeOnline.BLL.Services.Implementations
         {
             if(IsNotCorrectID(id))
             {
-                ErrorResponse errorResponse = new ErrorResponse();
-                errorResponse.Body = "ID sent by client is invalid";
-                errorResponse.Code = (int)HttpStatusCode.BadRequest;
-                return errorResponse;
+                return new() {
+                    Body = "ID sent by client is invalid",
+                    Code = (int)HttpStatusCode.BadRequest
+                };
             }
 
             bool passed = await _crudProvider.TryRemoveAsync(id);

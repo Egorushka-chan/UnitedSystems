@@ -1,40 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using MasterDominaSystem.RMQL.Models.Messages;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace MasterDominaSystem.RMQL.Implementations
 {
-    public class RabbitEventConsumer<TMessage> where TMessage : IBrokerMessage<TMessage>
+    public class RabbitEventConsumer<TMessage> : EventingBasicConsumer where TMessage : IConsumerableMessage
     {
-        private readonly IModel channel;
         private readonly IServiceProvider services;
-        private readonly AsyncEventingBasicConsumer eventConsumer;
-        public RabbitEventConsumer(IModel model, IServiceProvider servicesProvider)
+        private readonly ILogger<RabbitEventConsumer<TMessage>> logger;
+        public RabbitEventConsumer(IModel model, IServiceProvider servicesProvider) : base(model)
         {
-            channel = model;
             services = servicesProvider;
+            logger = services.GetRequiredService<ILogger<RabbitEventConsumer<TMessage>>>();
 
-            eventConsumer = new AsyncEventingBasicConsumer(model);
-            eventConsumer.Received += EventConsumer_Received;
+            Received += EventConsumer_Received;
         }
 
-        private Task EventConsumer_Received(object sender, BasicDeliverEventArgs messageArgs)
+        private void EventConsumer_Received(object? sender, BasicDeliverEventArgs messageArgs)
         {
+            logger.LogTrace("Message received from {routingKey}", messageArgs.RoutingKey);
             byte[] bodyArray = messageArgs.Body.ToArray();
             string json = Encoding.UTF8.GetString(bodyArray);
-            TMessage messageObject = JsonSerializer.Deserialize<TMessage>(json) ?? throw new ArgumentNullException(nameof(messageObject), "Empty package received");
+            if (string.IsNullOrEmpty(json)) {
+                logger.LogWarning("Consumer received empty body package" + $": sender: {sender}");
+            }
+            TMessage? messageObject = JsonSerializer.Deserialize<TMessage>(json);
+            if (messageObject is null) {
+                logger.LogError("Failed to deserialize {type} after receiving message: sender: {sender}", typeof(TMessage).Name, sender);
+                throw new JsonException("Deserialization error");
+            }
             messageObject.Handle(services);
-            return Task.CompletedTask;
         }
     }
 }
