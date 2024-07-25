@@ -1,10 +1,12 @@
 ﻿using ManyEntitiesSender.BLL.Settings;
-using ManyEntitiesSender.DAL.Entities;
 using ManyEntitiesSender.DAL.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Abstractions
 {

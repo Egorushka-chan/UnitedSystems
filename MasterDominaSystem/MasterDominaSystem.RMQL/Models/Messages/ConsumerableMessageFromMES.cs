@@ -3,29 +3,34 @@
 using Microsoft.Extensions.DependencyInjection;
 
 using UnitedSystems.CommonLibrary.Models.MasterDominaSystem.Messages;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages.Headers;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
 
 namespace MasterDominaSystem.RMQL.Models.Messages
 {
-    public class ConsumerableMessageFromMES : MessageFromWO, IConsumerableMessage
+    public class ConsumerableMessageFromMES : MessageFromMES, IConsumerableMessage
     {
         public void Handle(IServiceProvider services)
         {
             IGeneralInfoProvider generalInfoProvider = services.GetRequiredService<IGeneralInfoProvider>();
-            switch (Type) {
-                case MessageHeaderFromWO.NotSpecified:
+            switch (Type)
+            {
+                case MessageHeaderFromMES.NotSpecified:
+                    generalInfoProvider.MessagePool.Add("MES (not specified): " + Body);
                     break;
-                case MessageHeaderFromWO.AppStarting:
+                case MessageHeaderFromMES.EnsuredRequestStart:
+                    generalInfoProvider.EnsuredRequestMES.Add(Body);
                     break;
-                case MessageHeaderFromWO.AppClose:
+                case MessageHeaderFromMES.EnsuredRequestEnd:
+                    generalInfoProvider.EnsuredRequestMES.Add(Body);
                     break;
-                case MessageHeaderFromWO.PostRequestInfo:
+                case MessageHeaderFromMES.GetRequestInfo:
+                    generalInfoProvider.GetRequestsMES.Add(Body);
                     break;
-                case MessageHeaderFromWO.PutRequestInfo:
+                case MessageHeaderFromMES.AppStarting:
+                    generalInfoProvider.MessagePool.Add("MES (app start): " + Body);
                     break;
-                case MessageHeaderFromWO.GetRequestInfo:
-                    break;
-                case MessageHeaderFromWO.DeleteRequestInfo:
+                case MessageHeaderFromMES.AppEnd:
+                    generalInfoProvider.MessagePool.Add("MES (app end): + Body");
                     break;
             }
         }

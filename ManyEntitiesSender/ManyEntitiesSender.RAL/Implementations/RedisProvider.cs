@@ -3,12 +3,13 @@ using System.Text;
 
 using ManyEntitiesSender.BLL.Models;
 using ManyEntitiesSender.BLL.Settings;
-using ManyEntitiesSender.DAL.Entities;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
 using ManyEntitiesSender.DAL.Interfaces;
 
 using Microsoft.Extensions.Options;
 
 using StackExchange.Redis;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.DAL.Implementations
 {

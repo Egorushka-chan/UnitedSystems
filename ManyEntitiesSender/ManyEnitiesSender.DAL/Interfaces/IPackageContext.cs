@@ -1,7 +1,9 @@
-﻿using ManyEntitiesSender.DAL.Entities;
-using ManyEntitiesSender.DAL.Implementations;
+﻿using ManyEntitiesSender.DAL.Implementations;
 
 using Microsoft.EntityFrameworkCore;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.DAL.Interfaces
 {

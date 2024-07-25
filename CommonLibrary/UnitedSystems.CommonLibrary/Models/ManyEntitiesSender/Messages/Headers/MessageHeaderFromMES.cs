@@ -7,9 +7,6 @@
         EnsuredRequestEnd = 2,
         GetRequestInfo = 3,
         AppStarting = 4,
-        AppEnd = 5,
-        BodyCacheSnapshot = 6,
-        HandCacheSnapshot = 7,
-        LegCacheSnapShot = 8
+        AppEnd = 5
     }
 }

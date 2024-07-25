@@ -1,6 +1,6 @@
 ﻿using ManyEntitiesSender.BLL.Models;
-using ManyEntitiesSender.DAL.Entities;
-using ManyEntitiesSender.DAL.Interfaces;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Abstractions
 {

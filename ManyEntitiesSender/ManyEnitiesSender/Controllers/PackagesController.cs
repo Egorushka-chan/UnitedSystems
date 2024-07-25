@@ -2,11 +2,12 @@
 using ManyEntitiesSender.BLL.Models;
 using ManyEntitiesSender.BLL.Models.Requests;
 using ManyEntitiesSender.BLL.Services.Abstractions;
-using ManyEntitiesSender.DAL.Entities;
 using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models.Responses;
 
 using Microsoft.AspNetCore.Mvc;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
 
 namespace ManyEntitiesSender.Controllers
 {

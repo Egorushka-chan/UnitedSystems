@@ -1,11 +1,13 @@
 ﻿using ManyEntitiesSender.BLL.Models;
 using ManyEntitiesSender.BLL.Services.Abstractions;
 using ManyEntitiesSender.BLL.Settings;
-using ManyEntitiesSender.DAL.Entities;
 using ManyEntitiesSender.DAL.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Implementations
 {

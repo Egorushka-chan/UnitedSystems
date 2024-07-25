@@ -2,9 +2,10 @@
 using System.Text.Json;
 
 using ManyEntitiesSender.Attributes;
-using ManyEntitiesSender.DAL.Entities;
 using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models;
+
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
 
 namespace ManyEntitiesSender.Middleware
 {

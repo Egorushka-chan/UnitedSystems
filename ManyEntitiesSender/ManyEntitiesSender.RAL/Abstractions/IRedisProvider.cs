@@ -1,6 +1,6 @@
-﻿using ManyEntitiesSender.DAL.Entities;
+﻿using StackExchange.Redis;
 
-using StackExchange.Redis;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.DAL.Interfaces
 {
