@@ -1,9 +1,9 @@
-using WardrobeOnline.DAL;
-using WardrobeOnline.BLL;
-using Microsoft.Extensions.FileProviders;
 using Serilog;
-using WardrobeOnline.WebApi.Settings;
+
+using WardrobeOnline.BLL;
 using WardrobeOnline.BLL.Models.Settings;
+using WardrobeOnline.DAL;
+using WardrobeOnline.WebApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 

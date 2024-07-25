@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using WardrobeOnline.BLL.Models;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+
 using WardrobeOnline.BLL.Services.Interfaces;
 
 namespace WardrobeOnline.WebApi.Controllers

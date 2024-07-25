@@ -1,7 +1,6 @@
-﻿using System.Data;
-using System.Threading.Channels;
-using WardrobeOnline.BLL.Models;
-using WardrobeOnline.BLL.Models.Interfaces;
+﻿using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.DAL.Interfaces;

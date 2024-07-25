@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WardrobeOnline.BLL.Models;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+
 using WardrobeOnline.BLL.Services.Extensions;
 using WardrobeOnline.BLL.Services.Interfaces;
-using WardrobeOnline.DAL;
 using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.DAL.Interfaces;
 

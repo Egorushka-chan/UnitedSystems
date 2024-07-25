@@ -1,5 +1,5 @@
-﻿using WardrobeOnline.BLL.Models;
-using WardrobeOnline.BLL.Models.Interfaces;
+﻿using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Interfaces
 {

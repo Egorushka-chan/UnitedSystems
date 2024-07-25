@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonLibrary\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
     <ProjectReference Include="..\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj" />
   </ItemGroup>
 

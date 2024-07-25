@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WardrobeOnline.BLL.Models;
-using WardrobeOnline.BLL.Models.Interfaces;
+
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+
 using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.BLL.Services.Implementations;
 using WardrobeOnline.BLL.Services.Implementations.CRUD;
