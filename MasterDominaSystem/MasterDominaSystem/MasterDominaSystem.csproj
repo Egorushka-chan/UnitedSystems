@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />
+    <ProjectReference Include="..\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj" />
   </ItemGroup>
 
 </Project>

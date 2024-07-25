@@ -1,13 +1,22 @@
+using ManyEntitiesSender.PL.Settings;
+
+using MasterDominaSystem.BLL;
+using MasterDominaSystem.RMQL;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+AddOptions(builder);
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.InjectBLL();
+builder.Services.InjectRMQL();
 
 var app = builder.Build();
 
@@ -24,3 +33,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void AddOptions(WebApplicationBuilder builder)
+{
+    builder.Services.Configure<BrokerSettings>(
+        builder.Configuration.GetSection("Broker:RabbitMQ"));
+}
