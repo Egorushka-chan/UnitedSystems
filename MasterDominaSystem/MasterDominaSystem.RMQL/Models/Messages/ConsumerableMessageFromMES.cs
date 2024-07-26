@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 using UnitedSystems.CommonLibrary.Models.MasterDominaSystem.Messages;
 using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Produced;
+using System.Text.Json;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages;
 
 namespace MasterDominaSystem.RMQL.Models.Messages
 {
@@ -24,7 +27,13 @@ namespace MasterDominaSystem.RMQL.Models.Messages
                     generalInfoProvider.EnsuredRequestMES.Add(Body);
                     break;
                 case MessageHeaderFromMES.GetRequestInfo:
-                    generalInfoProvider.GetRequestsMES.Add(Body);
+                    GetMESInfo? getMESInfo = JsonSerializer.Deserialize<GetMESInfo>(Body);
+                    if (getMESInfo is null) {
+                        generalInfoProvider.MessagePool.Add("MES: GET info consumed, but body can't be handled");
+                    }
+                    else {
+                        generalInfoProvider.GetRequestsMES.Add(getMESInfo);
+                    }
                     break;
                 case MessageHeaderFromMES.AppStarting:
                     generalInfoProvider.MessagePool.Add("MES (app start): " + Body);

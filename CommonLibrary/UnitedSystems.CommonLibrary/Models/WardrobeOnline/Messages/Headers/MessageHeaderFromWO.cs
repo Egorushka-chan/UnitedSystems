@@ -8,6 +8,8 @@
         PostRequestInfo = 3,
         PutRequestInfo = 4,
         GetRequestInfo = 5,
-        DeleteRequestInfo = 6
+        DeleteRequestInfo = 6,
+        ErrorResponseInfo = 7,
+        PagedGetInfo = 8
     }
 }

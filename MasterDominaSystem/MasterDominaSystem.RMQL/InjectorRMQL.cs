@@ -1,4 +1,4 @@
-﻿using ManyEntitiesSender.PL.Settings;
+﻿using MasterDominaSystem.RMQL.Models.Settings;
 
 using MasterDominaSystem.RMQL.Models.Messages;
 using MasterDominaSystem.RMQL.Models.Queues;
@@ -18,7 +18,7 @@ namespace MasterDominaSystem.RMQL
         {
             services.AddSingleton<IConnectionFactory, ConnectionFactory>(opt =>
             {
-                BrokerSettings configuration = opt.GetRequiredService<BrokerSettings>();
+                BrokerSettings configuration = opt.GetRequiredService<IOptions<BrokerSettings>>().Value;
 
                 return new ConnectionFactory()
                 {

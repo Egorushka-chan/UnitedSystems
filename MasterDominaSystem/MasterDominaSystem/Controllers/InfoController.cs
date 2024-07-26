@@ -9,6 +9,9 @@ namespace MasterDominaSystem.Controllers
     [ApiController]
     public class InfoController : ControllerBase
     {
+        /// <summary>
+        /// Просто вывод по быстрому, для проверки
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGeneralInfoProvider))]
         public IResult GeneralInfo([FromServices] IGeneralInfoProvider generalInfoProvider)

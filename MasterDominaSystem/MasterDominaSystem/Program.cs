@@ -1,4 +1,4 @@
-using ManyEntitiesSender.PL.Settings;
+using MasterDominaSystem.RMQL.Models.Settings;
 
 using MasterDominaSystem.BLL;
 using MasterDominaSystem.RMQL;

@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLibrary", "CommonLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary", "CommonLibrary\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj", "{AC244908-CFC0-4971-BC87-9800D4F58AF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeOnline.BPL", "WardrobeOnline\WardrobeOnline.BPL\WardrobeOnline.BPL.csproj", "{422DB717-BC19-4A89-96B9-BA0C157E48E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{07464460-07E9-4B98-9FA3-8F56E30BC3A4} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{4587FEDF-7B91-4B01-9484-3972B4E73CEA} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2} = {187AE593-767A-4747-B94D-D2C871A7E984}
+		{422DB717-BC19-4A89-96B9-BA0C157E48E2} = {EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}

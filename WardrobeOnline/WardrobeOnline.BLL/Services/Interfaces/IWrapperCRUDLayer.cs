@@ -3,7 +3,7 @@ using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Interfaces
 {
-    public interface IValidationLayer<TEntityDTO> where TEntityDTO : class, IEntityDTO
+    public interface IWrapperCRUDLayer<TEntityDTO> where TEntityDTO : class, IEntityDTO
     {
         Task<(ErrorResponse?, TEntityDTO?)> Post(TEntityDTO entityDTO);
         Task<(ErrorResponse?, TEntityDTO?)> Get(int id);

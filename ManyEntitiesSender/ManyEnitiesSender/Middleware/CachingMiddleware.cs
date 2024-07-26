@@ -2,10 +2,13 @@
 using System.Text.Json;
 
 using ManyEntitiesSender.Attributes;
+using ManyEntitiesSender.BPL.Abstraction;
 using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models;
 
 using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Produced;
 
 namespace ManyEntitiesSender.Middleware
 {
@@ -26,7 +29,7 @@ namespace ManyEntitiesSender.Middleware
         /// <summary>
         /// Если возвращает 200 - это контроллер создал, если 201 - то создал Redis
         /// </summary>
-        public async Task InvokeAsync(HttpContext httpContext, IRedisProvider redis)
+        public async Task InvokeAsync(HttpContext httpContext, IRedisProvider redis, IMDMSender mdmSender)
         {
             Endpoint? endpoint = httpContext.GetEndpoint();
             if(endpoint is not null) {
@@ -46,18 +49,15 @@ namespace ManyEntitiesSender.Middleware
                     {
                         //monitors.GetOrAdd(table, new Mutex()).WaitOne(); // здесь происходит магия 2check
                         semaphores.GetOrAdd(table, new SemaphoreSlim(1,1)).Wait();
-                        bool redisReturnedValueSecond = await CheckRedis(httpContext, redis, table, filter); 
-                        if (redisReturnedValueSecond)
-                        {
+                        bool redisReturnedValueSecond = await CheckRedis(httpContext, redis, table, filter);
+                        if (redisReturnedValueSecond) {
                             // httpContext.Response.StatusCode = 201;
                         }
-                        else
-                        {
+                        else {
                             string responseBody;
                             // супер трюк
                             Stream originalBody = httpContext.Response.Body;
-                            using (var memStream = new MemoryStream())
-                            {
+                            using (var memStream = new MemoryStream()) {
                                 httpContext.Response.Body = memStream;
 
                                 await _next(httpContext);
@@ -71,6 +71,10 @@ namespace ManyEntitiesSender.Middleware
                             }
                             await CacheResponseBody(redis, table, responseBody);
                         }
+                        mdmSender.Send(new GetMESInfo() {
+                            StatusCode = httpContext.Response.StatusCode,
+                            Summary = "Успешное выполнение"
+                        }, MessageHeaderFromMES.GetRequestInfo);
                     }
                     finally
                     {

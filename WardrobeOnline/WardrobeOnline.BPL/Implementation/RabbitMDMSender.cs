@@ -1,23 +1,24 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-using ManyEntitiesSender.BPL.Abstraction;
-using ManyEntitiesSender.PL.Settings;
-
 using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
 using UnitedSystems.CommonLibrary.Models.MasterDominaSystem.Messages;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages.Headers;
 using UnitedSystems.CommonLibrary.Queries;
 using UnitedSystems.CommonLibrary.Queries.Interfaces;
 
-namespace ManyEntitiesSender.BPL.Implementation
+using WardrobeOnline.BPL.Abstractions;
+using WardrobeOnline.BPL.Settings;
+
+namespace WardrobeOnline.BPL.Implementations
 {
     public class RabbitMDMSender<TQueue> : IMDMSender
         where TQueue : IQueueInfo
     {
+        private QueueType queueType = QueueType.WOtoMDM;
         private readonly IConnectionFactory factory;
         private readonly IConnection connection;
         private readonly IModel channel;
@@ -33,9 +34,9 @@ namespace ManyEntitiesSender.BPL.Implementation
                 exclusive: false);
         }
 
-        public void Send(string message, MessageHeaderFromMES header = MessageHeaderFromMES.NotSpecified)
+        public void Send(string message, MessageHeaderFromWO header = MessageHeaderFromWO.NotSpecified)
         {
-            MessageFromMES messageFromMES = new() {
+            MessageFromWO messageFromMES = new() {
                 Body = message,
                 Type = header
             };
@@ -44,7 +45,7 @@ namespace ManyEntitiesSender.BPL.Implementation
             channel.BasicPublish("", routingKey: TQueue.GetQueueKey(), body: body);
         }
 
-        public void Send(object obj, MessageHeaderFromMES header = MessageHeaderFromMES.NotSpecified)
+        public void Send(object obj, MessageHeaderFromWO header = MessageHeaderFromWO.NotSpecified)
         {
             string serial = JsonSerializer.Serialize(obj);
             Send(serial, header);

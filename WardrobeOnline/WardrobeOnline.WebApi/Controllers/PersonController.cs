@@ -13,9 +13,9 @@ namespace WardrobeOnline.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PersonDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [HttpGet("{id}")]
-        public async Task<IResult> GetPersonInfo(int id, [FromServices] IValidationLayer<PersonDTO> validationLayer, [FromServices] ILogger<PersonController> logger)
+        public async Task<IResult> GetPersonInfo(int id, [FromServices] IWrapperCRUDLayer<PersonDTO> validationLayer, [FromServices] ILogger<PersonController> logger)
         {
-            logger.LogInformation("Get Person Request at {0}", DateTime.Now);
+            logger.LogInformation("Get Person Request at {DateTime}", DateTime.Now);
             (ErrorResponse? errorResponse, PersonDTO? dto) = await validationLayer.Get(id);
 
             if(errorResponse != null)
@@ -27,7 +27,7 @@ namespace WardrobeOnline.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [HttpDelete("{id}")]
-        public async Task<IResult> DeletePerson(int id, [FromServices] IValidationLayer<PersonDTO> validationLayer) 
+        public async Task<IResult> DeletePerson(int id, [FromServices] IWrapperCRUDLayer<PersonDTO> validationLayer) 
         {
             ErrorResponse? errorResponse = await validationLayer.Delete(id);
             if (errorResponse != null)
@@ -39,7 +39,7 @@ namespace WardrobeOnline.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PersonDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [HttpPost]
-        public async Task<IResult> CreatePerson([FromBody] PersonDTO personDTO, [FromServices] IValidationLayer<PersonDTO> validationLayer) 
+        public async Task<IResult> CreatePerson([FromBody] PersonDTO personDTO, [FromServices] IWrapperCRUDLayer<PersonDTO> validationLayer) 
         {
             (ErrorResponse? errorResponse, PersonDTO? dto) = await validationLayer.Post(personDTO);
 
@@ -52,7 +52,7 @@ namespace WardrobeOnline.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PersonDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [HttpPut("{id?}")]
-        public async Task<IResult> UpdatePersonInfo(int? id, [FromBody] PersonDTO personDTO, [FromServices] IValidationLayer<PersonDTO> validationLayer)
+        public async Task<IResult> UpdatePersonInfo(int? id, [FromBody] PersonDTO personDTO, [FromServices] IWrapperCRUDLayer<PersonDTO> validationLayer)
         {
             (ErrorResponse? errorResponse, PersonDTO? dto) = await validationLayer.Put(id,personDTO);
 
@@ -65,7 +65,7 @@ namespace WardrobeOnline.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PersonDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [HttpGet("page/{pageIndex}/{pageSize}")]
-        public async Task<IResult> GetPage(int pageIndex, int pageSize, [FromServices] IValidationLayer<PersonDTO> validationLayer)
+        public async Task<IResult> GetPage(int pageIndex, int pageSize, [FromServices] IWrapperCRUDLayer<PersonDTO> validationLayer)
         {
             (ErrorResponse? errorResponse, IReadOnlyList<PersonDTO>? list) = await validationLayer.GetPaged(pageIndex, pageSize);
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace MasterDominaSystem.RMQL.Models.Settings
+namespace WardrobeOnline.BPL.Settings
 {
     public class BrokerSettings : IOptions<BrokerSettings>
     {

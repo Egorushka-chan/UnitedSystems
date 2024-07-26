@@ -26,52 +26,28 @@ namespace MasterDominaSystem.RMQL.Models.Messages
                     generalInfoProvider.MessagePool.Add("WO (app close): " + Body);
                     break;
                 case MessageHeaderFromWO.PostRequestInfo:
-                    PostWOInfo? postWOInfo = JsonSerializer.Deserialize<PostWOInfo>(Body);
-                    if (postWOInfo is null)
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: POST info consumed, but body can't be handled");
-                    }
-                    else
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: POST info consumed");
-                        generalInfoProvider.PostRequestsWO.Add(postWOInfo);
-                    }
+                    PostWOInfo postWOInfo = JsonSerializer.Deserialize<PostWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(PostWOInfo)}");
+                    generalInfoProvider.PostRequestsWO.Add(postWOInfo);
                     break;
                 case MessageHeaderFromWO.PutRequestInfo:
-                    PutWOInfo? putWOInfo = JsonSerializer.Deserialize<PutWOInfo>(Body);
-                    if (putWOInfo is null)
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: PUT info consumed, but body can't be handled");
-                    }
-                    else
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: PUT info consumed");
-                        generalInfoProvider.PutRequestsWO.Add(putWOInfo);
-                    }
+                    PutWOInfo putWOInfo = JsonSerializer.Deserialize<PutWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(PutWOInfo)}");
+                    generalInfoProvider.PutRequestsWO.Add(putWOInfo);
                     break;
                 case MessageHeaderFromWO.GetRequestInfo:
-                    GetWOInfo? getWOInfo = JsonSerializer.Deserialize<GetWOInfo>(Body);
-                    if (getWOInfo is null)
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: GET info consumed, but body can't be handled");
-                    }
-                    else
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: GET info consumed");
-                        generalInfoProvider.GetRequestsWO.Add(getWOInfo);
-                    }
+                    GetWOInfo getWOInfo = JsonSerializer.Deserialize<GetWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(GetWOInfo)}");
+                    generalInfoProvider.GetRequestsWO.Add(getWOInfo);
                     break;
                 case MessageHeaderFromWO.DeleteRequestInfo:
-                    DeleteWOInfo? deleteWOInfo = JsonSerializer.Deserialize<DeleteWOInfo>(Body);
-                    if (deleteWOInfo is null)
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: DELETE info consumed, but body can't be handled");
-                    }
-                    else
-                    {
-                        generalInfoProvider.MessagePool.Add("WO: DELETE info consumed");
-                        generalInfoProvider.DeleteRequestWO.Add(deleteWOInfo);
-                    }
+                    DeleteWOInfo deleteWOInfo = JsonSerializer.Deserialize<DeleteWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(DeleteWOInfo)}");
+                    generalInfoProvider.DeleteRequestWO.Add(deleteWOInfo);
+                    break;
+                case MessageHeaderFromWO.ErrorResponseInfo:
+                    ErrorWOInfo errorWOInfo = JsonSerializer.Deserialize<ErrorWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(ErrorWOInfo)}");
+                    generalInfoProvider.ErrorRequestWO.Add(errorWOInfo);
+                    break;
+                case MessageHeaderFromWO.PagedGetInfo:
+                    PagedGetWOInfo pagedWOInfo = JsonSerializer.Deserialize<PagedGetWOInfo>(Body) ?? throw new JsonException($"Failed to deserialize {nameof(PagedGetWOInfo)}");
+                    generalInfoProvider.PagedRequestWO.Add(pagedWOInfo);
                     break;
             }
         }

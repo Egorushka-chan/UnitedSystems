@@ -2,12 +2,14 @@
 using ManyEntitiesSender.BLL.Models;
 using ManyEntitiesSender.BLL.Models.Requests;
 using ManyEntitiesSender.BLL.Services.Abstractions;
+using ManyEntitiesSender.BPL.Abstraction;
 using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models.Responses;
 
 using Microsoft.AspNetCore.Mvc;
 
 using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
 
 namespace ManyEntitiesSender.Controllers
 {
@@ -84,9 +86,11 @@ namespace ManyEntitiesSender.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost("ensure")]
-        public async Task<IActionResult> Ensure(IObjectGenerator generator)
+        public async Task<IActionResult> Ensure(IObjectGenerator generator, IMDMSender sender)
         {
+            sender.Send("Begin ensuring", MessageHeaderFromMES.EnsuredRequestStart);
             await generator.EnsurePartsCount();
+            sender.Send("End ensuring", MessageHeaderFromMES.EnsuredRequestStart);
             return Ok();
         }
     }

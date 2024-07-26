@@ -5,9 +5,8 @@ namespace UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages
 {
     public class GetWOInfo : BrokerInfoObject
     {
-        public string RequestQuery { get; set; } = "NaN";
+        public Dictionary<string, string> RequestQuery { get; set; } = [];
         public int StatusCode { get; set; }
-        public ErrorResponse? ErrorResponse { get; set; }
-        public IEntityDTO? ReturnedDTO { get; set; }
+        public IEntityDTO? ObjectDTO { get; set; }
     }
 }

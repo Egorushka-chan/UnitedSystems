@@ -4,6 +4,9 @@ using WardrobeOnline.BLL;
 using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.DAL;
 using WardrobeOnline.WebApi.Settings;
+using WardrobeOnline.BPL;
+using WardrobeOnline.BPL.Abstractions;
+using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +35,8 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration);
 });
 
+builder.Services.InjectBPL();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,11 +44,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Services.GetRequiredService<ILogger<Program>>().LogInformation(connectionString);
 
@@ -67,4 +69,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+IMDMSender broker = app.Services.GetRequiredService<IMDMSender>();
+broker.Send("Приложение запущено", MessageHeaderFromWO.AppStarting);
+
 app.Run();
+
+broker.Send("Приложение остановлено", MessageHeaderFromWO.AppClose);

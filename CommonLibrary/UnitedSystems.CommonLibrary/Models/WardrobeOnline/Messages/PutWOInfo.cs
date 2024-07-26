@@ -1,13 +1,10 @@
 ﻿using UnitedSystems.CommonLibrary.Models.Messages;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
 
 namespace UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages
 {
     public class PutWOInfo : BrokerInfoObject
     {
-        public string RequestQuery { get; set; } = "NaN";
+        public Dictionary<string, string> RequestQuery { get; set; } = [];
         public int StatusCode { get; set; }
-        public ErrorResponse? ErrorResponse { get; set; }
-        public IEntityDTO? ReturnedDTO { get; set; }
     }
 }

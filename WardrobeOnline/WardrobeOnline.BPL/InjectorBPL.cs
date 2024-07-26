@@ -1,16 +1,15 @@
-﻿using ManyEntitiesSender.BPL.Abstraction;
-using ManyEntitiesSender.BPL.Implementation;
-using ManyEntitiesSender.PL.Settings;
+﻿using MasterDominaSystem.RMQL.Models.Queues;
 
-using MasterDominaSystem.RMQL.Models.Queues;
-
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 
-namespace ManyEntitiesSender.BPL
+using WardrobeOnline.BPL.Abstractions;
+using WardrobeOnline.BPL.Implementations;
+using WardrobeOnline.BPL.Settings;
+
+namespace WardrobeOnline.BPL
 {
     public static class InjectorBPL
     {
@@ -25,7 +24,7 @@ namespace ManyEntitiesSender.BPL
                     HostName = configuration.ConnectionString
                 };
             });
-            services.AddSingleton<IMDMSender, RabbitMDMSender<QueueInfoMES>>();
+            services.AddSingleton<IMDMSender, RabbitMDMSender<QueueInfoWO>>();
         }
     }
 }

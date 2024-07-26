@@ -1,12 +1,13 @@
 ﻿using MasterDominaSystem.RMQL.Implementations;
 using MasterDominaSystem.RMQL.Models.Messages;
-using MasterDominaSystem.RMQL.Models.Queues.Interface;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using RabbitMQ.Client;
+
+using UnitedSystems.CommonLibrary.Queries.Interfaces;
 
 namespace MasterDominaSystem.RMQL.Workers
 {
@@ -19,7 +20,7 @@ namespace MasterDominaSystem.RMQL.Workers
         private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await Task.Yield();
+            //await Task.Yield();
             IConnectionFactory factory = _serviceProvider.GetRequiredService<IConnectionFactory>();
 
             using var connection = factory.CreateConnection("RabbitMQ");
@@ -27,21 +28,20 @@ namespace MasterDominaSystem.RMQL.Workers
             var consumeChannel = connection.CreateModel();
             string queueKey = TQueueInfo.GetQueueKey();
 
-            while (!stoppingToken.IsCancellationRequested) 
-            {
+            while (!stoppingToken.IsCancellationRequested) {
                 var eventConsumer = new RabbitEventConsumer<TConsumableMessage>(consumeChannel, _serviceProvider);
                 consumeChannel.QueueDeclare(
                     queue: queueKey,
                     durable: false,
-                    exclusive: true,
+                    exclusive: false,
                     autoDelete: true);
                 consumeChannel.BasicConsume(queueKey, true, eventConsumer);
 
-                while (!stoppingToken.IsCancellationRequested)
-                {
-
+                while (!stoppingToken.IsCancellationRequested) {
+                    await Task.Delay(1000);
                 }
             }
+            Console.WriteLine("End");
         }
 
         public override void Dispose()

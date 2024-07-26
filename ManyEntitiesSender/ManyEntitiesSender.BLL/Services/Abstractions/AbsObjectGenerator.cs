@@ -2,6 +2,7 @@
 using ManyEntitiesSender.DAL.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -10,22 +11,42 @@ using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Abstractions
 {
-    public abstract class AbsObjectGenerator(IPackageContext context, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : IObjectGenerator
+    public abstract class AbsObjectGenerator(IServiceScopeFactory scopeFactory, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : IObjectGenerator
     {
         public async Task EnsurePartsCount()
         {
             logger.LogDebug("Begin ensuring sets of entities");
             logger.LogTrace("Begin ensuring bodies");
-            await Ensure<Body>();
+            var bodyTask = Ensure<Body>();
             logger.LogTrace("Begin ensuring hands");
-            await Ensure<Hand>();
+            var handTask = Ensure<Hand>();
             logger.LogTrace("Begin ensuring legs");
-            await Ensure<Leg>();
+            var legTask = Ensure<Leg>();
             logger.LogDebug("Ensuring complete");
+
+            var tasks = new List<Task> { bodyTask, handTask, legTask };
+            while (tasks.Count > 0) {
+                Task finishedTask = await Task.WhenAny(tasks);
+                if (finishedTask == bodyTask) {
+                    Console.WriteLine("Body are ensured");
+                }
+                else if (finishedTask == handTask) {
+                    Console.WriteLine("Hands are ensured");
+                }
+                else if (finishedTask == legTask) {
+                    Console.WriteLine("Legs are ensured");
+                }
+                await finishedTask;
+                tasks.Remove(finishedTask);
+            }
+
         }
 
         private async Task Ensure<TEntity>() where TEntity : class, IEntity, new()
         {
+            using IServiceScope scope = scopeFactory.CreateScope();
+            IPackageContext context = scope.ServiceProvider.GetRequiredService<IPackageContext>();
+
             TEntity checkEntity = new();
             if(!(checkEntity is Body || checkEntity is Hand || checkEntity is Leg))
                 throw new NotImplementedException("Such entity type can't be created");

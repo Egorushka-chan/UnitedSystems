@@ -2,6 +2,7 @@
 using ManyEntitiesSender.BLL.Settings;
 using ManyEntitiesSender.DAL.Interfaces;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -11,7 +12,7 @@ namespace ManyEntitiesSender.DAL
 {
     public class TestObjectsGenerator : AbsObjectGenerator
     {
-        public TestObjectsGenerator(IPackageContext context, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : base(context, options, logger)
+        public TestObjectsGenerator(IServiceScopeFactory scopeFactory, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : base(scopeFactory, options, logger)
         {
 
         }

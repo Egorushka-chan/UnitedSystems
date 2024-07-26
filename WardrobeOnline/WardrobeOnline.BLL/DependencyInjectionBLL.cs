@@ -55,7 +55,7 @@ namespace WardrobeOnline.BLL
 
         private static void ConfigureValidationLayer<TEntityDTO>(this IServiceCollection services) where TEntityDTO : class, IEntityDTO
         {
-            services.AddTransient<IValidationLayer<TEntityDTO>, ValidationLayer<TEntityDTO>>();
+            services.AddTransient<IWrapperCRUDLayer<TEntityDTO>, BrokerSenderLayer<TEntityDTO>>();
         }
     }
 

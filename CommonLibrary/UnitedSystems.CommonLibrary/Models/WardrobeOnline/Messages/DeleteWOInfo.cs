@@ -4,8 +4,7 @@ namespace UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages
 {
     public class DeleteWOInfo : BrokerInfoObject
     {
-        public string RequestQuery { get; set; } = "NaN";
+        public Dictionary<string, string> RequestQuery { get; set; } = [];
         public int StatusCode { get; set; }
-        public ErrorResponse? ErrorResponse { get; set; }
     }
 }

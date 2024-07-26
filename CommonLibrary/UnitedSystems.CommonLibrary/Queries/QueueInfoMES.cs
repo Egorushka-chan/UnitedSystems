@@ -1,10 +1,9 @@
-﻿using MasterDominaSystem.RMQL.Models.Queues.Interface;
-
-using UnitedSystems.CommonLibrary.Queries;
+﻿using UnitedSystems.CommonLibrary.Queries;
+using UnitedSystems.CommonLibrary.Queries.Interfaces;
 
 namespace MasterDominaSystem.RMQL.Models.Queues
 {
-    internal class QueueInfoMES : IQueueInfo
+    public class QueueInfoMES : IQueueInfo
     {
         public static string GetQueueKey()
         {
