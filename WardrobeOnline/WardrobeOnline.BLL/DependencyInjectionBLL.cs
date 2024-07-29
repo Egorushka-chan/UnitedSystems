@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 
 using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
 using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
@@ -7,6 +10,7 @@ using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.BLL.Services.Implementations;
 using WardrobeOnline.BLL.Services.Implementations.CRUD;
 using WardrobeOnline.BLL.Services.Implementations.Pagination;
+using WardrobeOnline.BLL.Services.Implementations.Validation;
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.WebApi.Settings;
@@ -50,7 +54,8 @@ namespace WardrobeOnline.BLL
             });
 
             services.AddScoped<IGeneralInfoProvider, GeneralInfoProvider>();
-            
+
+            services.AddTransient<IValidator<IEntityDTO>, DTOValidator>();
         }
 
         private static void ConfigureValidationLayer<TEntityDTO>(this IServiceCollection services) where TEntityDTO : class, IEntityDTO
