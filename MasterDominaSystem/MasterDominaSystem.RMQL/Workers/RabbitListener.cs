@@ -38,7 +38,7 @@ namespace MasterDominaSystem.RMQL.Workers
                 consumeChannel.BasicConsume(queueKey, true, eventConsumer);
 
                 while (!stoppingToken.IsCancellationRequested) {
-                    await Task.Delay(1000);
+                    await Task.Delay(1000, stoppingToken);
                 }
             }
             Console.WriteLine("End");

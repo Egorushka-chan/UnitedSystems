@@ -1,20 +1,19 @@
-﻿using MasterDominaSystem.RMQL.Models.Settings;
-
-using MasterDominaSystem.RMQL.Models.Messages;
-using MasterDominaSystem.RMQL.Models.Queues;
+﻿using MasterDominaSystem.RMQL.Models.Messages;
+using MasterDominaSystem.RMQL.Models.Settings;
 using MasterDominaSystem.RMQL.Workers;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 
+using UnitedSystems.CommonLibrary.Queries;
+
 namespace MasterDominaSystem.RMQL
 {
     public static class InjectorRMQL
     {
-        public static void InjectRMQL(this IServiceCollection services)
+        public static IServiceCollection InjectRMQL(this IServiceCollection services)
         {
             services.AddSingleton<IConnectionFactory, ConnectionFactory>(opt =>
             {
@@ -29,6 +28,7 @@ namespace MasterDominaSystem.RMQL
             });
             services.AddHostedService<RabbitListener<QueueInfoMES, ConsumerableMessageFromMES>>();
             services.AddHostedService<RabbitListener<QueueInfoWO, ConsumerableMessageFromWO>>();
+            return services;
         }
     }
 }

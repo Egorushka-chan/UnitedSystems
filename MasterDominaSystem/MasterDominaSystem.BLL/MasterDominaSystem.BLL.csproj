@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CommonLibrary\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
   </ItemGroup>
 
 </Project>

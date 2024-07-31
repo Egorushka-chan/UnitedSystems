@@ -2,6 +2,7 @@ using MasterDominaSystem.RMQL.Models.Settings;
 
 using MasterDominaSystem.BLL;
 using MasterDominaSystem.RMQL;
+using MasterDominaSystem.DAL;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.InjectBLL();
-builder.Services.InjectRMQL();
+string connectionString = builder.Configuration["ConnectionString:Postgres"] ?? throw new InvalidCastException("Cannot start without valid connection string");
+connectionString = connectionString.Replace("###", "wardrobe");
+
+// Подтягиваем библиотеки
+builder.Services
+    .InjectBLL()
+    .InjectRMQL()
+    .InjectDAL(connectionString);
 
 var app = builder.Build();
 
@@ -34,7 +41,7 @@ app.MapControllers();
 
 app.Run();
 
-void AddOptions(WebApplicationBuilder builder)
+static void AddOptions(WebApplicationBuilder builder)
 {
     builder.Services.Configure<BrokerSettings>(
         builder.Configuration.GetSection("Broker:RabbitMQ"));

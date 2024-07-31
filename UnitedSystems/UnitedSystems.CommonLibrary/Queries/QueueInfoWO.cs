@@ -1,7 +1,7 @@
 ﻿using UnitedSystems.CommonLibrary.Queries;
 using UnitedSystems.CommonLibrary.Queries.Interfaces;
 
-namespace MasterDominaSystem.RMQL.Models.Queues
+namespace UnitedSystems.CommonLibrary.Queries
 {
     public class QueueInfoWO : IQueueInfo
     {

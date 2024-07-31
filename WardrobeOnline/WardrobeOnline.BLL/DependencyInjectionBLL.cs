@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 using UnitedSystems.CommonLibrary.Models.WardrobeOnline;

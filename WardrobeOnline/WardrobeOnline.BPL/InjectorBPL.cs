@@ -1,9 +1,9 @@
-﻿using MasterDominaSystem.RMQL.Models.Queues;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
+
+using UnitedSystems.CommonLibrary.Queries;
 
 using WardrobeOnline.BPL.Abstractions;
 using WardrobeOnline.BPL.Implementations;

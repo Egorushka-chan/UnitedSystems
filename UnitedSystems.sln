@@ -45,11 +45,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.BPL", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.BLL", "MasterDominaSystem\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj", "{4587FEDF-7B91-4B01-9484-3972B4E73CEA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLibrary", "CommonLibrary", "{187AE593-767A-4747-B94D-D2C871A7E984}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitedSystems", "UnitedSystems", "{187AE593-767A-4747-B94D-D2C871A7E984}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary", "CommonLibrary\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj", "{AC244908-CFC0-4971-BC87-9800D4F58AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary", "UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj", "{AC244908-CFC0-4971-BC87-9800D4F58AF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeOnline.BPL", "WardrobeOnline\WardrobeOnline.BPL\WardrobeOnline.BPL.csproj", "{422DB717-BC19-4A89-96B9-BA0C157E48E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.BPL", "WardrobeOnline\WardrobeOnline.BPL\WardrobeOnline.BPL.csproj", "{422DB717-BC19-4A89-96B9-BA0C157E48E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityAPI", "IdentityAPI", "{C13B2901-47AB-4441-802C-899FEB887555}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityAPI", "IdentityAPI\IdentityAPI\IdentityAPI.csproj", "{5758A592-9101-4620-94A9-A9B28BC939FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.DAL", "MasterDominaSystem\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj", "{D2132788-9A22-4182-A27B-82F557EE215D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.EventBus", "UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj", "{F4974AB0-4129-48C5-B20F-9921B8821448}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.EventBus.RabbitMQ", "UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj", "{366F3BE5-D498-4400-BADC-484C3153AEFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +127,22 @@ Global
 		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{422DB717-BC19-4A89-96B9-BA0C157E48E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5758A592-9101-4620-94A9-A9B28BC939FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5758A592-9101-4620-94A9-A9B28BC939FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5758A592-9101-4620-94A9-A9B28BC939FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5758A592-9101-4620-94A9-A9B28BC939FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2132788-9A22-4182-A27B-82F557EE215D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2132788-9A22-4182-A27B-82F557EE215D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2132788-9A22-4182-A27B-82F557EE215D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2132788-9A22-4182-A27B-82F557EE215D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4974AB0-4129-48C5-B20F-9921B8821448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4974AB0-4129-48C5-B20F-9921B8821448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4974AB0-4129-48C5-B20F-9921B8821448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4974AB0-4129-48C5-B20F-9921B8821448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{366F3BE5-D498-4400-BADC-484C3153AEFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366F3BE5-D498-4400-BADC-484C3153AEFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366F3BE5-D498-4400-BADC-484C3153AEFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366F3BE5-D498-4400-BADC-484C3153AEFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +163,10 @@ Global
 		{4587FEDF-7B91-4B01-9484-3972B4E73CEA} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2} = {187AE593-767A-4747-B94D-D2C871A7E984}
 		{422DB717-BC19-4A89-96B9-BA0C157E48E2} = {EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}
+		{5758A592-9101-4620-94A9-A9B28BC939FC} = {C13B2901-47AB-4441-802C-899FEB887555}
+		{D2132788-9A22-4182-A27B-82F557EE215D} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
+		{F4974AB0-4129-48C5-B20F-9921B8821448} = {187AE593-767A-4747-B94D-D2C871A7E984}
+		{366F3BE5-D498-4400-BADC-484C3153AEFF} = {187AE593-767A-4747-B94D-D2C871A7E984}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}
