@@ -9,7 +9,7 @@ namespace MasterDominaSystem.BLL
     {
         public static IServiceCollection InjectBLL(this IServiceCollection services)
         {
-            services.AddSingleton<IGeneralInfoProvider, GeneralInfoProvider>();
+            services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>();
             return services;
         }
     }

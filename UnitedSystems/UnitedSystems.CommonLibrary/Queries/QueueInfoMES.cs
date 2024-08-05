@@ -1,5 +1,4 @@
-﻿using UnitedSystems.CommonLibrary.Queries;
-using UnitedSystems.CommonLibrary.Queries.Interfaces;
+﻿using UnitedSystems.CommonLibrary.Queries.Interfaces;
 
 namespace UnitedSystems.CommonLibrary.Queries
 {

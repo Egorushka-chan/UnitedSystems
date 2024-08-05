@@ -1,16 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-
-using UnitedSystems.EventBus.Events;
+using UnitedSystems.CommonLibrary.Messages;
 using UnitedSystems.EventBus.Interfaces;
 using UnitedSystems.EventBus.Models;
 
@@ -22,13 +19,13 @@ namespace UnitedSystems.EventBus.RabbitMQ
         IOptions<EventBusSubscriptionInfo> subscriptionsOptions) 
         : BackgroundService, IEventBus, IDisposable
     {
-        private IModel? _consumerChannel;
-        private IConnection? _rabbitConnection;
+        private IModel _consumerChannel;
+        private IConnection _rabbitConnection;
 
-        private EventBusSettings busSettings = busSettings.Value;
-        private EventBusSubscriptionInfo subscriptions = subscriptionsOptions.Value;
+        private readonly EventBusSettings busSettings = busSettings.Value;
+        private readonly EventBusSubscriptionInfo subscriptions = subscriptionsOptions.Value;
 
-        private string _consumerChannelQueue = busSettings.Value.ServiceQueueName;
+        private readonly string _consumerChannelQueue = busSettings.Value.ServiceQueueName;
         private const string _exchangeName = "event_bus_exchange";
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -73,7 +70,7 @@ namespace UnitedSystems.EventBus.RabbitMQ
 
         public Task PublishAsync(IntegrationEvent @event)
         {
-            var routingKey = @event.GetType().Name;
+            var routingKey = @event.GetType().GetKey();
 
             using var channel = _rabbitConnection?.CreateModel() ?? throw new InvalidOperationException("Нет подключения к RabbitMQ");
 

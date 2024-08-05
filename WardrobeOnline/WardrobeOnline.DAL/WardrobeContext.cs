@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WardrobeOnline.DAL.Entities;
+﻿using System.Reflection;
+
+using Microsoft.EntityFrameworkCore;
+
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.DAL
 {
-
     public class WardrobeContext : DbContext, IWardrobeContext
     {
         public WardrobeContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
@@ -33,6 +37,8 @@ namespace WardrobeOnline.DAL
 
         public Task<int> SaveChangesAsync()
         {
+            var changeTracker = this.ChangeTracker;
+            
             return base.SaveChangesAsync();
         }
 

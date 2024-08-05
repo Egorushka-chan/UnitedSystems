@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
   </ItemGroup>
 

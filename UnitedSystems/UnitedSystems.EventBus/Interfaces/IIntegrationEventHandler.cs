@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnitedSystems.EventBus.Events;
+﻿using UnitedSystems.CommonLibrary.Messages;
 
 namespace UnitedSystems.EventBus.Interfaces
 {

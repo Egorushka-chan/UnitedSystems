@@ -1,6 +1,4 @@
-﻿using WardrobeOnline.DAL.Entities;
-
-namespace WardrobeOnline.BLL.Services.Interfaces
+﻿namespace WardrobeOnline.BLL.Services.Interfaces
 {
     public interface IImageProvider
     {

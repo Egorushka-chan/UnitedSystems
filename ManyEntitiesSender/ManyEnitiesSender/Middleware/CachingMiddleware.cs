@@ -2,13 +2,12 @@
 using System.Text.Json;
 
 using ManyEntitiesSender.Attributes;
-using ManyEntitiesSender.BPL.Abstraction;
-using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models;
+using ManyEntitiesSender.RAL.Abstractions;
 
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Produced;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender.IntegrationEvents;
+using UnitedSystems.EventBus.Interfaces;
 
 namespace ManyEntitiesSender.Middleware
 {
@@ -26,18 +25,18 @@ namespace ManyEntitiesSender.Middleware
         // А SemaphoreSlim вообще нормально
         private static ConcurrentDictionary<string, SemaphoreSlim> semaphores = new();
 
+        // Подсчет количества обработанных элементов для отправки в MDM
+        private int _entityProcessedCount = 0;
         /// <summary>
         /// Если возвращает 200 - это контроллер создал, если 201 - то создал Redis
         /// </summary>
-        public async Task InvokeAsync(HttpContext httpContext, IRedisProvider redis, IMDMSender mdmSender)
+        public async Task InvokeAsync(HttpContext httpContext, IRedisProvider redis, IEventBus eventBus)
         {
             Endpoint? endpoint = httpContext.GetEndpoint();
             if(endpoint is not null) {
                 if (endpoint.Metadata.Where(meta => meta is CacheableAttribute).Any())
                 {
-                    string? table = (string)httpContext.Items["table"];
-                    if(table == null)
-                        throw new NotFoundMiddlewareException();
+                    string? table = (string?)httpContext.Items["table"] ?? throw new NotFoundMiddlewareException();
                     string? filter = (string?)httpContext.Items["filter"];
                     
                     bool redisReturnedValue = await CheckRedis(httpContext, redis, table, filter);
@@ -71,10 +70,10 @@ namespace ManyEntitiesSender.Middleware
                             }
                             await CacheResponseBody(redis, table, responseBody);
                         }
-                        mdmSender.Send(new GetMESInfo() {
+                        await eventBus.PublishAsync(new MESReturnedObjectsEvent() {
                             StatusCode = httpContext.Response.StatusCode,
-                            Summary = "Успешное выполнение"
-                        }, MessageHeaderFromMES.GetRequestInfo);
+                            Count = _entityProcessedCount
+                        });
                     }
                     finally
                     {
@@ -90,21 +89,24 @@ namespace ManyEntitiesSender.Middleware
             }
         }
 
-        private static async Task CacheResponseBody(IRedisProvider redis, string? table, string responseBody)
+        private async Task CacheResponseBody(IRedisProvider redis, string? table, string responseBody)
         {
             if (table == "body")
             {
                 Body[] bodies = JsonSerializer.Deserialize<Body[]?>(responseBody) ?? throw new ArgumentNullException(nameof(responseBody));
+                _entityProcessedCount = bodies.Length;
                 await redis.AppendListAsync(bodies);
             }
             else if (table == "hand")
             {
                 Hand[] hands = JsonSerializer.Deserialize<Hand[]?>(responseBody) ?? throw new ArgumentNullException(nameof(responseBody));
+                _entityProcessedCount = hands.Length;
                 await redis.AppendListAsync(hands);
             }
             else if (table == "leg")
             {
                 Leg[] legs = JsonSerializer.Deserialize<Leg[]?>(responseBody) ?? throw new ArgumentNullException(nameof(responseBody));
+                _entityProcessedCount = legs.Length;
                 await redis.AppendListAsync(legs);
             }
         }
@@ -113,7 +115,7 @@ namespace ManyEntitiesSender.Middleware
         /// Кушает данные из стрима иии.. соединяет их в один пакет. Иначе логика потребуется очень сложная
         /// </summary>
         /// <returns></returns>
-        private static async Task<bool> CheckRedis(HttpContext httpContext, IRedisProvider redis, string? requestedTable, string? filterValue)
+        private async Task<bool> CheckRedis(HttpContext httpContext, IRedisProvider redis, string requestedTable, string? filterValue)
         {
             bool redisReturnedValue = false;
             if (requestedTable.ToLower() == "body")
@@ -131,6 +133,7 @@ namespace ManyEntitiesSender.Middleware
                     redisReturnedValue = true;
                 }
                 if (values.Count > 0) {
+                    _entityProcessedCount = values.Count;
                     httpContext.Response.StatusCode = 201;
                     await httpContext.Response.WriteAsJsonAsync(values);
                 }
@@ -150,6 +153,7 @@ namespace ManyEntitiesSender.Middleware
                     redisReturnedValue = true;
                 }
                 if (values.Count > 0) {
+                    _entityProcessedCount = values.Count;
                     httpContext.Response.StatusCode = 201;
                     await httpContext.Response.WriteAsJsonAsync(values);
                 }
@@ -170,6 +174,7 @@ namespace ManyEntitiesSender.Middleware
                     redisReturnedValue = true;
                 }
                 if (values.Count > 0) {
+                    _entityProcessedCount = values.Count;
                     httpContext.Response.StatusCode = 201;
                     await httpContext.Response.WriteAsJsonAsync(values);
                 }

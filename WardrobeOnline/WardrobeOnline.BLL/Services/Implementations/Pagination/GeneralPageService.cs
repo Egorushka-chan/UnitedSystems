@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
 

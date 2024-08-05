@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-using WardrobeOnline.DAL.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+
 using WardrobeOnline.DAL.Interfaces;
 using WardrobeOnline.DAL.Repositories;
 using WardrobeOnline.DAL.Repositories.Interfaces;

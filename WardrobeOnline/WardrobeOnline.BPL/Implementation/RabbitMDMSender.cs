@@ -5,8 +5,8 @@ using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 
-using UnitedSystems.CommonLibrary.Models.MasterDominaSystem.Messages;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Messages.Headers;
+using UnitedSystems.CommonLibrary.MasterDominaSystem.Messages;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Messages.Headers;
 using UnitedSystems.CommonLibrary.Queries;
 using UnitedSystems.CommonLibrary.Queries.Interfaces;
 

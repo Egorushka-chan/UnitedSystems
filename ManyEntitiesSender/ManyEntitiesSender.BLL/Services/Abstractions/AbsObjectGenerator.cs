@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender;
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Abstractions
 {

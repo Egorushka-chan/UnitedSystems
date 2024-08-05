@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WardrobeOnline.DAL.Interfaces;
+
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace WardrobeOnline.DAL.Repositories.Interfaces
 {

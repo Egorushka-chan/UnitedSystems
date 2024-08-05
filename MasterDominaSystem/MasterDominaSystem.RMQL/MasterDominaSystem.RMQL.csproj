@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj" />
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj" />

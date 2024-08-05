@@ -1,6 +1,6 @@
 ﻿using ManyEntitiesSender.Attributes;
-using ManyEntitiesSender.DAL.Interfaces;
 using ManyEntitiesSender.Models.Responses;
+using ManyEntitiesSender.RAL.Abstractions;
 
 namespace ManyEntitiesSender.Middleware
 {

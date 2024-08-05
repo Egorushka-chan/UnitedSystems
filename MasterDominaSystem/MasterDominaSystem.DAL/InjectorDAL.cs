@@ -7,7 +7,7 @@ namespace MasterDominaSystem.DAL
     {
         public static IServiceCollection InjectDAL(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<WardrobeContext>(opt => {
+            services.AddDbContext<MasterContext>(opt => {
                 opt.UseNpgsql(connectionString);
             });
             return services;

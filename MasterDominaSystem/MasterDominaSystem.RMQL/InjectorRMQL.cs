@@ -1,34 +1,37 @@
-﻿using MasterDominaSystem.RMQL.Models.Messages;
-using MasterDominaSystem.RMQL.Models.Settings;
-using MasterDominaSystem.RMQL.Workers;
+﻿using MasterDominaSystem.RMQL.IntegrationEventHandlers;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 
-using RabbitMQ.Client;
-
-using UnitedSystems.CommonLibrary.Queries;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender.IntegrationEvents;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
+using UnitedSystems.EventBus;
+using UnitedSystems.EventBus.Interfaces;
+using UnitedSystems.EventBus.RabbitMQ;
 
 namespace MasterDominaSystem.RMQL
 {
     public static class InjectorRMQL
     {
-        public static IServiceCollection InjectRMQL(this IServiceCollection services)
+        public static void InjectRMQL(this IHostApplicationBuilder builder, string connectionString)
         {
-            services.AddSingleton<IConnectionFactory, ConnectionFactory>(opt =>
-            {
-                BrokerSettings configuration = opt.GetRequiredService<IOptions<BrokerSettings>>().Value;
+            builder.AddRabbitMQEventBus("RabbitMQ")
+                // ManyEntitiesSender
+                .AddSubscription<MESReturnedObjectsEvent, ReturnedObjectsHandler>()
+                // WardrobeOnline
+                .AddWOSubscriptionCRUD<Cloth>()
+                .AddWOSubscriptionCRUD<Physique>()
+                .AddWOSubscriptionCRUD<Set>()
+                .AddWOSubscriptionCRUD<Person>();
+        }
 
-                return new ConnectionFactory()
-                {
-                    UserName = configuration.User,
-                    Password = configuration.Password,
-                    HostName = configuration.ConnectionString
-                };
-            });
-            services.AddHostedService<RabbitListener<QueueInfoMES, ConsumerableMessageFromMES>>();
-            services.AddHostedService<RabbitListener<QueueInfoWO, ConsumerableMessageFromWO>>();
-            return services;
+        private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntity
+        {
+            builder.AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>()
+                .AddSubscription<WODeletedCRUDEvent<TEntity>, WODeletedHandler<TEntity>>()
+                .AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>();
+            return builder;
         }
     }
 }

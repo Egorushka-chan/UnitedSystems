@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
+using UnitedSystems.EventBus.Interfaces;
 
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
@@ -12,17 +15,20 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
         where TEntityDTO : class, IEntityDTO
         where TEntityDB : class, IEntity
     {
-        protected IWardrobeContext _context;
-        protected IPaginationService<TEntityDB> _pagination;
-        protected ICastHelper _castHelper;
-        protected IImageProvider _imageProvider;
+        protected readonly IWardrobeContext _context;
+        protected readonly IPaginationService<TEntityDB> _pagination;
+        protected readonly ICastHelper _castHelper;
+        protected readonly IImageProvider _imageProvider;
+        protected readonly IEventBus _eventBus;
 
-        public CRUDProvider(IWardrobeContext context, IPaginationService<TEntityDB> pagination, ICastHelper castHelper, IImageProvider imageProvider)
+        public CRUDProvider(IWardrobeContext context, IPaginationService<TEntityDB> pagination,
+            ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
         {
             _context = context;
             _pagination = pagination;
             _castHelper = castHelper;
             _imageProvider = imageProvider;
+            _eventBus = eventBus;
         }
 
         public async Task<IReadOnlyList<TEntityDTO>> GetPagedQuantity(int pageIndex, int pageSize)
@@ -32,7 +38,7 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             List<TEntityDTO> resultList = [];
             foreach (var item in list)
             {
-                var itemDTO = await GetTranslateToDTO(item);
+                TEntityDTO itemDTO = await GetTranslateToDTO(item) ?? throw new InvalidOperationException($"NULL! {nameof(itemDTO)}");
                 resultList.Add(itemDTO);
             }
             return resultList;
@@ -46,6 +52,13 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 
             _context.DBSet<TEntityDB>().Add(entityDB);
             int result = await SaveChangesAsync();
+
+            await _eventBus.PublishAsync(new WOCreatedCRUDEvent<TEntityDB>() {
+                Entities = [
+                    entityDB
+                ]
+            });
+
             return await AddTranslateToDTO(entityDB);
         }
 
@@ -60,7 +73,16 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
         public async Task<bool> TryRemoveAsync(int id)
         {
             int deleted = await _context.DBSet<TEntityDB>().Where(ent => ent.ID == id).ExecuteDeleteAsync();
-            return deleted > 0;
+
+            bool successful = deleted > 0;
+
+            if (successful) {
+                await _eventBus.PublishAsync(new WODeletedCRUDEvent<TEntityDB>() {
+                    EntitiesIDs = [id]
+                });
+            }
+
+            return successful;
         }
 
         public async Task<TEntityDTO?> TryUpdateAsync(TEntityDTO entity)
@@ -68,8 +90,16 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             TEntityDB? entityDB = await UpdateTranslateToDB(entity);
             if (entityDB == null)
                 return null;
-            await SaveChangesAsync();
-            return await UpdateTranslateToDTO(entityDB);
+            var saveTask = SaveChangesAsync();
+
+            var eventTask = _eventBus.PublishAsync(new WOUpdatedCRUDEvent<TEntityDB>() {
+                Entities = [entityDB]
+            });
+
+            var translateTask = UpdateTranslateToDTO(entityDB);
+
+            await Task.WhenAll(saveTask, eventTask, translateTask); 
+            return translateTask.Result;
         }
 
         public async Task<int> SaveChangesAsync()

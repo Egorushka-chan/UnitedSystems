@@ -1,5 +1,5 @@
-﻿using ManyEntitiesSender.DAL.Implementations;
-using ManyEntitiesSender.DAL.Interfaces;
+﻿using ManyEntitiesSender.RAL.Abstractions;
+using ManyEntitiesSender.RAL.Implementations;
 
 using Microsoft.Extensions.DependencyInjection;
 

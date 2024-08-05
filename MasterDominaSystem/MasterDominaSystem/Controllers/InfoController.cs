@@ -13,8 +13,8 @@ namespace MasterDominaSystem.Controllers
         /// Просто вывод по быстрому, для проверки
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGeneralInfoProvider))]
-        public IResult GeneralInfo([FromServices] IGeneralInfoProvider generalInfoProvider)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ISessionInfoProvider))]
+        public IResult GeneralInfo([FromServices] ISessionInfoProvider generalInfoProvider)
         {
             return TypedResults.Ok(generalInfoProvider);
         }

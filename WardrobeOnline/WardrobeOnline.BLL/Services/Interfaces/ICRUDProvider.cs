@@ -1,4 +1,4 @@
-﻿using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+﻿using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Interfaces
 {

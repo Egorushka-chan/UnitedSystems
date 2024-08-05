@@ -1,9 +1,9 @@
-﻿using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+﻿using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WardrobeOnline.BLL.Services.Interfaces;
-using WardrobeOnline.DAL.Entities;
-using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Extensions
 {

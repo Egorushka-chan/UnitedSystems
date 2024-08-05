@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+using UnitedSystems.CommonLibrary.Messages;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
 
 using WardrobeOnline.BLL.Services.Interfaces;
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
 
 using WardrobeOnline.BLL.Services.Extensions;
 using WardrobeOnline.BLL.Services.Interfaces;
-using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD

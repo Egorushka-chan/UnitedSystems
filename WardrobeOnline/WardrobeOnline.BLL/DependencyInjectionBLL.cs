@@ -2,8 +2,9 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
 
 using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.BLL.Services.Implementations;
@@ -11,7 +12,6 @@ using WardrobeOnline.BLL.Services.Implementations.CRUD;
 using WardrobeOnline.BLL.Services.Implementations.Pagination;
 using WardrobeOnline.BLL.Services.Implementations.Validation;
 using WardrobeOnline.BLL.Services.Interfaces;
-using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.WebApi.Settings;
 
 namespace WardrobeOnline.BLL
@@ -59,7 +59,7 @@ namespace WardrobeOnline.BLL
 
         private static void ConfigureValidationLayer<TEntityDTO>(this IServiceCollection services) where TEntityDTO : class, IEntityDTO
         {
-            services.AddTransient<IWrapperCRUDLayer<TEntityDTO>, BrokerSenderLayer<TEntityDTO>>();
+            services.AddTransient<IWrapperCRUDLayer<TEntityDTO>, ValidationLayer<TEntityDTO>>();
         }
     }
 

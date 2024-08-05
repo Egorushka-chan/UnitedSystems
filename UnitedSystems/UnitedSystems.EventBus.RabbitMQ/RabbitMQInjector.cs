@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 using RabbitMQ.Client;
 
@@ -16,9 +17,14 @@ namespace UnitedSystems.EventBus.RabbitMQ
             builder.Services.Configure<EventBusSettings>(builder.Configuration.GetSection(SettingPath));
 
             builder.Services.AddSingleton(opt => {
+                EventBusSettings configuration = opt.GetRequiredService<IOptions<EventBusSettings>>().Value;
+
                 ConnectionFactory connectionFactory = new() {
-                    DispatchConsumersAsync = true
+                    DispatchConsumersAsync = true,
+                    UserName = configuration.UserName,
+                    Password = configuration.Password
                 };
+
                 return connectionFactory.CreateConnection(connectionString);
             });
 

@@ -2,8 +2,9 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+
 using WardrobeOnline.BLL.Services.Interfaces;
-using WardrobeOnline.DAL.Entities;
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations

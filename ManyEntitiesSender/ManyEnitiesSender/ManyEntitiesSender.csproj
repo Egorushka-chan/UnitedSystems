@@ -31,9 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj" />
     <ProjectReference Include="..\ManyEnitiesSender.DAL\ManyEntitiesSender.DAL.csproj" />
     <ProjectReference Include="..\ManyEntitiesSender.BLL\ManyEntitiesSender.BLL.csproj" />
-    <ProjectReference Include="..\ManyEntitiesSender.BPL\ManyEntitiesSender.BPL.csproj" />
     <ProjectReference Include="..\ManyEntitiesSender.PL\ManyEntitiesSender.PL.csproj" />
     <ProjectReference Include="..\ManyEntitiesSender.RAL\ManyEntitiesSender.RAL.csproj" />
   </ItemGroup>

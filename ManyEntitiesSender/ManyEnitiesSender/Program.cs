@@ -1,12 +1,11 @@
 using ManyEntitiesSender.BLL;
 using ManyEntitiesSender.BLL.Settings;
-using ManyEntitiesSender.BPL;
-using ManyEntitiesSender.BPL.Abstraction;
 using ManyEntitiesSender.DAL;
 using ManyEntitiesSender.Middleware;
 using ManyEntitiesSender.PL.Settings;
 using ManyEntitiesSender.RAL;
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Messages.Headers;
+
+using UnitedSystems.EventBus.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +21,8 @@ AddOptions(builder);
 AddDataAccessLayer(builder);
 AddRedisLayer(builder);
 AddBusinessLayer(builder);
-AddBrokerLayer(builder);
+
+builder.AddRabbitMQEventBus("RabbitMQ");
 
 var app = builder.Build();
 
@@ -38,12 +38,8 @@ app.UseMyCaching();
 
 app.MapControllers();
 
-IMDMSender broker = app.Services.GetRequiredService<IMDMSender>();
-broker.Send("Сервис MDM запущен", MessageHeaderFromMES.AppStarting);
-
 app.Run();
 
-broker.Send("Сервис MDM закончен", MessageHeaderFromMES.AppEnd);
 
 void AddDataAccessLayer(WebApplicationBuilder builder)
 {
@@ -62,10 +58,6 @@ void AddBusinessLayer(WebApplicationBuilder builder)
 void AddRedisLayer(WebApplicationBuilder builder)
 {
     builder.Services.InjectRAL();
-}
-void AddBrokerLayer(WebApplicationBuilder builder)
-{
-    builder.Services.InjectBPL();
 }
 
 

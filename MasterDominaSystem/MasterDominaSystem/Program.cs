@@ -1,8 +1,7 @@
-using MasterDominaSystem.RMQL.Models.Settings;
-
 using MasterDominaSystem.BLL;
-using MasterDominaSystem.RMQL;
 using MasterDominaSystem.DAL;
+using MasterDominaSystem.RMQL;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +21,9 @@ connectionString = connectionString.Replace("###", "wardrobe");
 // Подтягиваем библиотеки
 builder.Services
     .InjectBLL()
-    .InjectRMQL()
-    .InjectDAL(connectionString);
+    .InjectDAL(connectionString)
+    .InjectRMQL("RabbitMQ");
+
 
 var app = builder.Build();
 
@@ -43,6 +43,6 @@ app.Run();
 
 static void AddOptions(WebApplicationBuilder builder)
 {
-    builder.Services.Configure<BrokerSettings>(
-        builder.Configuration.GetSection("Broker:RabbitMQ"));
+    //builder.Services.Configure<BrokerSettings>(
+    //    builder.Configuration.GetSection("Broker:RabbitMQ"));
 }

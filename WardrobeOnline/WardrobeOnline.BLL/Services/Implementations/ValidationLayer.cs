@@ -1,7 +1,7 @@
 ﻿using System.Net;
 
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline;
-using UnitedSystems.CommonLibrary.Models.WardrobeOnline.Interfaces;
+using UnitedSystems.CommonLibrary.Messages;
+using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
 
 using WardrobeOnline.BLL.Services.Interfaces;
 

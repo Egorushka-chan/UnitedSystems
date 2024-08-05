@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-
-using UnitedSystems.EventBus.Events;
+using UnitedSystems.CommonLibrary.Messages;
 using UnitedSystems.EventBus.Interfaces;
 using UnitedSystems.EventBus.Models;
 
@@ -20,7 +19,7 @@ namespace UnitedSystems.EventBus
             builder.Services.Configure<EventBusSubscriptionInfo>(o =>
             {
                 // Используется в брокере при привязке каналов
-                o.EventTypes[typeof(TIntegration).Name] = typeof(TIntegration);
+                o.EventTypes[typeof(TIntegration).GetKey()] = typeof(TIntegration);
             });
 
             return builder;

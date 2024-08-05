@@ -1,4 +1,4 @@
-﻿using UnitedSystems.EventBus.Events;
+﻿using UnitedSystems.CommonLibrary.Messages;
 
 namespace UnitedSystems.EventBus.Interfaces
 {

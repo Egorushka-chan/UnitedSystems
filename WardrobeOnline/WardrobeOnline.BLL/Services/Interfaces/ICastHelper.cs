@@ -1,4 +1,4 @@
-﻿using WardrobeOnline.DAL.Entities;
+﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
 
 namespace WardrobeOnline.BLL.Services.Interfaces
 {

@@ -1,8 +1,8 @@
 ﻿using StackExchange.Redis;
 
-using UnitedSystems.CommonLibrary.Models.ManyEntitiesSender.Interfaces;
+using UnitedSystems.CommonLibrary.ManyEntitiesSender.Interfaces;
 
-namespace ManyEntitiesSender.DAL.Interfaces
+namespace ManyEntitiesSender.RAL.Abstractions
 {
     public interface IRedisProvider
     {
