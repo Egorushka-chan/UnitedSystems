@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using RabbitMQ.Client;
@@ -13,9 +7,9 @@ using UnitedSystems.EventBus.Interfaces;
 
 namespace UnitedSystems.EventBus.RabbitMQ
 {
-    public static class RabbitMQExpansions
+    public static class RabbitMQInjector
     {
-        private static string SettingPath = "EventBus";
+        private const string SettingPath = "EventBus";
 
         public static IEventBusBuilder AddRabbitMQEventBus(this IHostApplicationBuilder builder, string connectionString)
         {
