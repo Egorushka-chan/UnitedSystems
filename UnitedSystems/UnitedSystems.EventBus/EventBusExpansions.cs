@@ -2,6 +2,7 @@
 
 using UnitedSystems.EventBus.Events;
 using UnitedSystems.EventBus.Interfaces;
+using UnitedSystems.EventBus.Models;
 
 namespace UnitedSystems.EventBus
 {
@@ -15,6 +16,13 @@ namespace UnitedSystems.EventBus
             // консьюмер сможет использовать IKeyedServiceProvider.GetKeyedService<IIntegrationEventHandler>(typeof(T)) 
             // что бы получить все подходящие обработчики для данного типа
             builder.Services.AddKeyedSingleton<IIntegrationEventHandler>(typeof(TIntegration));
+
+            builder.Services.Configure<EventBusSubscriptionInfo>(o =>
+            {
+                // Используется в брокере при привязке каналов
+                o.EventTypes[typeof(TIntegration).Name] = typeof(TIntegration);
+            });
+
             return builder;
         }
     }
