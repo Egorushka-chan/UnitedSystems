@@ -14,7 +14,7 @@ namespace MasterDominaSystem.RMQL
 {
     public static class InjectorRMQL
     {
-        public static void InjectRMQL(this IHostApplicationBuilder builder, string connectionString)
+        public static IHostApplicationBuilder InjectRMQL(this IHostApplicationBuilder builder, string connectionString)
         {
             builder.AddRabbitMQEventBus(connectionString)
                 // ManyEntitiesSender
@@ -24,6 +24,8 @@ namespace MasterDominaSystem.RMQL
                 .AddWOSubscriptionCRUD<Physique>()
                 .AddWOSubscriptionCRUD<Set>()
                 .AddWOSubscriptionCRUD<Person>();
+
+            return builder;
         }
 
         private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntity

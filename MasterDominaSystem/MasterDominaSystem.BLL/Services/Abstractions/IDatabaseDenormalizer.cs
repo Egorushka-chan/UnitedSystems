@@ -6,6 +6,6 @@ namespace MasterDominaSystem.BLL.Services.Abstractions
     {
         Task AppendNew(IEntity entity);
 
-        Task AppendNew(ICollection<IEntity> entities);
+        Task AppendNew(IEnumerable<IEntity> entities);
     }
 }

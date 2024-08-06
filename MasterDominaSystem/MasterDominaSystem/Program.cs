@@ -1,6 +1,7 @@
 using MasterDominaSystem.BLL;
 using MasterDominaSystem.DAL;
 using MasterDominaSystem.RMQL;
+using MasterDominaSystem.GRPC;
 
 
 
@@ -23,7 +24,8 @@ builder.Services
     .InjectBLL()
     .InjectDAL(connectionString);
 
-builder.InjectRMQL("RabbitMQ");
+builder.InjectRMQL("RabbitMQ")
+    .InjectGRPC();
 
 var app = builder.Build();
 

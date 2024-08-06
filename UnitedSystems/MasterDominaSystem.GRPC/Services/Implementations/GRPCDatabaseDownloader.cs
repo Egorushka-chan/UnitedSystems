@@ -2,12 +2,10 @@
 
 using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.GRPC.Models;
+using MasterDominaSystem.GRPC.Services.Extensions;
 using MasterDominaSystem.GRPC.Services.Interfaces;
 
 using Microsoft.Extensions.Options;
-
-using UnitedSystems.CommonLibrary.ManyEntitiesSender.Interfaces;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
 
 using WODownloaderClient;
 
@@ -32,11 +30,41 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
             while (await responseStream.MoveNext(cancellationToken))
             {
                 ResponseDownload response = responseStream.Current;
-
-                
+                await ProcessMessage(response);
             }
         }
 
+        private async Task ProcessMessage(ResponseDownload response)
+        {
+            var clothesDB = from clothProto in response.Cloths
+                            select clothProto.ConvertToDB();
+            Task clothesTask = denormalizer.AppendNew(clothesDB);
 
+            var personsDB = from personProto in response.Persons
+                            select personProto.ConvertToDB();
+            var physiquesDB = from physiqueProto in response.Physiques
+                              select physiqueProto.ConvertToDB();
+            var setsDB = from setsProto in response.Sets
+                         select setsProto.ConvertToDB();
+            var seasonsDB = from seasonProto in response.Seasons
+                            select seasonProto.ConvertToDB();
+            var setHasClothesDb = from setHasClothesProto in response.SetHasClothes
+                                  select setHasClothesProto.ConvertToDB();
+            var photosDB = from photoProto in response.Photos
+                           select photoProto.ConvertToDB();
+            var materialsDB = from materialProto in response.Materials
+                              select materialProto.ConvertToDB();
+            var clothMaterialsDB = from clothHasMaterialsProto in response.ClothHasMaterials
+                                   select clothHasMaterialsProto.ConvertToDB();
+            await clothesTask;
+            await denormalizer.AppendNew(personsDB);
+            await denormalizer.AppendNew(physiquesDB);
+            await denormalizer.AppendNew(setsDB);
+            await denormalizer.AppendNew(seasonsDB);
+            await denormalizer.AppendNew(setHasClothesDb);
+            await denormalizer.AppendNew(photosDB);
+            await denormalizer.AppendNew(materialsDB);
+            await denormalizer.AppendNew(clothMaterialsDB);
+        }
     }
 }
