@@ -16,7 +16,7 @@ namespace MasterDominaSystem.RMQL
     {
         public static void InjectRMQL(this IHostApplicationBuilder builder, string connectionString)
         {
-            builder.AddRabbitMQEventBus("RabbitMQ")
+            builder.AddRabbitMQEventBus(connectionString)
                 // ManyEntitiesSender
                 .AddSubscription<MESReturnedObjectsEvent, ReturnedObjectsHandler>()
                 // WardrobeOnline
@@ -30,7 +30,7 @@ namespace MasterDominaSystem.RMQL
         {
             builder.AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>()
                 .AddSubscription<WODeletedCRUDEvent<TEntity>, WODeletedHandler<TEntity>>()
-                .AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>();
+                .AddSubscription<WOUpdatedCRUDEvent<TEntity>, WOUpdatedHandler<TEntity>>();
             return builder;
         }
     }

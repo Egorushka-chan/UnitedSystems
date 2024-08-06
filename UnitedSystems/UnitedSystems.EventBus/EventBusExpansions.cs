@@ -14,7 +14,7 @@ namespace UnitedSystems.EventBus
             // Регистрирую сервис по ключу из типа интеграционного ивента
             // консьюмер сможет использовать IKeyedServiceProvider.GetKeyedService<IIntegrationEventHandler>(typeof(T)) 
             // что бы получить все подходящие обработчики для данного типа
-            builder.Services.AddKeyedSingleton<IIntegrationEventHandler>(typeof(TIntegration));
+            builder.Services.AddKeyedSingleton<THandler>(typeof(TIntegration));
 
             builder.Services.Configure<EventBusSubscriptionInfo>(o =>
             {

@@ -9,8 +9,9 @@ namespace MasterDominaSystem.BLL.Services.Implementations
         public List<string> MessagePool { get; set; } = [];
         // Many Entities Sender
         public List<MESReturnedObjectsEvent> GetRequestsMES { get; set; } = [];
-        public List<string> EnsuredRequestMES { get; set; } = [];
-        public List<string> CacheStatusMES { get; set; } = [];
+        public List<string> PostRequestsWO { get; set; } = [];
+        public List<string> PutRequestsWO { get; set; } = [];
+        public List<string> DeleteRequestWO { get; set; } = [];
         // Wardrobe Online
         //public List<GetWOInfo> GetRequestsWO { get; set; } = [];
         //public List<PostWOInfo> PostRequestsWO { get; set; } = [];

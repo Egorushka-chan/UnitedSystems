@@ -21,9 +21,9 @@ connectionString = connectionString.Replace("###", "wardrobe");
 // Подтягиваем библиотеки
 builder.Services
     .InjectBLL()
-    .InjectDAL(connectionString)
-    .InjectRMQL("RabbitMQ");
+    .InjectDAL(connectionString);
 
+builder.InjectRMQL("RabbitMQ");
 
 var app = builder.Build();
 

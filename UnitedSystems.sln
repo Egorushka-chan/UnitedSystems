@@ -57,9 +57,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus", "U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus.RabbitMQ", "UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj", "{366F3BE5-D498-4400-BADC-484C3153AEFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.CommonLibrary.ManyEntitiesSender", "UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj", "{B89AAF12-CC69-4447-B663-2479D9B55323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.ManyEntitiesSender", "UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj", "{B89AAF12-CC69-4447-B663-2479D9B55323}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.CommonLibrary.WardrobeOnline", "UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj", "{460B8BEE-37BF-4A2A-9C05-96CD14375D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.WardrobeOnline", "UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj", "{460B8BEE-37BF-4A2A-9C05-96CD14375D47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterDominaSystem.GRPC", "UnitedSystems\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj", "{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,10 @@ Global
 		{460B8BEE-37BF-4A2A-9C05-96CD14375D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{460B8BEE-37BF-4A2A-9C05-96CD14375D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{460B8BEE-37BF-4A2A-9C05-96CD14375D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{366F3BE5-D498-4400-BADC-484C3153AEFF} = {187AE593-767A-4747-B94D-D2C871A7E984}
 		{B89AAF12-CC69-4447-B663-2479D9B55323} = {187AE593-767A-4747-B94D-D2C871A7E984}
 		{460B8BEE-37BF-4A2A-9C05-96CD14375D47} = {187AE593-767A-4747-B94D-D2C871A7E984}
+		{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}

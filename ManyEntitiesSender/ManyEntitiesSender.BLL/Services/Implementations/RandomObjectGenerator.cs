@@ -17,8 +17,8 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
     /// </summary>
     public class RandomObjectGenerator: AbsObjectGenerator
     {
-        NamesObjectsGenerator _properties;
-        Random _random = new Random(123);
+        private readonly NamesObjectsGenerator _properties;
+        private readonly Random _random = new(123);
         public RandomObjectGenerator(IServiceScopeFactory scopeFactory, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : base(scopeFactory, options, logger)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "internalFiles", "namesObjectsGenerator.json");
@@ -38,7 +38,7 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
 
         protected override Body CreateBody(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Count());
+            int selected = _random.Next(0, _properties.Mightiness.Length);
             return new Body()
             {
                 Mightiness = _properties.Mightiness[selected]
@@ -47,7 +47,7 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
 
         protected override Hand CreateHand(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Count());
+            int selected = _random.Next(0, _properties.Mightiness.Length);
             return new Hand()
             {
                 State = _properties.State[selected]
@@ -56,7 +56,7 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
 
         protected override Leg CreateLeg(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Count());
+            int selected = _random.Next(0, _properties.Mightiness.Length);
             return new Leg()
             {
                 State = _properties.State[selected]

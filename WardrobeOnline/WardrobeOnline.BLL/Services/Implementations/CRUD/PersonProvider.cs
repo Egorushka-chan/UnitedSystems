@@ -2,6 +2,7 @@
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.EventBus.Interfaces;
 
 using WardrobeOnline.BLL.Services.Extensions;
 using WardrobeOnline.BLL.Services.Interfaces;
@@ -11,8 +12,8 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
     public class PersonProvider : CRUDProvider<PersonDTO, Person>
     {
-        public PersonProvider(IWardrobeContext context, IPaginationService<Person> pagination, ICastHelper castHelper, IImageProvider imageProvider)
-            : base(context, pagination, castHelper, imageProvider)
+        public PersonProvider(IWardrobeContext context, IPaginationService<Person> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
+            : base(context, pagination, castHelper, imageProvider, eventBus)
         {
 
         }

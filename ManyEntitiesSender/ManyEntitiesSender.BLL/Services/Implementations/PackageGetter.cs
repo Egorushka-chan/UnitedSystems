@@ -2,6 +2,7 @@
 using ManyEntitiesSender.BLL.Services.Abstractions;
 using ManyEntitiesSender.BLL.Settings;
 using ManyEntitiesSender.DAL.Interfaces;
+using ManyEntitiesSender.RAL.Abstractions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -64,7 +65,7 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
                 int skip = initial + (iteration * packageCount);
                 int take = initial + ((iteration + 1) * packageCount);
 
-                List<TEntity> entities = new List<TEntity>();
+                List<TEntity> entities = [];
                 if(filterOptions.PropertyFilter != null)
                 {
                     if(type == typeof(Body))

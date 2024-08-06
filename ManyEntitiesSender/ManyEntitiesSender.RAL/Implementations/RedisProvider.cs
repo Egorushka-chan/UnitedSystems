@@ -14,19 +14,12 @@ using UnitedSystems.CommonLibrary.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.RAL.Implementations
 {
-    public class RedisProvider : IRedisProvider
+    public class RedisProvider(IOptions<RedisSettings> settings, IOptions<PackageSettings> packageOptions) : IRedisProvider
     {
-        public RedisProvider(IOptions<RedisSettings> settings, IOptions<PackageSettings> packageOptions)
-        {
-            this.settings = settings.Value;
-            this.packageSettings = packageOptions.Value;
-        }
-
-        protected RedisSettings settings { get; set; }
-        protected PackageSettings packageSettings { get; set; }
+        protected RedisSettings Settings { get; set; } = settings.Value;
+        protected PackageSettings PackageSettings { get; set; } = packageOptions.Value;
 
         private static IConnectionMultiplexer __connectionMultiplexer;
-        private static Dictionary<string, string> luaScriptBodies;
 
         /// <summary>
         /// Возвращает объект из singleton, или создаёт новый, если объект ещё не создан
@@ -34,19 +27,16 @@ namespace ManyEntitiesSender.RAL.Implementations
         /// <returns></returns>
         public IConnectionMultiplexer GetConnectionMultiplexer()
         {
-            if(__connectionMultiplexer is null)
-            {
-                __connectionMultiplexer = ConnectionMultiplexer.Connect(settings.Configuration + ",protocol=resp3");
-            }
+            __connectionMultiplexer ??= ConnectionMultiplexer.Connect(Settings.Configuration + ",protocol=resp3");
             return __connectionMultiplexer;
         }
 
         protected IDatabase GetDatabase()
         {
-            return GetConnectionMultiplexer().GetDatabase(settings.DatabaseID);
+            return GetConnectionMultiplexer().GetDatabase(Settings.DatabaseID);
         }
 
-        private byte[] GetMD5(string value)
+        private static byte[] GetMD5(string value)
         {
             byte[] mightinessBytes = Encoding.Default.GetBytes(value);
             byte[] mightinessHashBytes = MD5.HashData(mightinessBytes);
@@ -84,7 +74,7 @@ namespace ManyEntitiesSender.RAL.Implementations
         {
             // Проверка что тут реализован тип, который будет использоваться
             Type type = typeof(TEntity);
-            Type[] allowedTypes = { typeof(Body), typeof(Hand), typeof(Leg) };
+            Type[] allowedTypes = [typeof(Body), typeof(Hand), typeof(Leg)];
             if (!allowedTypes.Contains(type))
                 throw new ArgumentException($"Type {type.Name} can't be inserted inside Redis (Not Implemented)");
 
@@ -93,12 +83,12 @@ namespace ManyEntitiesSender.RAL.Implementations
             appendFields = SelectFieldAppendingAlgorithm(type);
 
             // Получаем количество элементов для того, чтобы в возвращаемой задаче реализовать ожидание
-            int entityCount = array.Count();
+            int entityCount = array.Length;
             long res = 0;
             foreach (TEntity element in array)
             {
-                List<HashEntry> fields = new();
-                HashEntry idEntry = new HashEntry(new RedisValue("id"), new RedisValue(element.ID.ToString()));
+                List<HashEntry> fields = [];
+                HashEntry idEntry = new(new RedisValue("id"), new RedisValue(element.ID.ToString()));
                 fields.Add(idEntry);
 
                 string value = appendFields.Invoke(fields, element);
@@ -109,8 +99,8 @@ namespace ManyEntitiesSender.RAL.Implementations
 
                 // Добавляем в список уникальных значений
                 SetUniqueValue(type.Name, value);
-                RedisKey key = new RedisKey($"{type.Name}:{value}:{counter + 1}");
-                HashEntry[] hashEntries = fields.ToArray();
+                RedisKey key = new($"{type.Name}:{value}:{counter + 1}");
+                HashEntry[] hashEntries = [.. fields];
 
                 // Все запросы делаются в пайплайне, и не ожидаются. Ожидаться они будут задачей далее.
                 Task setter = GetDatabase().HashSetAsync(key, hashEntries);
@@ -143,7 +133,7 @@ namespace ManyEntitiesSender.RAL.Implementations
         public async IAsyncEnumerable<List<TEntity>> TryGetAsync<TEntity>(string? filterValue = null) where TEntity : class, IEntity, new()
         {
             Type type = typeof(TEntity);
-            Type[] allowedTypes = { typeof(Body), typeof(Hand), typeof(Leg) };
+            Type[] allowedTypes = [typeof(Body), typeof(Hand), typeof(Leg)];
             if (!allowedTypes.Contains(type))
                 throw new ArgumentException($"Type {type.Name} can't be gotten from Redis (Not Implemented)");
 
@@ -154,7 +144,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 if (count <= 0)
                     yield break;
 
-                int packageCount = packageSettings.PackageCount;
+                int packageCount = PackageSettings.PackageCount;
                 int initialIteration = 0;
                 int initialElement = 1;
                 long requiredIteration = count / packageCount;
@@ -166,7 +156,7 @@ namespace ManyEntitiesSender.RAL.Implementations
 
                 for (int iteration = initialIteration; iteration < requiredIteration; iteration++)
                 {
-                    List<TEntity> packageList = new List<TEntity>();
+                    List<TEntity> packageList = [];
 
                     for (int i = initialElement; i <= packageCount; i++)
                     {
@@ -191,7 +181,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 foreach(string uniqueValue in uniqueValues)
                 {
                     long count = await GetCounter(type.Name, uniqueValue);
-                    int packageCount = packageSettings.PackageCount;
+                    int packageCount = PackageSettings.PackageCount;
                     long requiredIterations = count/packageCount;
                     if (count % packageCount != 0)
                         requiredIterations++;
@@ -201,7 +191,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 
                     for(int iteration = 0; iteration < requiredIterations; iteration++)
                     {
-                        List<TEntity> packageList = new List<TEntity>();
+                        List<TEntity> packageList = [];
 
                         for(int i = 1; i <= packageCount; i++)
                         {
@@ -226,14 +216,14 @@ namespace ManyEntitiesSender.RAL.Implementations
         /// он делается один раз заранее здесь
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
-        private Func<List<HashEntry>, IEntity, string> SelectFieldAppendingAlgorithm(Type type)
+        private static Func<List<HashEntry>, IEntity, string> SelectFieldAppendingAlgorithm(Type type)
         {
             Func<List<HashEntry>, IEntity, string> appendFields;
             if (type == typeof(Body))
             {
                 appendFields = (List<HashEntry> fields, IEntity entity) =>
                 {
-                    HashEntry mightiness = new HashEntry(new RedisValue("mightiness"), new RedisValue(((Body)entity).Mightiness));
+                    HashEntry mightiness = new(new RedisValue("mightiness"), new RedisValue(((Body)entity).Mightiness));
 
                     fields.Add(mightiness);
 
@@ -244,7 +234,7 @@ namespace ManyEntitiesSender.RAL.Implementations
             {
                 appendFields = (List<HashEntry> fields, IEntity entity) =>
                 {
-                    HashEntry state = new HashEntry(new RedisValue("state"), new RedisValue(((Hand)entity).State));
+                    HashEntry state = new(new RedisValue("state"), new RedisValue(((Hand)entity).State));
 
                     fields.Add(state);
 
@@ -255,7 +245,7 @@ namespace ManyEntitiesSender.RAL.Implementations
             {
                 appendFields = (List<HashEntry> fields, IEntity entity) =>
                 {
-                    HashEntry state = new HashEntry(new RedisValue("state"), new RedisValue(((Leg)entity).State));
+                    HashEntry state = new(new RedisValue("state"), new RedisValue(((Leg)entity).State));
 
                     fields.Add(state);
 
@@ -281,7 +271,7 @@ namespace ManyEntitiesSender.RAL.Implementations
             {
                 if (type == typeof(Body))
                 {
-                    Body body = new Body();
+                    Body body = new();
                     foreach (HashEntry entry in values)
                     {
                         if (entry.Name == "id")
@@ -293,7 +283,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 }
                 else if (type == typeof(Hand))
                 {
-                    Hand hand = new Hand();
+                    Hand hand = new();
                     foreach (HashEntry entry in values)
                     {
                         if (entry.Name == "id")
@@ -305,7 +295,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 }
                 else if (type == typeof(Leg))
                 {
-                    Leg leg = new Leg();
+                    Leg leg = new();
                     foreach (HashEntry entry in values)
                     {
                         if (entry.Name == "id")

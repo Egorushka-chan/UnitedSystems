@@ -2,6 +2,7 @@
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.EventBus.Interfaces;
 
 using WardrobeOnline.BLL.Services.Extensions;
 using WardrobeOnline.BLL.Services.Interfaces;
@@ -9,14 +10,9 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
-    public class ClothProvider : CRUDProvider<ClothDTO, Cloth>
+    public class ClothProvider(IWardrobeContext context, IPaginationService<Cloth> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus) 
+        : CRUDProvider<ClothDTO, Cloth>(context, pagination, castHelper, imageProvider, eventBus)
     {
-        public ClothProvider(IWardrobeContext context, IPaginationService<Cloth> pagination, ICastHelper castHelper, IImageProvider imageProvider)
-            : base(context, pagination, castHelper, imageProvider)
-        {
-
-        }
-
         protected override Task<Cloth?> GetFromDBbyID(int id)
         {
             return _context.Clothes.Where(ent => ent.ID == id)

@@ -10,26 +10,17 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
-    public abstract class CRUDProvider<TEntityDTO, TEntityDB>
+    public abstract class CRUDProvider<TEntityDTO, TEntityDB>(IWardrobeContext context, IPaginationService<TEntityDB> pagination,
+        ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
         : ICRUDProvider<TEntityDTO>
         where TEntityDTO : class, IEntityDTO
         where TEntityDB : class, IEntity
     {
-        protected readonly IWardrobeContext _context;
-        protected readonly IPaginationService<TEntityDB> _pagination;
-        protected readonly ICastHelper _castHelper;
-        protected readonly IImageProvider _imageProvider;
-        protected readonly IEventBus _eventBus;
-
-        public CRUDProvider(IWardrobeContext context, IPaginationService<TEntityDB> pagination,
-            ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
-        {
-            _context = context;
-            _pagination = pagination;
-            _castHelper = castHelper;
-            _imageProvider = imageProvider;
-            _eventBus = eventBus;
-        }
+        protected readonly IWardrobeContext _context = context;
+        protected readonly IPaginationService<TEntityDB> _pagination = pagination;
+        protected readonly ICastHelper _castHelper = castHelper;
+        protected readonly IImageProvider _imageProvider = imageProvider;
+        protected readonly IEventBus _eventBus = eventBus;
 
         public async Task<IReadOnlyList<TEntityDTO>> GetPagedQuantity(int pageIndex, int pageSize)
         {

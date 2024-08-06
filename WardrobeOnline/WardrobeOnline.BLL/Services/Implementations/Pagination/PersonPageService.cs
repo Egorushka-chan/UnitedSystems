@@ -7,10 +7,10 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.Pagination
 {
-    public class GeneralPersonPageService : GeneralPageService<Person>
+    public class PersonPageService : GeneralPageService<Person>
     {
         private IGeneralInfoProvider _generalInfoProvider;
-        public GeneralPersonPageService(IWardrobeContext context, IGeneralInfoProvider generalInfoProvider) : base(context)
+        public PersonPageService(IWardrobeContext context, IGeneralInfoProvider generalInfoProvider) : base(context)
         {
             _generalInfoProvider = generalInfoProvider;
         }

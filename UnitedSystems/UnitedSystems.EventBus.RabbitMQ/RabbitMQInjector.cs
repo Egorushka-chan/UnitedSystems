@@ -22,7 +22,8 @@ namespace UnitedSystems.EventBus.RabbitMQ
                 ConnectionFactory connectionFactory = new() {
                     DispatchConsumersAsync = true,
                     UserName = configuration.UserName,
-                    Password = configuration.Password
+                    Password = configuration.Password,
+                    HostName = connectionString
                 };
 
                 return connectionFactory.CreateConnection(connectionString);

@@ -2,6 +2,7 @@
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.EventBus.Interfaces;
 
 using WardrobeOnline.BLL.Services.Extensions;
 using WardrobeOnline.BLL.Services.Interfaces;
@@ -9,15 +10,9 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
-    public class PhysiqueProvider : CRUDProvider<PhysiqueDTO, Physique>
+    public class PhysiqueProvider(IWardrobeContext context, IPaginationService<Physique> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus) 
+        : CRUDProvider<PhysiqueDTO, Physique>(context, pagination, castHelper, imageProvider, eventBus)
     {
-        public PhysiqueProvider(IWardrobeContext context, IPaginationService<Physique> pagination, ICastHelper castHelper, IImageProvider imageProvider)
-            : base(context, pagination, castHelper, imageProvider)
-        {
-
-        }
-
-
         protected override async Task<Physique?> AddTranslateToDB(PhysiqueDTO entityDTO)
         {
             entityDTO.TranslateToDB(out Physique? physiqueDB, _castHelper);

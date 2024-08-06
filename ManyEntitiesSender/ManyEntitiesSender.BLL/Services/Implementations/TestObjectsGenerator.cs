@@ -9,13 +9,8 @@ using UnitedSystems.CommonLibrary.ManyEntitiesSender;
 
 namespace ManyEntitiesSender.DAL
 {
-    public class TestObjectsGenerator : AbsObjectGenerator
+    public class TestObjectsGenerator(IServiceScopeFactory scopeFactory, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : AbsObjectGenerator(scopeFactory, options, logger)
     {
-        public TestObjectsGenerator(IServiceScopeFactory scopeFactory, IOptions<PackageSettings> options, ILogger<AbsObjectGenerator> logger) : base(scopeFactory, options, logger)
-        {
-
-        }
-
         protected override Body CreateBody(int testNo)
         {
             return new Body
