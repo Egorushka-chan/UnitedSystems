@@ -363,3 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 /ManyEnitiesSender/postgres-data
 /Docker/postgres-data
+/ManyEntitiesSender/ManyEntitiesSender.PL/ManyEntitiesSender - Backup.PL.csproj
+/MasterDominaSystem/MasterDominaSystem.BLL/MasterDominaSystem - Backup.BLL.csproj
+/MasterDominaSystem/MasterDominaSystem.RMQL/MasterDominaSystem - Backup.RMQL.csproj
+/WardrobeOnline/WardrobeOnline.BLL/WardrobeOnline - Backup.BLL.csproj
