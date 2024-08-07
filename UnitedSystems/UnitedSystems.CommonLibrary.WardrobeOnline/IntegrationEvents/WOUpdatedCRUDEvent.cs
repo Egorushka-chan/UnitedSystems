@@ -4,7 +4,7 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents
 {
     public class WOUpdatedCRUDEvent<TEntity> : IntegrationEvent
-        where TEntity : IEntity
+        where TEntity : IEntityDB
     {
         public TEntity[] Entities { get; set; } = [];
     }

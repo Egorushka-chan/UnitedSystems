@@ -1,6 +1,5 @@
-﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
-
-using WODownloaderClient;
+﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using WOSenderDB;
 
 namespace MasterDominaSystem.GRPC.Services.Extensions
 {

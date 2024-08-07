@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
 using UnitedSystems.EventBus.Interfaces;
@@ -14,7 +12,7 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
         ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
         : ICRUDProvider<TEntityDTO>
         where TEntityDTO : class, IEntityDTO
-        where TEntityDB : class, IEntity
+        where TEntityDB : class, IEntityDB
     {
         protected readonly IWardrobeContext _context = context;
         protected readonly IPaginationService<TEntityDB> _pagination = pagination;

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
-
 using WardrobeOnline.DAL.Interfaces;
 using WardrobeOnline.DAL.Repositories.Interfaces;
 
@@ -12,7 +10,7 @@ namespace WardrobeOnline.DAL.Repositories
     /// Однако мне в этом проекте понадобилось усложнить получение и применение данных, из-за чего он стал меня сильно ограничивать
     /// </summary>
     [Obsolete]
-    public class Repository<T>(IWardrobeContext wardrobeContext) : IRepository<T> where T : class, IEntity
+    public class Repository<T>(IWardrobeContext wardrobeContext) : IRepository<T> where T : class, IEntityDB
     {
         private readonly IWardrobeContext _wardrobeContext = wardrobeContext ?? throw new ArgumentNullException(nameof(wardrobeContext));
 

@@ -1,10 +1,8 @@
 ﻿using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
-
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.DAL
@@ -28,7 +26,7 @@ namespace WardrobeOnline.DAL
                 .OnDelete(DeleteBehavior.SetNull);
         }
 
-        public DbSet<T> DBSet<T>() where T : class, IEntity
+        public DbSet<T> DBSet<T>() where T : class, IEntityDB
         {
             return this.Set<T>();
         }

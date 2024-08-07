@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
+    <ProjectReference Include="..\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj" />
   </ItemGroup>
 
 </Project>

@@ -99,7 +99,6 @@ namespace UnitedSystems.EventBus.RabbitMQ
             if(!subscriptions.EventTypes.TryGetValue(routingKey, out var valueType)) {
                 throw new InvalidOperationException("Нет подобных зарегистрированных обработчиков");
             }
-
             var eventHandlers = services.GetKeyedServices<IIntegrationEventHandler>(valueType);
 
             IntegrationEvent value = JsonSerializer.Deserialize(message, valueType, subscriptions.JsonSerializerOptions) as IntegrationEvent

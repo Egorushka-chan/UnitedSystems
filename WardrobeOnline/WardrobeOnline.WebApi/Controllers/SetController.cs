@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using UnitedSystems.CommonLibrary.Messages;
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
-
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using WardrobeOnline.BLL.Services.Interfaces;
 
 namespace WardrobeOnline.WebApi.Controllers

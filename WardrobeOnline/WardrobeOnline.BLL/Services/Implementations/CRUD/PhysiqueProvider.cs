@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.EventBus.Interfaces;
 
 using WardrobeOnline.BLL.Services.Extensions;

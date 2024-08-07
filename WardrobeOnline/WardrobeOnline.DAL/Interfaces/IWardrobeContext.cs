@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace WardrobeOnline.DAL.Interfaces
@@ -18,7 +17,7 @@ namespace WardrobeOnline.DAL.Interfaces
         DbSet<Set> Sets { get; set; }
 
         WardrobeContext Context();
-        DbSet<T> DBSet<T>() where T : class, IEntity;
+        DbSet<T> DBSet<T>() where T : class, IEntityDB;
         Task<int> SaveChangesAsync();
     }
 }

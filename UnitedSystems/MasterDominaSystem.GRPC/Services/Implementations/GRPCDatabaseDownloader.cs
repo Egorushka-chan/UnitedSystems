@@ -7,7 +7,7 @@ using MasterDominaSystem.GRPC.Services.Interfaces;
 
 using Microsoft.Extensions.Options;
 
-using WODownloaderClient;
+using WOSenderDB;
 
 namespace MasterDominaSystem.GRPC.Services.Implementations
 {

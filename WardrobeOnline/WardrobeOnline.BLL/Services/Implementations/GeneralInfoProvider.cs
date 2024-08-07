@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
-
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
 

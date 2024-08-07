@@ -4,8 +4,7 @@ using MasterDominaSystem.BLL.Services.Strategies;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
 
 using Microsoft.Extensions.DependencyInjection;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL
 {

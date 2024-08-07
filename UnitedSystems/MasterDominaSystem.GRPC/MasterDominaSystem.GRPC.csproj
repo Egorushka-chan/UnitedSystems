@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Protobufs\downloader.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>downloader.proto</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.27.3" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
@@ -23,29 +15,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\MasterDominaSystem\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />
     <ProjectReference Include="..\..\MasterDominaSystem\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Protobufs\downloader.proto">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>downloader.cs</LastGenOutput>
-    </None>
+    <ProjectReference Include="..\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
+<!--
   <ItemGroup>
-    <Protobuf Include="Protobufs\downloader.proto" GrpsServices="Client" />
+    <Protobuf Include="..\..\UnitedSystems\UnitedSystems.GRPC\Protobufs\wardrobeDBsender.proto" GrpsServices="Client" Link="UnitedSystems.GRPC\Protobufs\wardrobeDBsender.proto" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Protobufs\downloader.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>downloader.proto</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
+-->
 </Project>

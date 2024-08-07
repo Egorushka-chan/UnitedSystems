@@ -6,6 +6,7 @@ using WardrobeOnline.BLL;
 using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.DAL;
 using WardrobeOnline.WebApi.Settings;
+using WardrobeOnline.GRPC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services.AddBusinessLayer(new ImageSetting() {
     InstanceName = builder.Configuration["RedisSetting:InstanceName"]
 });
 
+builder.Services.InjectGRPC();
+
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
@@ -51,5 +54,6 @@ app.Services.GetRequiredService<ILogger<Program>>().LogInformation(connectionStr
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGRPC();
 
 app.Run();

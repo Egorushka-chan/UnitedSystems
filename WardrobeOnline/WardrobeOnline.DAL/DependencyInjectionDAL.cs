@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
-
 using WardrobeOnline.DAL.Interfaces;
 using WardrobeOnline.DAL.Repositories;
 using WardrobeOnline.DAL.Repositories.Interfaces;
@@ -26,7 +24,7 @@ namespace WardrobeOnline.DAL
             //services.ConfigureEntity<SetHasClothes>();
         }
 
-        private static void ConfigureEntity<T>(this IServiceCollection services) where T : class, IEntity
+        private static void ConfigureEntity<T>(this IServiceCollection services) where T : class, IEntityDB
         {
             services.AddTransient<IRepository<T>, Repository<T>>();
         }

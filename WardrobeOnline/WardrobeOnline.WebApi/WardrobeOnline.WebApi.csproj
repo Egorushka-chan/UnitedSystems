@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WardrobeOnline.BLL\WardrobeOnline.BLL.csproj" />
     <ProjectReference Include="..\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj" />
+    <ProjectReference Include="..\WardrobeOnline.GRPC\WardrobeOnline.GRPC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

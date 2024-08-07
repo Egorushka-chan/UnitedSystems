@@ -1,5 +1,5 @@
 ﻿using UnitedSystems.CommonLibrary.Messages;
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Interfaces
 {

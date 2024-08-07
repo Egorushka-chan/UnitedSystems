@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
-
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.Pagination
 {
     public class GeneralPageService<TEntity> : IPaginationService<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class, IEntityDB
     {
         protected IWardrobeContext _context;
         public GeneralPageService(IWardrobeContext context)

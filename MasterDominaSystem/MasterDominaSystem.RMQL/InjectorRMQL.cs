@@ -3,7 +3,7 @@
 using Microsoft.Extensions.Hosting;
 
 using UnitedSystems.CommonLibrary.ManyEntitiesSender.IntegrationEvents;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
 using UnitedSystems.EventBus;
@@ -28,7 +28,7 @@ namespace MasterDominaSystem.RMQL
             return builder;
         }
 
-        private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntity
+        private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntityDB
         {
             builder.AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>()
                 .AddSubscription<WODeletedCRUDEvent<TEntity>, WODeletedHandler<TEntity>>()

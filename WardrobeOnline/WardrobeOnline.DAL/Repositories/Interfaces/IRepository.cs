@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace WardrobeOnline.DAL.Repositories.Interfaces
@@ -10,7 +9,7 @@ namespace WardrobeOnline.DAL.Repositories.Interfaces
     /// Интерфейс КРУДа реализован в бизнес логике, не здесь
     /// </summary>
     [Obsolete]
-    public interface IRepository<T> where T : class, IEntity
+    public interface IRepository<T> where T : class, IEntityDB
     {
         public IReadOnlyCollection<T> GetAll();
         public T? TryGet(int id);

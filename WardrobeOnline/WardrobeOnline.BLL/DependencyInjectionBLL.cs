@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
 
 using Microsoft.Extensions.DependencyInjection;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
-
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.BLL.Services.Implementations;
 using WardrobeOnline.BLL.Services.Implementations.CRUD;

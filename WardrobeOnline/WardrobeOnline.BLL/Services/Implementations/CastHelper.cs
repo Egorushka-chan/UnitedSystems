@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
-
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using WardrobeOnline.BLL.Services.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
 
@@ -63,7 +61,6 @@ namespace WardrobeOnline.BLL.Services.Implementations
                                           where !existedIDs.Contains(clothID)
                                           select clothID;
             }
-            
 
             foreach (Cloth nonMatched in notMatchedDBCloths)
             {

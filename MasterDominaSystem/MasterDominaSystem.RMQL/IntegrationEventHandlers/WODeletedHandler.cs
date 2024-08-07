@@ -1,5 +1,4 @@
 ﻿using MasterDominaSystem.BLL.Services.Abstractions;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
 using UnitedSystems.EventBus.Interfaces;
@@ -8,7 +7,7 @@ namespace MasterDominaSystem.RMQL.IntegrationEventHandlers
 {
     public class WODeletedHandler<TEntity>(ISessionInfoProvider sessionInfo) 
         : IIntegrationEventHandler<WODeletedCRUDEvent<TEntity>>
-        where TEntity : IEntity
+        where TEntity : IEntityDB
     {
         public Task Handle(WODeletedCRUDEvent<TEntity> @event)
         {

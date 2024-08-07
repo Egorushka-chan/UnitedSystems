@@ -14,4 +14,16 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj" />
+    <ProjectReference Include="..\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj" />
+  </ItemGroup>
+
+<!--  
+  <ItemGroup>
+    <Protobuf Include="..\..\UnitedSystems\UnitedSystems.GRPC\Protobufs\wardrobeDBsender.proto" 
+			  GrpsServices="Server" 
+			  Link="UnitedSystems.GRPC\Protobufs\wardrobeDBsender.proto" />
+  </ItemGroup>
+-->
 </Project>

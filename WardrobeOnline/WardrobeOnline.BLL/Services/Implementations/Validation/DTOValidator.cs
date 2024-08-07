@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.Validation
 {

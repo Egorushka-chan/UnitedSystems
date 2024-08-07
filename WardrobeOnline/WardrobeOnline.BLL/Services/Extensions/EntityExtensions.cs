@@ -1,8 +1,6 @@
-﻿using UnitedSystems.CommonLibrary.WardrobeOnline.DTO;
-using UnitedSystems.CommonLibrary.WardrobeOnline.DTO.Interfaces;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities;
+﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
-
 using WardrobeOnline.BLL.Services.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Extensions
@@ -10,16 +8,16 @@ namespace WardrobeOnline.BLL.Services.Extensions
     internal static class EntityExtensions
     {
         /// <summary>
-        /// Метод расширения, переводящий объекты <see cref="IEntity"></see> в объекты <see cref="IEntityDTO"/>
+        /// Метод расширения, переводящий объекты <see cref="IEntityDB"></see> в объекты <see cref="IEntityDTO"/>
         /// </summary>
         /// <remarks>Делает это не оптимально, т.к для приведения могут запрашиваться дополнительные запросы к базе данных</remarks>
-        /// <typeparam name="Tdb">Один из типов, принадлежащих <see cref="IEntity"></see></typeparam>
+        /// <typeparam name="Tdb">Один из типов, принадлежащих <see cref="IEntityDB"></see></typeparam>
         /// <typeparam name="Tdto">Один из типов, принадлежащих <see cref="IEntityDTO"></see></typeparam>
         /// <param name="entityDB"></param>
         /// <param name="resultDTO">Выведет null, если нет имплементации для выбранных объектов</param>
         /// <param name="translator"></param>
         internal static void TranslateToDTO<Tdb, Tdto>(this Tdb entityDB, out Tdto? resultDTO, ICastHelper translator) 
-            where Tdb : class, IEntity
+            where Tdb : class, IEntityDB
             where Tdto : class, IEntityDTO
         {
             //return entityDB switch
@@ -94,16 +92,16 @@ namespace WardrobeOnline.BLL.Services.Extensions
         }
 
         /// <summary>
-        /// Метод расширения, переводящий объекты <see cref="IEntityDTO"></see> в объекты <see cref="IEntity"/>
+        /// Метод расширения, переводящий объекты <see cref="IEntityDTO"></see> в объекты <see cref="IEntityDB"/>
         /// </summary>
         /// <remarks>Делает это не оптимально, т.к для приведения могут запрашиваться дополнительные запросы к базе данных</remarks>
-        /// <typeparam name="Tdb">Один из типов, принадлежащих <see cref="IEntity"></see></typeparam>
+        /// <typeparam name="Tdb">Один из типов, принадлежащих <see cref="IEntityDB"></see></typeparam>
         /// <typeparam name="Tdto">Один из типов, принадлежащих <see cref="IEntityDTO"></see></typeparam>
         /// <param name="entityDB"></param>
         /// <param name="resultDTO">Выведет null, если нет имплементации для выбранных объектов</param>
         /// <param name="translator"></param>
         internal static void TranslateToDB<Tdto, Tdb>(this Tdto entityDTO, out Tdb? resultDB, ICastHelper castHelper)
-            where Tdb : class, IEntity
+            where Tdb : class, IEntityDB
             where Tdto : class, IEntityDTO
         {
             resultDB = entityDTO switch
