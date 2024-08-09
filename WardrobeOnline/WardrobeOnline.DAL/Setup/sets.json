@@ -1,0 +1,91 @@
+﻿{
+  "sets": [
+    {
+      "ID": 1,
+      "Name": "Бытовой",
+      "Description": "Ну, на рыбалку сходить, на дачу, на рынок (как чмо)",
+      "PhysiqueID": 1,
+      "SeasonID": 1,
+      "SetHasClothes": [
+        {
+          "ID": 1,
+          "ClothID": 1,
+          "SetID": 1
+        },
+        {
+          "ID": 2,
+          "ClothID": 2,
+          "SetID": 1
+        },
+        {
+          "ID": 3,
+          "ClothID": 3,
+          "SetID": 1
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "Зимний",
+      "Description": "Back in USSR",
+      "PhysiqueID": 1,
+      "SeasonID": 3,
+      "SetHasClothes": [
+        {
+          "ID": 4,
+          "ClothID": 4,
+          "SetID": 2
+        }
+      ]
+    },
+    {
+      "ID": 3,
+      "Name": "Собачий",
+      "Description": "Хозяева не расщедрились на одежду собаке",
+      "PhysiqueID": 2,
+      "SeasonID": 6
+    },
+    {
+      "ID": 4,
+      "Name": "Сет бабки",
+      "Description": "Пахнет нафталином",
+      "PhysiqueID": 3,
+      "SeasonID": 6
+    },
+    {
+      "ID": 5,
+      "Name": "Кошачий",
+      "Description": "Хозяева не расщедрились на одежду и кошке, твари",
+      "PhysiqueID": 4,
+      "SeasonID": 6
+    },
+    {
+      "ID": 6,
+      "Name": "Кэжуал",
+      "Description": "Одежда из секс-шопа",
+      "PhysiqueID": 5,
+      "SeasonID": 1
+    },
+    {
+      "ID": 7,
+      "Name": "Умный",
+      "Description": "Для работника социальной службы",
+      "PhysiqueID": 6,
+      "SeasonID": 1
+    },
+    {
+      "ID": 8,
+      "Name": "Кэжуал",
+      "Description": "Днем и летом, одним Цветом",
+      "PhysiqueID": 7,
+      "SeasonID": 6
+    },
+    {
+      "ID": 9,
+      "Name": "Обновски",
+      "Description": "Покрыты следами множества сражений",
+      "PhysiqueID": 8,
+      "SeasonID": 5
+    }
+  ]
+}

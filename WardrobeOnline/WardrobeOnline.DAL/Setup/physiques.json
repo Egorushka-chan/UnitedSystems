@@ -1,0 +1,66 @@
+﻿{
+  "physiques": [
+    {
+      "ID": 1,
+      "Weight": 100,
+      "Growth": 170,
+      "Force": 4,
+      "Description": "Обычный толстый Я",
+      "PersonID": 1
+    },
+    {
+      "ID": 2,
+      "Weight": 10,
+      "Growth": 100,
+      "Force": 4,
+      "Description": "вот   такаявот   собака !!!!!!",
+      "PersonID": 2
+    },
+    {
+      "ID": 3,
+      "Weight": 70,
+      "Growth": 150,
+      "Force": 1,
+      "PersonID": 3
+    },
+    {
+      "ID": 4,
+      "Weight": 5,
+      "Growth": 40,
+      "Force": 3,
+      "Description": "♡♡♡ моя кошечка ♡♡♡",
+      "PersonID": 4
+    },
+    {
+      "ID": 5,
+      "Weight": 75,
+      "Growth": 160,
+      "Force": 5,
+      "PersonID": 5
+    },
+    {
+      "ID": 6,
+      "Weight": 75,
+      "Growth": 160,
+      "Force": 5,
+      "Description": "Не ходите дети в университет",
+      "PersonID": 5
+    },
+    {
+      "ID": 7,
+      "Weight": 90,
+      "Growth": 175,
+      "Force": 5,
+      "Description": "Не ходите дети в университет",
+      "PersonID": 6
+    },
+    {
+      "ID": 8,
+      "Weight": 90,
+      "Growth": 175,
+      "Force": 5,
+      "Description": "До ЧАЭС не дойти",
+      "PersonID": 7
+    }
+  ]
+}

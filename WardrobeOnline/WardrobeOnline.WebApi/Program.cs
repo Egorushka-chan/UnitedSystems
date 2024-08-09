@@ -47,7 +47,6 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) => {
     });
 });
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,8 +64,10 @@ app.Run();
 
 void AddBusinessLayer(WebApplicationBuilder builder)
 {
+    string configuration = builder.Configuration["RedisSetting:Configuration"] ?? new RedisSetting().Configuration;
+    string packages = builder.Configuration["RedisSetting:InstanceName"] ?? new RedisSetting().InstanceName;
     builder.Services.AddBusinessLayer(new RedisSetting() {
-        Configuration = builder.Configuration["RedisSetting:Configuration"],
-        InstanceName = builder.Configuration["RedisSetting:InstanceName"]
+        Configuration = configuration,
+        InstanceName = packages
     });
 }

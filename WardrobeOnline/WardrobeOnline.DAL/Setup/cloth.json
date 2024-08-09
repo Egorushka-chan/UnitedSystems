@@ -1,0 +1,137 @@
+﻿{
+  "clothes": [
+    {
+      "ID": 1,
+      "Name": "Синяя куртка",
+      "Description": "Купил на рынке Маяковкого, у бабки Гали",
+      "Rating": 4,
+      "Size": 52,
+      "Photos": [
+        {
+          "ID": 1,
+          "Name": "Фото синей куртки (спереди)",
+          "HashCode": "f1g312g1g31g13",
+          "IsDBStored": false,
+          "ClothID": 1
+        },
+        {
+          "ID": 2,
+          "Name": "Фото синей куртки (сзади)",
+          "HashCode": "f1g312g1gf1rr",
+          "IsDBStored": false,
+          "ClothID": 1
+        },
+        {
+          "ID": 3,
+          "Name": "Фото синей куртки (на пузе)",
+          "HashCode": "f1g312g1gf1rr4",
+          "IsDBStored": false,
+          "ClothID": 1
+        }
+      ],
+      "ClothHasMaterials": [
+        {
+          "ID": 1,
+          "ClothID": 1,
+          "MaterialID": 1
+        },
+        {
+          "ID": 2,
+          "ClothID": 1,
+          "MaterialID": 2
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "Синие штаны",
+      "Description": "Купил на рынке Маяковкого, у бабки Гали",
+      "Rating": 4,
+      "Size": 52,
+      "Photos": [
+        {
+          "ID": 4,
+          "Name": "Фото синих штанов (спереди)",
+          "HashCode": "f1g3412g1g31g13",
+          "IsDBStored": false,
+          "ClothID": 2
+        },
+        {
+          "ID": 5,
+          "Name": "Фото синих штанов (сзади)",
+          "HashCode": "f1g3122g1gf1rr",
+          "IsDBStored": false,
+          "ClothID": 2
+        }
+      ],
+      "ClothHasMaterials": [
+        {
+          "ID": 3,
+          "ClothID": 2,
+          "MaterialID": 1
+        },
+        {
+          "ID": 4,
+          "ClothID": 2,
+          "MaterialID": 2
+        }
+      ]
+    },
+    {
+      "ID": 3,
+      "Name": "Синяя шапка",
+      "Description": "Купил на рынке Маяковкого, у бабки Гали",
+      "Rating": 4,
+      "Size": 10,
+      "Photos": [
+        {
+          "ID": 6,
+          "Name": "Фото шапки",
+          "HashCode": "f1g312g1dg31g13",
+          "IsDBStored": false,
+          "ClothID": 3
+        }
+      ],
+      "ClothHasMaterials": [
+        {
+          "ID": 5,
+          "ClothID": 3,
+          "MaterialID": 1
+        },
+        {
+          "ID": 6,
+          "ClothID": 3,
+          "MaterialID": 2
+        }
+      ]
+    },
+    {
+      "ID": 4,
+      "Name": "Зимняя куртка",
+      "Description": "Купил на рынке Маяковкого, у бабки Гали",
+      "Rating": 5,
+      "Size": 54,
+      "Photos": [
+        {
+          "ID": 7,
+          "Name": "я в зимней куртке (нажратый)",
+          "HashCode": "daffwgwegwe",
+          "IsDBStored": false,
+          "ClothID": 4
+        }
+      ],
+      "ClothHasMaterials": [
+        {
+          "ID": 7,
+          "ClothID": 4,
+          "MaterialID": 4
+        },
+        {
+          "ID": 8,
+          "ClothID": 4,
+          "MaterialID": 2
+        }
+      ]
+    }
+  ]
+}
