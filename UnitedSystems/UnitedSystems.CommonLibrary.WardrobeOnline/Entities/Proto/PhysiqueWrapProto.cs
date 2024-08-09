@@ -1,34 +1,25 @@
 ﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
 {
-    public class PhysiqueWrapProto : EntityProto<PhysiqueS, PhysiqueProto>
+    public class PhysiqueWrapProto(PhysiqueProto proto) : EntityProto<PhysiqueS>(proto)
     {
-        public PhysiqueWrapProto() : base()
+        private Physique CreateDB()
         {
+            return new() {
+                ID = Value.ID,
+                Description = Value.Description,
+                Growth = Value.Growth,
+                Weight = Value.Weight,
+                Force = Value.Force,
+                PersonID = Value.PersonID
+            };
         }
-        public PhysiqueWrapProto(PhysiqueProto proto) : base(proto)
-        {
-        }
-
-        internal override EntityDB GeneralConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-        internal override EntityDTO GeneralConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
-        internal override EntityDB<PhysiqueS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-        internal override EntityDTO<PhysiqueS> GenericConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
+        internal override EntityDB<PhysiqueS> GenericConvertToDB(EntityDB<PhysiqueS> entityDB) => CreateDB();
     }
 }

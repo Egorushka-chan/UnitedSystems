@@ -6,18 +6,19 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces
 {
     public abstract class EntityDB : EntityS, IEntityDB
     {
+        public abstract int ID { get; set; }
         public static implicit operator EntityDB(EntityDTO entityDB)
         {
-            return entityDB.GeneralConvertToDB();
+            return entityDB.GeneralConvertToDB(entityDB);
         }
 
         public static implicit operator EntityDB(EntityProto entityProto)
         {
-            return entityProto.GeneralConvertToDB();
+            return entityProto.GeneralConvertToDB(entityProto);
         }
 
-        internal abstract EntityDTO GeneralConvertToDTO();
-        internal abstract EntityProto GeneralConvertToProto();
+        internal abstract EntityDTO GeneralConvertToDTO(EntityDTO entityDTO);
+        internal abstract EntityProto GeneralConvertToProto(EntityProto entityProto);
     }
 
     // Из-за тупняка С# (нельзя абстрактные методы вызвать в следующем абстрактом классе) у нас два одинаковых метода конвертации
@@ -27,15 +28,15 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces
     {
         public static implicit operator EntityDB<TEntity>(EntityDTO<TEntity> entityDB)
         {
-            return entityDB.GenericConvertToDB();
+            return entityDB.GenericConvertToDB(entityDB);
         }
 
         public static implicit operator EntityDB<TEntity>(EntityProto<TEntity> entityProto)
         {
-            return entityProto.GenericConvertToDB();
+            return entityProto.GenericConvertToDB(entityProto);
         }
 
-        internal abstract EntityDTO<TEntity> GenericConvertToDTO();
-        internal abstract EntityProto<TEntity> GenericConvertToProto();
+        internal abstract EntityDTO<TEntity> GenericConvertToDTO(EntityDTO<TEntity> entityDTO);
+        internal abstract EntityProto<TEntity> GenericConvertToProto(EntityProto<TEntity> entityProto);
     }
 }

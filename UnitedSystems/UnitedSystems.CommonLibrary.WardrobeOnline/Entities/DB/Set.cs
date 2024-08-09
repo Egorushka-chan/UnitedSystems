@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+using System.Linq;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
@@ -11,7 +13,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Set : EntityDB<SetS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
@@ -30,6 +32,16 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
             string? season = null;
             List<int>? clothIDs = null;
 
+            if (Season != null) {
+                season = Season.Name;
+            }
+
+            if(SetHasClothes.Count > 0) {
+                clothIDs ??= [];
+                clothIDs.AddRange(from clothSet in SetHasClothes
+                                  select clothSet.ClothID);
+            }
+
             return new() {
                 ID = ID,
                 Description = Description,
@@ -39,24 +51,23 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 PhysiqueID = PhysiqueID
             };
         }
-        internal override EntityDTO GeneralConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
 
-        internal override EntityProto GeneralConvertToProto()
+        private SetWrapProto CreateProto()
         {
-            throw new NotImplementedException();
+            return new(new() {
+                ID = ID,
+                Name = Name,
+                Description = Description,
+                PhysiqueID = PhysiqueID,
+                SeasonID = SeasonID
+            });
         }
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
 
-        internal override EntityDTO<SetS> GenericConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
 
-        internal override EntityProto<SetS> GenericConvertToProto()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDTO<SetS> GenericConvertToDTO(EntityDTO<SetS> entityDTO) => CreateDTO();
+
+        internal override EntityProto<SetS> GenericConvertToProto(EntityProto<SetS> entityProto) => CreateProto();
     }
 }

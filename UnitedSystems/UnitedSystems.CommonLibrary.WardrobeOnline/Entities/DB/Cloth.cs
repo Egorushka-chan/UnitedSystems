@@ -12,7 +12,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Cloth : EntityDB<ClothS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
@@ -67,9 +67,13 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                     Size = Size
                 });
         }
-        internal override EntityDTO GeneralConvertToDTO() => CreateDTO();
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityDTO<ClothS> GenericConvertToDTO() => CreateDTO();
-        internal override EntityProto<ClothS> GenericConvertToProto() => CreateProto();
+
+        internal override EntityDTO<ClothS> GenericConvertToDTO(EntityDTO<ClothS> entityDTO) => CreateDTO();
+
+        internal override EntityProto<ClothS> GenericConvertToProto(EntityProto<ClothS> entityProto) => CreateProto();
+
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
+
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
     }
 }

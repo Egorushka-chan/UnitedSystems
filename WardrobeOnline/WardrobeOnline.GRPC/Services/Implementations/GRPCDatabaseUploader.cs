@@ -1,9 +1,11 @@
 ﻿using Grpc.Core;
 
 using Microsoft.EntityFrameworkCore;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
+
 using WardrobeOnline.DAL.Interfaces;
-using WardrobeOnline.GRPC.Services.Extensions;
 using WardrobeOnline.GRPC.Services.Interfaces;
 
 using WOSenderDB;
@@ -12,7 +14,7 @@ namespace WardrobeOnline.GRPC.Services.Implementations
 {
     public class GRPCDatabaseUploader(IWardrobeContext _dbContext) : WODownloader.WODownloaderBase, IDatabaseUploader
     {
-        private readonly int _packageSize = 500;
+        private readonly int _packageSize = 100;
         public override async Task DownloadDatabaseEntities(RequestDownload request, IServerStreamWriter<ResponseDownload> responseStream, ServerCallContext context)
         {
             if (!request.Proceed) {
@@ -21,45 +23,41 @@ namespace WardrobeOnline.GRPC.Services.Implementations
 
             CancellationToken token = context.CancellationToken;
 
-            int iteration = 1;
-            Dictionary<string, bool> completed = new() {
-                {nameof(Person), false },
-                {nameof(Physique), false},
-                {nameof(Set), false },
-                {nameof(Season), false },
-                {nameof(Cloth), false },
-                {nameof(SetHasClothes), false },
-                {nameof(Photo), false },
-                {nameof(Material), false },
-                {nameof(ClothHasMaterials), false }
-            };
+            await SendAsync<Person>(responseStream, token);
+            await SendAsync<Physique>(responseStream, token);
+            await SendAsync<Set>(responseStream, token);
+            await SendAsync<Season>(responseStream, token);
+            await SendAsync<Cloth>(responseStream, token);
+            await SendAsync<SetHasClothes>(responseStream, token);
+            await SendAsync<Photo>(responseStream, token);
+            await SendAsync<Material>(responseStream, token);
+            await SendAsync<ClothHasMaterials>(responseStream, token);
+        }
 
-            while (!token.IsCancellationRequested) {
+        private async Task SendAsync<TEntity>(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
+            where TEntity : EntityDB
+        {
+            int iteration = 1;
+            bool isEnd = false;
+            while (!token.IsCancellationRequested && !isEnd) {
+                
                 ResponseDownload response = new() {
                     PackageNumber = iteration,
                     PackageSize = _packageSize
                 };
-
-                if (!completed[nameof(Cloth)]) {
-                    var clothes = (await _dbContext.Clothes
-                        .Skip(_packageSize * (iteration - 1))
-                        .Take(_packageSize)
-                        .ToListAsync(token))
-                        .Select(element => element.ConvertToProto());
-
-                    if (clothes.Any())
-                        response.Cloths.AddRange(clothes);
-                    else
-                        completed[nameof(Cloth)] = true;
-                }
                 
-
-                var persons = (await _dbContext.Persons
+                var entitiesProto = (await _dbContext.DBSet<TEntity>()
                     .Skip(_packageSize * (iteration - 1))
                     .Take(_packageSize)
                     .ToListAsync(token))
-                    .Select(element => element.ConvertToProto());
+                    .Select(element => ((EntityProto)element).Value);
 
+                if (entitiesProto.Any())
+                    foreach(var entityProto in entitiesProto) {
+                        response.Cloths.Add(entityProto);
+                    }
+                else
+                    isEnd = true;
 
                 await responseStream.WriteAsync(response, token);
 

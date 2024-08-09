@@ -12,7 +12,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Physique : EntityDB<PhysiqueS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public int Weight { get; set; }
         [Required]
@@ -56,9 +56,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 SetIDs = setIDs
             };
         }
-        internal override EntityDTO GeneralConvertToDTO() => CreateDTO();
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityDTO<PhysiqueS> GenericConvertToDTO() => CreateDTO();
-        internal override EntityProto<PhysiqueS> GenericConvertToProto() => CreateProto();
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
+        internal override EntityDTO<PhysiqueS> GenericConvertToDTO(EntityDTO<PhysiqueS> entityDTO) => CreateDTO();
+        internal override EntityProto<PhysiqueS> GenericConvertToProto(EntityProto<PhysiqueS> entityProto) => CreateProto();
     }
 }

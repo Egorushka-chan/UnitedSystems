@@ -11,7 +11,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Photo : EntityDB<PhotoS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -33,14 +33,14 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
             });
         }
 
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityProto<PhotoS> GenericConvertToProto() => CreateProto();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
+        internal override EntityProto<PhotoS> GenericConvertToProto(EntityProto<PhotoS> entityProto) => CreateProto();
 
-        internal override EntityDTO GeneralConvertToDTO()
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO)
         {
             throw new NotImplementedException();
         }
-        internal override EntityDTO<PhotoS> GenericConvertToDTO()
+        internal override EntityDTO<PhotoS> GenericConvertToDTO(EntityDTO<PhotoS> entityDTO)
         {
             throw new NotImplementedException();
         }

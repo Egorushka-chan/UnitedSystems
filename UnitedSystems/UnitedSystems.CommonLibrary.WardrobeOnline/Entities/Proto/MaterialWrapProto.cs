@@ -1,37 +1,24 @@
 ﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
 {
-    public class MaterialWrapProto : EntityProto<MaterialsS, MaterialProto>
+    public class MaterialWrapProto(MaterialProto proto) : EntityProto<MaterialsS>(proto)
     {
-        public MaterialWrapProto() : base()
+        private Material CreateDB()
         {
-        }
-        public MaterialWrapProto(MaterialProto proto) : base(proto)
-        {
-        }
-
-        internal override EntityDB GeneralConvertToDB()
-        {
-            throw new NotImplementedException();
+            return new() {
+                ID = Value.ID,
+                Name = Value.Name,
+                Description = Value.Description
+            };
         }
 
-        internal override EntityDTO GeneralConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
-        internal override EntityDB<MaterialsS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityDTO<MaterialsS> GenericConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB<MaterialsS> GenericConvertToDB(EntityDB<MaterialsS> entityDB) => CreateDB();
     }
 }

@@ -11,7 +11,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Season : EntityDB<SeasonS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public virtual ICollection<Set> Sets { get; set; } = [];
@@ -24,13 +24,13 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
             });
         }
 
-        internal override EntityProto<SeasonS> GenericConvertToProto() => CreateProto();
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityDTO<SeasonS> GenericConvertToDTO()
+        internal override EntityProto<SeasonS> GenericConvertToProto(EntityProto<SeasonS> entityProto) => CreateProto();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
+        internal override EntityDTO<SeasonS> GenericConvertToDTO(EntityDTO<SeasonS> entityDTO)
         {
             throw new NotImplementedException();
         }
-        internal override EntityDTO GeneralConvertToDTO()
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO)
         {
             throw new NotImplementedException();
         }

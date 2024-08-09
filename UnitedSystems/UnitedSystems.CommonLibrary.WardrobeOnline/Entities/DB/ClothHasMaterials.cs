@@ -13,7 +13,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class ClothHasMaterials : EntityDB<ClothHasMaterialsS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required, ForeignKey("ClothForeignKey")]
         public int ClothID { get; set; }
         [Required, ForeignKey("MaterialForeignKey")]
@@ -29,15 +29,14 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 MaterialID = MaterialID
             });
         }
-        internal override EntityProto<ClothHasMaterialsS> GenericConvertToProto() => CreateProto();
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
+        internal override EntityProto<ClothHasMaterialsS> GenericConvertToProto(EntityProto<ClothHasMaterialsS> entityProto) => CreateProto();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
 
-
-        internal override EntityDTO GeneralConvertToDTO()
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO)
         {
             throw new NotImplementedException();
         }
-        internal override EntityDTO<ClothHasMaterialsS> GenericConvertToDTO()
+        internal override EntityDTO<ClothHasMaterialsS> GenericConvertToDTO(EntityDTO<ClothHasMaterialsS> entityDTO)
         {
             throw new NotImplementedException();
         }

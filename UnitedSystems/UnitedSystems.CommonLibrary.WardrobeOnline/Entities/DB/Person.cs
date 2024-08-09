@@ -12,7 +12,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Person : EntityDB<PersonS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public string? Type { get; set; } // Не только люди могут одеваться
@@ -44,9 +44,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 Type = Type
             });
         }
-        internal override EntityDTO GeneralConvertToDTO() => CreateDTO();
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityDTO<PersonS> GenericConvertToDTO() => CreateDTO();
-        internal override EntityProto<PersonS> GenericConvertToProto() => CreateProto();
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
+        internal override EntityDTO<PersonS> GenericConvertToDTO(EntityDTO<PersonS> entityDTO) => CreateDTO();
+        internal override EntityProto<PersonS> GenericConvertToProto(EntityProto<PersonS> entityProto) => CreateProto();
     }
 }

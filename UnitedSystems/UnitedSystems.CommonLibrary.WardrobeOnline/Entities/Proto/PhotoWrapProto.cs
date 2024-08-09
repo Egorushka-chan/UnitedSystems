@@ -1,37 +1,26 @@
 ﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
 {
-    public class PhotoWrapProto : EntityProto<PhotoS, PhotoProto>
+    public class PhotoWrapProto(PhotoProto proto) : EntityProto<PhotoS>(proto)
     {
-        public PhotoWrapProto() : base()
+        private Photo CreateDB()
         {
-        }
-        public PhotoWrapProto(PhotoProto proto) : base(proto)
-        {
-        }
-
-        internal override EntityDB GeneralConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityDTO GeneralConvertToDTO()
-        {
-            throw new NotImplementedException();
+            return new() {
+                ID = Value.ID,
+                ClothID = Value.ID,
+                Name = Value.Name,
+                HashCode = Value.HashCode,
+                IsDBStored = Value.IsDBStored
+            };
         }
 
-        internal override EntityDB<PhotoS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
-        internal override EntityDTO<PhotoS> GenericConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB<PhotoS> GenericConvertToDB(EntityDB<PhotoS> entityDB) => CreateDB();
     }
 }

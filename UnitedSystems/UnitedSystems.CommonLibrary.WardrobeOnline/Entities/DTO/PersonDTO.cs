@@ -5,27 +5,17 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO
 {
     public class PersonDTO : EntityDTO<PersonS>
     {
-        public int ID { get; set; }
+        public override int ID { get; set; }
         public string? Name { get; init; }
         public string? Type { get; init; }
         public IReadOnlyList<int>? PhysiqueIDs { get; init; }
 
-        internal override EntityDB GeneralConvertToDB()
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB)
         {
             throw new NotImplementedException();
         }
 
-        internal override EntityProto GeneralConvertToProto()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityDB<PersonS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityProto<PersonS> GenericConvertToProto()
+        internal override EntityDB<PersonS> GenericConvertToDB(EntityDB<PersonS> entityDB)
         {
             throw new NotImplementedException();
         }

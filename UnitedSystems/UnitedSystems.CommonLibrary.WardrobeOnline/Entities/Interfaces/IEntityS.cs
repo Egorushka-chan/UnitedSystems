@@ -5,6 +5,5 @@
     /// </summary>
     public interface IEntityS
     {
-        public int ID { get; set; }
     }
 }

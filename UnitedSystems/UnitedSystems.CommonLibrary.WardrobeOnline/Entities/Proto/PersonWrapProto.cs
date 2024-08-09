@@ -1,37 +1,24 @@
 ﻿using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
 {
-    public class PersonWrapProto : EntityProto<PersonS, PersonProto>
+    public class PersonWrapProto(PersonProto proto) : EntityProto<PersonS>(proto)
     {
-        public PersonWrapProto() : base()
+        private Person CreateDB()
         {
-        }
-        public PersonWrapProto(PersonProto proto) : base(proto) 
-        {
-        }
-
-        internal override EntityDB GeneralConvertToDB()
-        {
-            throw new NotImplementedException();
+            return new() {
+                ID = Value.ID,
+                Name = Value.Name,
+                Type = Value.Type
+            };
         }
 
-        internal override EntityDTO GeneralConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
-        internal override EntityDB<PersonS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityDTO<PersonS> GenericConvertToDTO()
-        {
-            throw new NotImplementedException();
-        }
+        internal override EntityDB<PersonS> GenericConvertToDB(EntityDB<PersonS> entityDB) => CreateDB();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces
 {
-    public interface IEntityProto
+    public interface IEntityProtoWrapper
     {
 
     }

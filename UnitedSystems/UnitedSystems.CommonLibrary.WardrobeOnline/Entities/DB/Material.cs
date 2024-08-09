@@ -11,7 +11,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
     public partial class Material : EntityDB<MaterialsS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public override int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
@@ -26,14 +26,14 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
             });
         }
 
-        internal override EntityProto GeneralConvertToProto() => CreateProto();
-        internal override EntityProto<MaterialsS> GenericConvertToProto() => CreateProto();
+        internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
+        internal override EntityProto<MaterialsS> GenericConvertToProto(EntityProto<MaterialsS> entityProto) => CreateProto();
 
-        internal override EntityDTO<MaterialsS> GenericConvertToDTO()
+        internal override EntityDTO<MaterialsS> GenericConvertToDTO(EntityDTO<MaterialsS> entityDTO)
         {
             throw new NotImplementedException();
         }
-        internal override EntityDTO GeneralConvertToDTO()
+        internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO)
         {
             throw new NotImplementedException();
         }

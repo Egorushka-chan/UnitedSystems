@@ -7,8 +7,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
     {
         public static Person ConvertToDB(this PersonProto personProto)
         {
-            return new()
-            {
+            return new() {
                 ID = personProto.ID,
                 Name = personProto.Name,
                 Type = personProto.Type
@@ -17,8 +16,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Physique ConvertToDB(this PhysiqueProto physiqueProto)
         {
-            return new()
-            {
+            return new() {
                 ID = physiqueProto.ID,
                 Growth = physiqueProto.Growth,
                 Weight = physiqueProto.Weight,
@@ -30,8 +28,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Set ConvertToDB(this SetProto setProto)
         {
-            return new()
-            {
+            return new() {
                 ID = setProto.ID,
                 Name = setProto.Name,
                 Description = setProto.Description,
@@ -42,8 +39,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Season ConvertToDB(this SeasonProto seasonProto)
         {
-            return new()
-            {
+            return new() {
                 ID = seasonProto.ID,
                 Name = seasonProto.Name
             };
@@ -51,8 +47,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static SetHasClothes ConvertToDB(this SetHasClothesProto proto)
         {
-            return new()
-            {
+            return new() {
                 ID = proto.ID,
                 ClothID = proto.ClothID,
                 SetID = proto.SetID
@@ -61,8 +56,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Cloth ConvertToDB(this ClothProto proto)
         {
-            return new()
-            {
+            return new() {
                 ID = proto.ID,
                 Name = proto.Name,
                 Description = proto.Description,
@@ -73,8 +67,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Photo ConvertToDB(this PhotoProto photoProto)
         {
-            return new()
-            {
+            return new() {
                 ID = photoProto.ID,
                 Name = photoProto.Name,
                 ClothID = photoProto.ClothID,
@@ -85,8 +78,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static ClothHasMaterials ConvertToDB(this ClothHasMaterialsProto proto)
         {
-            return new()
-            {
+            return new() {
                 ID = proto.ID,
                 MaterialID = proto.MaterialID,
                 ClothID = proto.ClothID
@@ -95,8 +87,7 @@ namespace MasterDominaSystem.GRPC.Services.Extensions
 
         public static Material ConvertToDB(this MaterialProto materialProto)
         {
-            return new()
-            {
+            return new() {
                 ID = materialProto.ID,
                 Name = materialProto.Name,
                 Description = materialProto.Description

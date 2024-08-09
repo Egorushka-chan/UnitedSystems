@@ -5,7 +5,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO
 {
     public class ClothDTO : EntityDTO<ClothS>
     {
-        public int ID { get; set; }
+        public override int ID { get; set; }
         public string? Name { get; init; }
         public string? Description { get; init; }
         public int? Rating { get; init; }
@@ -13,22 +13,12 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO
         public IReadOnlyList<string>? Materials { get; init; }
         public IReadOnlyList<string>? PhotoPaths { get; init; }
 
-        internal override EntityDB GeneralConvertToDB()
+        internal override EntityDB GeneralConvertToDB(EntityDB entityDB)
         {
             throw new NotImplementedException();
         }
 
-        internal override EntityProto GeneralConvertToProto()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityDB<ClothS> GenericConvertToDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override EntityProto<ClothS> GenericConvertToProto()
+        internal override EntityDB<ClothS> GenericConvertToDB(EntityDB<ClothS> entityDB)
         {
             throw new NotImplementedException();
         }
