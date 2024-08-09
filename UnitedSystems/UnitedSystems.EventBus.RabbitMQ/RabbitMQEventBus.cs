@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Sockets;
+using System.Text;
 using System.Text.Json;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,19 @@ namespace UnitedSystems.EventBus.RabbitMQ
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Task.Factory.StartNew(() => {
-                _rabbitConnection = services.GetRequiredService<IConnection>();
+                int retryCount = busSettings.RetryCount;
+                while(_rabbitConnection is null) {
+                    try {
+                        _rabbitConnection = services.GetRequiredService<IConnection>();
+                    }
+                    catch (SocketException ex) {
+                        retryCount--;
+                        if (retryCount <= 0)
+                            throw;
+                    }
+                }
+
+                
                 if (!_rabbitConnection.IsOpen) {
                     throw new InvalidOperationException("Не удалось открыть подключение");
                 }

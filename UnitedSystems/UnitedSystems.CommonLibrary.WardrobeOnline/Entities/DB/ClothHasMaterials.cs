@@ -9,7 +9,6 @@ using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("ClothHasMaterials")]
     public partial class ClothHasMaterials : EntityDB<ClothHasMaterialsS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

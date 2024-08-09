@@ -9,7 +9,6 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("Set")]
     public partial class Set : EntityDB<SetS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

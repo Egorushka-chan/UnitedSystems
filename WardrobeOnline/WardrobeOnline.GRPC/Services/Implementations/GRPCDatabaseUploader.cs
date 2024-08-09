@@ -12,8 +12,14 @@ using WOSenderDB;
 
 namespace WardrobeOnline.GRPC.Services.Implementations
 {
-    public class GRPCDatabaseUploader(IWardrobeContext _dbContext) : WODownloader.WODownloaderBase, IDatabaseUploader
+    public class GRPCDatabaseUploader : WODownloader.WODownloaderBase, IDatabaseUploader
     {
+        private readonly IWardrobeContext _dbContext;
+        public GRPCDatabaseUploader(IWardrobeContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         private readonly int _packageSize = 100;
         public override async Task DownloadDatabaseEntities(RequestDownload request, IServerStreamWriter<ResponseDownload> responseStream, ServerCallContext context)
         {

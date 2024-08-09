@@ -16,7 +16,7 @@ namespace WardrobeOnline.BLL
 {
     public static class DependencyInjectionBLL
     {
-        public static void AddBusinessLayer(this IServiceCollection services, ImageSetting imageSetting, RedisSetting redisSetting)
+        public static void AddBusinessLayer(this IServiceCollection services, RedisSetting redisSetting)
         {
             services.AddTransient<ICRUDProvider<ClothDTO>, ClothProvider>();
             services.AddTransient<ICRUDProvider<PhysiqueDTO>, PhysiqueProvider>();
@@ -33,19 +33,20 @@ namespace WardrobeOnline.BLL
             services.AddTransient<IPaginationService<Physique>, GeneralPageService<Physique>>();
             services.AddTransient<IPaginationService<Cloth>, GeneralPageService<Cloth>>();
 
-            if(imageSetting.Type == "web")
-            {
-                services.AddSingleton<IImageProvider, WebImageProvider>();
-            }
-            else
-            {
-                services.AddSingleton<IImageProvider, LocalImageProvider>();
-            }
+            //if(imageSetting.Type == "web")
+            //{
+            //    services.AddSingleton<IImageProvider, WebImageProvider>();
+            //}
+            //else
+            //{
+            //    services.AddSingleton<IImageProvider, LocalImageProvider>();
+            //}
 
             services.AddTransient<ICastHelper, CastHelper>();
 
             services.AddStackExchangeRedisCache(opt =>
             {
+                
                 opt.Configuration = redisSetting.Configuration;
                 opt.InstanceName =  redisSetting.InstanceName;
             });

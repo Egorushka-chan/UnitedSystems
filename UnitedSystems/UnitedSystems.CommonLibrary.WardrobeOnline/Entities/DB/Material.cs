@@ -7,7 +7,6 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("Material")]
     public partial class Material : EntityDB<MaterialsS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

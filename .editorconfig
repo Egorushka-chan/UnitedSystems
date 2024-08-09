@@ -1,7 +1,6 @@
 ﻿[*.cs]
 
 # Default severity for analyzer diagnostics with category 'Usage'
-dotnet_analyzer_diagnostic.category-Usage.severity = error
 
 [*.cs]
 #### Стили именования ####

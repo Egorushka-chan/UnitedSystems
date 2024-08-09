@@ -7,7 +7,6 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("Season")]
     public partial class Season : EntityDB<SeasonS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

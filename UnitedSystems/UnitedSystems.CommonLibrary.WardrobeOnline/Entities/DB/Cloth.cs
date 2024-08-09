@@ -8,7 +8,6 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("Cloth")]
     public partial class Cloth : EntityDB<ClothS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

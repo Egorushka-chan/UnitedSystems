@@ -47,6 +47,7 @@ namespace ManyEntitiesSender.BLL.Services.Abstractions
             using IServiceScope scope = scopeFactory.CreateScope();
             IPackageContext context = scope.ServiceProvider.GetRequiredService<IPackageContext>();
 
+
             TEntity checkEntity = new();
             if(!(checkEntity is Body || checkEntity is Hand || checkEntity is Leg))
                 throw new NotImplementedException("Such entity type can't be created");

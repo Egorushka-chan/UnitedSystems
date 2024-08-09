@@ -11,7 +11,9 @@ namespace WardrobeOnline.GRPC
         private static bool injected = false;
         public static IServiceCollection InjectGRPC(this IServiceCollection services)
         {
-            services.AddGrpc();
+            services.AddGrpc(options => {
+                options.EnableDetailedErrors = true;
+            });
 
             injected = true;
             return services;
@@ -19,8 +21,13 @@ namespace WardrobeOnline.GRPC
 
         public static IEndpointRouteBuilder MapGRPC(this IEndpointRouteBuilder app)
         {
-            app.MapGrpcService<GRPCDatabaseUploader>()
-                .WithName("DatabaseUploader");
+            if (injected) {
+                app.MapGrpcService<GRPCDatabaseUploader>();
+
+                app.MapGet("/", () => {
+                    Console.WriteLine("Запрос по корню");
+                });
+            }
 
             return app;
         }

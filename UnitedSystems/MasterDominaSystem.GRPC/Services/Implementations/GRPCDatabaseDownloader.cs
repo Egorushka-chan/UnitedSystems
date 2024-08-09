@@ -1,4 +1,5 @@
 ﻿using Grpc.Net.Client;
+using Grpc.Net.ClientFactory;
 
 using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.GRPC.Models;
@@ -17,8 +18,8 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
         public async Task DownloadDataAsync(CancellationToken cancellationToken = default)
         {
             using var channel = GrpcChannel.ForAddress(_options.ConnectionString);
-
             var client = new WODownloader.WODownloaderClient(channel);
+
             RequestDownload request = new()
             {
                 Proceed = true

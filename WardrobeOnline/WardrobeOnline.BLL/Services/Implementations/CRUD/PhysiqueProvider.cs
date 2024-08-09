@@ -46,7 +46,17 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             {
                 List<int> setIDs = (from Set set in entityDB.Sets
                                     select set.ID).ToList();
-                resultDTO = resultDTO with { SetIDs = setIDs };
+
+                var old = resultDTO;
+                resultDTO = new() {
+                    ID = old.ID,
+                    Growth = old.Growth,
+                    Weight = old.Weight,
+                    Force = old.Force,
+                    Description = old.Description,
+                    PersonID = old.PersonID,
+                    SetIDs = setIDs
+                };
             }
 
             return resultDTO;

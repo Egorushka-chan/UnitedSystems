@@ -7,6 +7,8 @@ using WardrobeOnline.BLL.Models.Settings;
 using WardrobeOnline.DAL;
 using WardrobeOnline.WebApi.Settings;
 using WardrobeOnline.GRPC;
+using System.Net;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,13 +24,8 @@ builder.Services.Configure<RedisSetting>(
     builder.Configuration.GetSection("RedisSetting"));
 
 builder.Services.AddDataLayer(connectionString);
-builder.Services.AddBusinessLayer(new ImageSetting() {
-    Path = builder.Configuration["ImageSetting:Path"],
-    Type = builder.Configuration["ImageSetting:Type"]
-}, new RedisSetting() {
-    Configuration = builder.Configuration["RedisSetting:Configuration"],
-    InstanceName = builder.Configuration["RedisSetting:InstanceName"]
-});
+
+AddBusinessLayer(builder);
 
 builder.Services.InjectGRPC();
 
@@ -37,11 +34,19 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration);
 });
 
+
 builder.AddRabbitMQEventBus("RabbitMQ");
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.WebHost.ConfigureKestrel((context, serverOptions) => {
+    serverOptions.Listen(IPAddress.Any, 8088, listenOptions => {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+    });
+});
+
 
 var app = builder.Build();
 
@@ -57,3 +62,11 @@ app.MapControllers();
 app.MapGRPC();
 
 app.Run();
+
+void AddBusinessLayer(WebApplicationBuilder builder)
+{
+    builder.Services.AddBusinessLayer(new RedisSetting() {
+        Configuration = builder.Configuration["RedisSetting:Configuration"],
+        InstanceName = builder.Configuration["RedisSetting:InstanceName"]
+    });
+}

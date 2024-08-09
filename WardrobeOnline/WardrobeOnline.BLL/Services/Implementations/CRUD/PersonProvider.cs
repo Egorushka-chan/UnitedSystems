@@ -46,11 +46,16 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             if (resultDTO == null)
                 return null;
 
-            if (entityDB.Physiques.Count > 0)
-            {
+            if (entityDB.Physiques.Count > 0) {
                 List<int> physiqueIDs = (from Physique physique in entityDB.Physiques
                                          select physique.ID).ToList();
-                resultDTO = resultDTO with { PhysiqueIDs = physiqueIDs };
+                var old = resultDTO;
+                resultDTO = new() {
+                    ID = old.ID,
+                    PhysiqueIDs = physiqueIDs,
+                    Name = old.Name,
+                    Type = old.Type
+                };
             }
 
             return resultDTO;

@@ -7,7 +7,6 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
-    [Table("Photo")]
     public partial class Photo : EntityDB<PhotoS>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
