@@ -1,3 +1,3 @@
-## :crown: Великий проект :construction: :construction_worker: :boom:
+## :crown: Р’РµР»РёРєРёР№ РїСЂРѕРµРєС‚ :construction: :construction_worker: :boom:
 #### 3 Web API, OBDC :key:, minIO :dvd:, Redis, Kafka, RabbitMQ
-и ещё что-то там
+Рё С‡С‚Рѕ-С‚Рѕ С‚Р°Рј РµС‰С‘
