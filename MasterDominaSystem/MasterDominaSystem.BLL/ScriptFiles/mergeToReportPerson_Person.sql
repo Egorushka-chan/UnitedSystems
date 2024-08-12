@@ -4,5 +4,5 @@
 WHEN MATCHED THEN
 	UPDATE SET RT."PersonName" = "MyName", RT."PersonType" = "MyType"
 WHEN NOT MATCHED THEN
-	INSERT (RT."PersonID", RT."PersonName", RT."PersonType"
+	INSERT (RT."PersonID", RT."PersonName", RT."PersonType")
 	VALUES ("MyID", "MyName", "MyType");

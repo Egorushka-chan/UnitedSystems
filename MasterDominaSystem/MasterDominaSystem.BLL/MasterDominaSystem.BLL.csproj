@@ -17,4 +17,10 @@
     <ProjectReference Include="..\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ScriptFiles\mergePersonToReportPerson.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
