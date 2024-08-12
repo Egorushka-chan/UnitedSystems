@@ -1,21 +1,25 @@
-﻿using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    public class SetDenormalizer : IEntityDenormalizer<Set>
+    internal class SetDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default)
+        : GeneralEntityDenormalizer<Set>(options, environment)
     {
-        public string Append(Set entity)
+        public override string Append(Set entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Delete(Set entity)
+        public override string Delete(Set entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Update(Set entity)
+        public override string Update(Set entity)
         {
             throw new NotImplementedException();
         }

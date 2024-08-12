@@ -1,36 +1,132 @@
-﻿using MasterDominaSystem.BLL.Services.Abstractions;
+﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Abstractions;
+using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Implementations;
 using MasterDominaSystem.BLL.Services.Strategies;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace MasterDominaSystem.BLL
 {
     public static class InjectorBLL
     {
-        public static IServiceCollection InjectBLL(this IServiceCollection services)
+        public static IDenormalizerBuilder InjectBLL(this IServiceCollection services)
         {
             services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>()
-                .AddDenormalizationStrategies()
+                //.AddDefaultDenormalizationStrategies()
                 .AddScoped<IDatabaseDenormalizer, DatabaseDenormalizer>();
-            return services;
+            return new DenormalizerBuilder(services);
         }
 
-        private static IServiceCollection AddDenormalizationStrategies(this IServiceCollection services)
+        /// <summary>
+        /// Подключает общие стратегии денормализации. Должна идти после AddDenormalizationStrategy
+        /// </summary>
+        /// <remarks>
+        /// Если какая-то стратегия была явно указана через <see cref="AddDenormalizationStrategy"/>, 
+        /// то он её заново не добавляет.
+        /// </remarks>
+        /// <param name="builder"></param>
+        /// <returns></returns>
+        public static IDenormalizerBuilder AddDefaultDenormalizationStrategies(this IDenormalizerBuilder builder)
         {
-            services.AddKeyedTransient<IEntityDenormalizer<Person>, PersonDenormalizer>(typeof(Person));
-            services.AddKeyedTransient<IEntityDenormalizer<Physique>, PhysiqueDenormalizer>(typeof(Physique));
-            services.AddKeyedTransient<IEntityDenormalizer<Set>, SetDenormalizer>(typeof(Set));
-            services.AddKeyedTransient<IEntityDenormalizer<Season>, SeasonDenormalizer>(typeof(Season));
-            services.AddKeyedTransient<IEntityDenormalizer<Cloth>, ClothDenormalizer>(typeof(Cloth));
-            services.AddKeyedTransient<IEntityDenormalizer<SetHasClothes>, SetHasClothesDenormalizer>(typeof(SetHasClothes));
-            services.AddKeyedTransient<IEntityDenormalizer<Photo>, PhotoDenormalizer>(typeof(Photo));
-            services.AddKeyedTransient<IEntityDenormalizer<Material>, MaterialDenormalizer>(typeof(Material));
-            services.AddKeyedTransient<IEntityDenormalizer<ClothHasMaterials>, ClothHasMaterialsDenormalizer>(typeof(ClothHasMaterials));
+            if (builder.GeneralStrategiesCreated) {
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, PersonDenormalizer>(typeof(Person).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, PhysiqueDenormalizer>(typeof(Physique).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, SetDenormalizer>(typeof(Set).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, SeasonDenormalizer>(typeof(Season).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, ClothDenormalizer>(typeof(Cloth).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, SetHasClothesDenormalizer>(typeof(SetHasClothes).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, PhotoDenormalizer>(typeof(Photo).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, MaterialDenormalizer>(typeof(Material).GetKey());
+                builder.Services.TryAddKeyedTransient<IEntityDenormalizer, ClothHasMaterialsDenormalizer>(typeof(ClothHasMaterials).GetKey());
+            }
+            else
+                throw new InvalidOperationException("Попытка вызвать метод 2 раза");
 
-            return services;
+            return builder;
+        }
+
+        /// <summary>
+        /// Позволяет специфически настроить стратегию денормализации
+        /// </summary>
+        /// <typeparam name="TEntityDB">Объект базы данных</typeparam>
+        /// <param name="builder">Получить объект можно через <see cref="InjectBLL"/></param>
+        /// <param name="options">Лямбда для задания опций денормализации</param>
+        public static IDenormalizerBuilder AddDenormalizationStrategy<TEntityDB>(this IDenormalizerBuilder builder, Action<DenormalizationOptions>? options = default)
+            where TEntityDB : IEntityDB, new()
+        {
+
+            if (builder.GeneralStrategiesCreated)
+                throw new InvalidOperationException("Нельзя настроить стратегии после вызова AddDefaultDenormalizationStrategies");
+            // Миллионы switch-case'ов вышли потому что я хочу в методе понятным языком обозначить, для кого денормализацию настраиваем, через всем понятные объекты
+            // И сохранить стратегии internal
+            TEntityDB entity = new();
+            switch (entity) {
+                case Person:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, PersonDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new PersonDenormalizer(env, options);
+                    });
+                    break;
+                case Cloth:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, ClothDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new ClothDenormalizer(env, options);
+                    });
+                    break;
+                case ClothHasMaterials:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, ClothHasMaterialsDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new ClothHasMaterialsDenormalizer(env, options);
+                    });
+                    break;
+                case Material:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, MaterialDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new MaterialDenormalizer(env, options);
+                    });
+                    break;
+                case Photo:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, PhotoDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new PhotoDenormalizer(env, options);
+                    });
+                    break;
+                case Physique:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, PhysiqueDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new PhysiqueDenormalizer(env, options);
+                    });
+                    break;
+                case Season:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, SeasonDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new SeasonDenormalizer(env, options);
+                    });
+                    break;
+                case Set:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, SetDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new SetDenormalizer(env, options);
+                    });
+                    break;
+                case SetHasClothes:
+                    builder.Services.AddKeyedTransient<IEntityDenormalizer, SetHasClothesDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
+                        IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
+                        return new SetHasClothesDenormalizer(env, options);
+                    });
+                    break;
+                default:
+                    throw new NotImplementedException($"Тип {typeof(TEntityDB)} не может быть обработан в стратегии денормализации");
+            }
+
+            return builder;
         }
     }
 }

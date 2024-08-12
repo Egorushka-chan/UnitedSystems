@@ -2,9 +2,7 @@
 
 namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
 {
-    /// <summary>
-    /// Генерирует скрипты SQL для применения в базу данных
-    /// </summary>
+    /// <inheritdoc cref="IEntityDenormalizer"/>
     public interface IEntityDenormalizer<in TEntity> : IEntityDenormalizer
         where TEntity : IEntityDB
     {

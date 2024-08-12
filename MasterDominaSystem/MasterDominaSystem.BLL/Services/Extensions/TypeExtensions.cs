@@ -1,6 +1,6 @@
-﻿namespace UnitedSystems.EventBus
+﻿namespace MasterDominaSystem.BLL.Services.Extensions
 {
-    public static class TypeKeyCreatorExtension
+    internal static class TypeExtensions
     {
         /// <summary>
         /// Создаёт ключ из имени типа
@@ -9,7 +9,7 @@
         /// Т.к имя очереди получается из имени класса ивента, следует учитывать существование множества вариаций приведения Type в string.
         /// Чтобы избежать проблем, приводить нужно через этот метод
         /// </remarks>
-        public static string GetKey(this Type type)
+        internal static string GetKey(this Type type)
         {
             // return type.Name - не работает с generic
             return type.ToString();

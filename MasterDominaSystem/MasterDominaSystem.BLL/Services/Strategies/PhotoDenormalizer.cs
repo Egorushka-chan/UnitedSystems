@@ -1,21 +1,25 @@
-﻿using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    public class PhotoDenormalizer : IEntityDenormalizer<Photo>
+    internal class PhotoDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
+        : GeneralEntityDenormalizer<Photo>(options, environment)
     {
-        public string Append(Photo entity)
+        public override string Append(Photo entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Delete(Photo entity)
+        public override string Delete(Photo entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Update(Photo entity)
+        public override string Update(Photo entity)
         {
             throw new NotImplementedException();
         }

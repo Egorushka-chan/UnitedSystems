@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace MasterDominaSystem.DAL.Reports
 {
-    public class ReportPerson
+    [Index(nameof(PersonID), nameof(PhysiqueID), nameof(SetID), nameof(SeasonID), nameof(ClothID), nameof(PhotoID))]
+    public class ReportPerson : IReport
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GeneralID { get; set; }

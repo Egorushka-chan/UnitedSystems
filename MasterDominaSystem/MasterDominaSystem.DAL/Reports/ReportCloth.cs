@@ -1,18 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace MasterDominaSystem.DAL.Reports
 {
-    public class ReportCloth
+    [Index(nameof(ClothID), nameof(MaterialID), nameof(PhotoID))]
+    public class ReportCloth : IReport
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GeneralID { get; set; }
         // Cloth
-        public int? ClothID { get; set; }
-        public string? ClothName { get; set; }
+        public int ClothID { get; set; }
+        public string ClothName { get; set; } = string.Empty;
         public string? ClothDescription { get; set; }
-        public int? ClothRating { get; set; }
-        public string? ClothSize { get; set; }
+        public int ClothRating { get; set; }
+        public string ClothSize { get; set; } = string.Empty;
         // Material
         public int? MaterialID { get; set; }
         public string? MaterialName { get; set; }

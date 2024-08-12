@@ -1,21 +1,25 @@
-﻿using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    public class SeasonDenormalizer : IEntityDenormalizer<Season>
+    internal class SeasonDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
+        : GeneralEntityDenormalizer<Season>(options, environment)
     {
-        public string Append(Season entity)
+        public override string Append(Season entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Delete(Season entity)
+        public override string Delete(Season entity)
         {
             throw new NotImplementedException();
         }
 
-        public string Update(Season entity)
+        public override string Update(Season entity)
         {
             throw new NotImplementedException();
         }

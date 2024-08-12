@@ -2,6 +2,8 @@ using MasterDominaSystem.BLL;
 using MasterDominaSystem.DAL;
 using MasterDominaSystem.RMQL;
 using MasterDominaSystem.GRPC;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using MasterDominaSystem.DAL.Reports;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +21,12 @@ connectionString = connectionString.Replace("###", "mdm");
 // Подтягиваем библиотеки
 builder.Services
     .InjectBLL()
-    .InjectDAL(connectionString);
+    //.AddDenormalizationStrategy<Person>(opt => {
+    //    opt.NotDenormalizeToTables.Add(typeof(ReportCloth));
+    //});
+    .AddDefaultDenormalizationStrategies();
+
+builder.Services.InjectDAL(connectionString);
 
 builder.InjectRMQL("RabbitMQ")
     .InjectGRPC();

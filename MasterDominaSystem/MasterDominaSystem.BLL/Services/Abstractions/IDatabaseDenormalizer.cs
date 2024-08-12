@@ -4,8 +4,8 @@ namespace MasterDominaSystem.BLL.Services.Abstractions
 {
     public interface IDatabaseDenormalizer
     {
-        Task AppendNew(IEntityDB entity);
+        Task Append<TEntity>(TEntity entity) where TEntity : IEntityDB;
 
-        Task AppendNew(IEnumerable<IEntityDB> entities);
+        Task AppendRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : IEntityDB;
     }
 }
