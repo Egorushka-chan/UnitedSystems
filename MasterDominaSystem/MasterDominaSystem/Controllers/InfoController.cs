@@ -2,6 +2,7 @@
 using System.Net.NetworkInformation;
 
 using MasterDominaSystem.BLL.Services.Abstractions;
+using MasterDominaSystem.DAL;
 using MasterDominaSystem.GRPC.Services.Interfaces;
 
 using Microsoft.AspNetCore.Http;
@@ -31,25 +32,10 @@ namespace MasterDominaSystem.Controllers
             return TypedResults.Ok();
         }
 
-        [HttpPut]
-        public async Task<IResult> Ping([FromServices] IHttpClientFactory clientFactory)
+        [HttpPut("{id?}")]
+        public async Task<IResult> CreateBaza([FromServices] MasterContext context, int? id)
         {
-            var client = clientFactory.CreateClient("tester");
-
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get,
-                "http://WardrobeWebApi:8088/api/clothes/1");
-            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            if (httpResponseMessage.IsSuccessStatusCode) {
-                using var body = await httpResponseMessage.Content.ReadAsStreamAsync();
-                using var reader = new StreamReader(body); 
-                return TypedResults.Ok(await reader.ReadToEndAsync());
-            }
-            else {
-                using var body = await httpResponseMessage.Content.ReadAsStreamAsync();
-                using var reader = new StreamReader(body);
-                string result = await reader.ReadToEndAsync();
-                return Results.Ok(httpResponseMessage.StatusCode + result);   
-            }
+            return TypedResults.Ok(context.ReportCloths.ToList());
         }
     }
 }

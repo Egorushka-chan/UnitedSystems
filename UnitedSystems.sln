@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManyEntitiesSender", "ManyEntitiesSender", "{161AD461-35EE-40F2-A0B8-D80ED3B3A88D}"
 	ProjectSection(SolutionItems) = preProject
-		Readme.md = Readme.md
+		ManyEntitiesSender\Readme.md = ManyEntitiesSender\Readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MasterDominaSystem", "MasterDominaSystem", "{0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}"
@@ -20,6 +20,9 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "Docker\docker-compose.dcproj", "{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{AAE50F85-2481-44AB-B6F4-C2F2887B84C4}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem", "MasterDominaSystem\MasterDominaSystem\MasterDominaSystem.csproj", "{E061D02D-1A85-4215-9850-0FCEBDC7AFF1}"
 EndProject
@@ -65,7 +68,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.GRPC", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.GRPC", "WardrobeOnline\WardrobeOnline.GRPC\WardrobeOnline.GRPC.csproj", "{F0EDE189-C330-494D-B66D-DD832892FFB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.GRPC", "UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj", "{043BFE66-2F3F-45E0-865B-5E12BAE95BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.GRPC", "UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj", "{043BFE66-2F3F-45E0-865B-5E12BAE95BDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A07E8582-9F40-43B7-9343-F228609C4A03}"
 	ProjectSection(SolutionItems) = preProject

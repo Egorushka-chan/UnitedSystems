@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MasterDominaSystem.DAL.Reports
 {
-    public class ReportGeneral
+    public class ReportPerson
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GeneralID { get; set; }
         // Person
-        public int? PersonID { get; set; }
-        public string? PersonName { get; set; }
-        public string? Type { get; set; } // Не только люди могут одеваться
+        public int PersonID { get; set; }
+        public string PersonName { get; set; } = string.Empty;
+        public string PersonType { get; set; } = string.Empty; // Не только люди могут одеваться
         // Physique
         public int? PhysiqueID { get; set; }
         public int? PhysiqueWeight { get; set; }

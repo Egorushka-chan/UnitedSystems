@@ -16,4 +16,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj" />
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
