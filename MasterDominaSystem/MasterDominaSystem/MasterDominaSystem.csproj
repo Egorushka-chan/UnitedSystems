@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\UnitedSystems\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj" />
+    <ProjectReference Include="..\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj" />
     <ProjectReference Include="..\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />
     <ProjectReference Include="..\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj" />
     <ProjectReference Include="..\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj" />

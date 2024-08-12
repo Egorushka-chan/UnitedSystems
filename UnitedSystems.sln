@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.WardrobeOnline", "UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj", "{460B8BEE-37BF-4A2A-9C05-96CD14375D47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.GRPC", "UnitedSystems\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj", "{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.GRPC", "MasterDominaSystem\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj", "{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.GRPC", "WardrobeOnline\WardrobeOnline.GRPC\WardrobeOnline.GRPC.csproj", "{F0EDE189-C330-494D-B66D-DD832892FFB4}"
 EndProject
