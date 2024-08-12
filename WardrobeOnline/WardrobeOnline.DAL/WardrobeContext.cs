@@ -11,7 +11,9 @@ namespace WardrobeOnline.DAL
     {
         public WardrobeContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
         {
-            this.Database.EnsureCreated();
+            if (this.Database.EnsureCreated()) {
+                
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -5,6 +5,6 @@
         /// <summary>
         /// Заполнить базу данных элементами
         /// </summary>
-        Task Seed(IWardrobeContext context);
+        Task Seed();
     }
 }
