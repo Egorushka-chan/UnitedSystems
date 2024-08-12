@@ -1,4 +1,6 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Extensions;
+using MasterDominaSystem.DAL.Reports;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -10,7 +12,8 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
         : IEntityDenormalizer<TEntityDB>
         where TEntityDB : IEntityDB
     {
-        private readonly string _scriptsPath;
+        protected Dictionary<string, string> ScriptsDomains;
+        protected readonly DenormalizationOptions _options;
         protected GeneralEntityDenormalizer(Action<DenormalizationOptions>? options,
             IWebHostEnvironment environment)
         {
@@ -18,10 +21,13 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
             options?.Invoke(_options);
 
             string dir = environment.ContentRootPath;
-            _scriptsPath = Path.Combine(dir, "ScriptFiles");
-        }
+            string scriptsPath = Path.Combine(dir, "ScriptFiles");
 
-        private readonly DenormalizationOptions _options;
+            ScriptsDomains = new() {
+                {typeof(ReportPerson).GetKey(), Path.Combine(scriptsPath, "mergeToReportPerson_") },
+                {typeof(ReportCloth).GetKey(), Path.Combine(scriptsPath, "mergeToReportCloth_") }
+            };
+        }
 
         public abstract string Append(TEntityDB entity);
 
