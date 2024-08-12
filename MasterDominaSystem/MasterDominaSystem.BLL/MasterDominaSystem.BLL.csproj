@@ -21,6 +21,33 @@
     <None Update="ScriptFiles\mergePersonToReportPerson.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="ScriptFiles\mergeToReportCloth_Cloth.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportCloth_Material.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportCloth_Photo.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Cloth.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Person.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Photo.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Physique.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Season.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ScriptFiles\mergeToReportPerson_Set.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
