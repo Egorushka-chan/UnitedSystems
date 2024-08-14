@@ -37,10 +37,9 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
 
         private async Task ProcessMessage(ResponseDownload response)
         {
+
             var clothesDB = from clothProto in response.Cloths
                             select clothProto.ConvertToDB();
-            Task clothesTask = denormalizer.AppendRange(clothesDB);
-
             var personsDB = from personProto in response.Persons
                             select personProto.ConvertToDB();
             var physiquesDB = from physiqueProto in response.Physiques
@@ -57,15 +56,16 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
                               select materialProto.ConvertToDB();
             var clothMaterialsDB = from clothHasMaterialsProto in response.ClothHasMaterials
                                    select clothHasMaterialsProto.ConvertToDB();
-            await clothesTask;
+
             await denormalizer.AppendRange(personsDB);
             await denormalizer.AppendRange(physiquesDB);
             await denormalizer.AppendRange(setsDB);
             await denormalizer.AppendRange(seasonsDB);
             await denormalizer.AppendRange(setHasClothesDb);
+            await denormalizer.AppendRange(clothesDB);
             await denormalizer.AppendRange(photosDB);
-            await denormalizer.AppendRange(materialsDB);
             await denormalizer.AppendRange(clothMaterialsDB);
+            await denormalizer.AppendRange(materialsDB);
         }
     }
 }

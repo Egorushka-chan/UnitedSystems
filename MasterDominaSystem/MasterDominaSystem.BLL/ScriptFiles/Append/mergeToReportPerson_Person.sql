@@ -1,5 +1,5 @@
-﻿MERGE INTO public."ReportCloths" as RT
-	USING (Select {0} as "MyID", {1} as "MyName", {2} as "MyType")
+﻿MERGE INTO "ReportPersons" as RT
+	USING (Select '{0}' as "MyID", '{1}' as "MyName", '{2}' as "MyType") AS Q
 	ON "MyID" = RT."PersonID"
 WHEN MATCHED THEN
 	UPDATE SET RT."PersonName" = "MyName", RT."PersonType" = "MyType"

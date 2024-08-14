@@ -1,5 +1,7 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using MasterDominaSystem.DAL.Reports;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -10,19 +12,18 @@ namespace MasterDominaSystem.BLL.Services.Strategies
     internal class MaterialDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
         : GeneralEntityDenormalizer<Material>(options, environment)
     {
-        public override string Append(Material entity)
+        protected override string[] DefaultAllowedReports { get; set; } = [
+            typeof(ReportCloth).GetKey()
+        ];
+
+        protected override string FormatAppend(string script, Material entity)
         {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID, entity.Name, entity.Description);
         }
 
-        public override string Delete(Material entity)
+        protected override string FormatDelete(string script, Material entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public override string Update(Material entity)
-        {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID);
         }
     }
 }

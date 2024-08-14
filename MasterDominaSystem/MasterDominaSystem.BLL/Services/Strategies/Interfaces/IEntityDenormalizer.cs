@@ -11,9 +11,6 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
 
         string Delete(TEntity entity);
         string IEntityDenormalizer.Delete(IEntityDB entity) => Delete(entity);
-
-        string Update(TEntity entity);
-        string IEntityDenormalizer.Update(IEntityDB entity) => Update(entity);
     }
 
     /// <summary>
@@ -23,6 +20,5 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
     {
         string Append(IEntityDB entity);
         string Delete(IEntityDB entity);
-        string Update(IEntityDB entity);
     }
 }

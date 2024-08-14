@@ -1,5 +1,8 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using MasterDominaSystem.DAL.Reports;
+
 using Microsoft.AspNetCore.Hosting;
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
@@ -9,19 +12,19 @@ namespace MasterDominaSystem.BLL.Services.Strategies
     internal class ClothHasMaterialsDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
         : GeneralEntityDenormalizer<ClothHasMaterials>(options, environment)
     {
-        public override string Append(ClothHasMaterials entity)
+        protected override string[] DefaultAllowedReports { get; set; } = [
+            typeof(ReportCloth).GetKey(),
+            typeof(ReportPerson).GetKey()
+        ];
+
+        protected override string FormatAppend(string script, ClothHasMaterials entity)
         {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID, entity.ClothID, entity.MaterialID);
         }
 
-        public override string Delete(ClothHasMaterials entity)
+        protected override string FormatDelete(string script, ClothHasMaterials entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public override string Update(ClothHasMaterials entity)
-        {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID, entity.ClothID, entity.MaterialID);
         }
     }
 }

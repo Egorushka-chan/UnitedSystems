@@ -1,5 +1,8 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using MasterDominaSystem.DAL.Reports;
+
 using Microsoft.AspNetCore.Hosting;
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
@@ -9,19 +12,18 @@ namespace MasterDominaSystem.BLL.Services.Strategies
     internal class PersonDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
         : GeneralEntityDenormalizer<Person>(options, environment)
     {
-        public override string Append(Person entity)
+        protected override string[] DefaultAllowedReports { get; set; } = [
+            typeof(ReportPerson).GetKey()
+        ];
+
+        protected override string FormatAppend(string script, Person entity)
         {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID, entity.Name, entity.Type);
         }
 
-        public override string Delete(Person entity)
+        protected override string FormatDelete(string script, Person entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public override string Update(Person entity)
-        {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID);
         }
     }
 }

@@ -33,11 +33,12 @@ namespace WardrobeOnline.GRPC.Services.Implementations
             await SendAsync<Physique>(responseStream, token);
             await SendAsync<Set>(responseStream, token);
             await SendAsync<Season>(responseStream, token);
-            await SendAsync<Cloth>(responseStream, token);
             await SendAsync<SetHasClothes>(responseStream, token);
+            await SendAsync<Cloth>(responseStream, token);
             await SendAsync<Photo>(responseStream, token);
-            await SendAsync<Material>(responseStream, token);
             await SendAsync<ClothHasMaterials>(responseStream, token);
+            await SendAsync<Material>(responseStream, token);
+
         }
 
         private async Task SendAsync<TEntity>(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)

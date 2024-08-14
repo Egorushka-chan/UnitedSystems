@@ -1,4 +1,7 @@
-﻿[*.cs]
+﻿[*.sql]
+SQL80001.severity = silent
+
+[*.cs]
 
 # Default severity for analyzer diagnostics with category 'Usage'
 

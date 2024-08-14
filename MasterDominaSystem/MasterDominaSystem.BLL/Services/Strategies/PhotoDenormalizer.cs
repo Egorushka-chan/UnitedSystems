@@ -1,5 +1,8 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using MasterDominaSystem.DAL.Reports;
+
 using Microsoft.AspNetCore.Hosting;
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
@@ -9,19 +12,19 @@ namespace MasterDominaSystem.BLL.Services.Strategies
     internal class PhotoDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
         : GeneralEntityDenormalizer<Photo>(options, environment)
     {
-        public override string Append(Photo entity)
+        protected override string[] DefaultAllowedReports { get; set; } = [
+            typeof(ReportCloth).GetKey(),
+            typeof(ReportPerson).GetKey()
+        ];
+
+        protected override string FormatAppend(string script, Photo entity)
         {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID, entity.Name, entity.HashCode, entity.IsDBStored, entity.ClothID);
         }
 
-        public override string Delete(Photo entity)
+        protected override string FormatDelete(string script, Photo entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public override string Update(Photo entity)
-        {
-            throw new NotImplementedException();
+            return string.Format(script, entity.ID);
         }
     }
 }
