@@ -15,6 +15,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
                 Name = Value.Name
             };
         }
+
+        public static implicit operator Season(SeasonWrapProto wrap) => wrap.CreateDB();
+        public static implicit operator SeasonProto(SeasonWrapProto wrap) => wrap.Value;
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
         internal override EntityDB<SeasonS> GenericConvertToDB(EntityDB<SeasonS> entityDB) => CreateDB();

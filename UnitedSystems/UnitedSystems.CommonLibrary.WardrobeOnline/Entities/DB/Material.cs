@@ -5,6 +5,8 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
+using WOSenderDB;
+
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
     public partial class Material : EntityDB<MaterialsS>
@@ -24,6 +26,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 Description = Description
             });
         }
+
+        public static implicit operator MaterialWrapProto(Material entity) => entity.CreateProto();
+        public static implicit operator MaterialProto(Material entity) => (MaterialWrapProto)entity;
 
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
         internal override EntityProto<MaterialsS> GenericConvertToProto(EntityProto<MaterialsS> entityProto) => CreateProto();

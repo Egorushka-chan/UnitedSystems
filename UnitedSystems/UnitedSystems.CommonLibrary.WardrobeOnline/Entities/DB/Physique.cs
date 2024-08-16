@@ -6,6 +6,8 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
+using WOSenderDB;
+
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
     public partial class Physique : EntityDB<PhysiqueS>
@@ -55,6 +57,10 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 SetIDs = setIDs
             };
         }
+
+        public static implicit operator PhysiqueWrapProto(Physique physique) => physique.CreateProto();
+        public static implicit operator PhysiqueProto(Physique physique) => (PhysiqueWrapProto)physique;
+        public static implicit operator Physique(PhysiqueProto physiqueProto) => new PhysiqueWrapProto(physiqueProto);
         internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
         internal override EntityDTO<PhysiqueS> GenericConvertToDTO(EntityDTO<PhysiqueS> entityDTO) => CreateDTO();

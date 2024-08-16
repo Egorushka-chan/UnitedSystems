@@ -19,6 +19,8 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
             };
         }
 
+        public static implicit operator Photo(PhotoWrapProto wrap) => wrap.CreateDB();
+        public static implicit operator PhotoProto(PhotoWrapProto wrap) => wrap.Value;
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
         internal override EntityDB<PhotoS> GenericConvertToDB(EntityDB<PhotoS> entityDB) => CreateDB();

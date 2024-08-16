@@ -6,6 +6,8 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
+using WOSenderDB;
+
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
     public partial class Cloth : EntityDB<ClothS>
@@ -66,6 +68,10 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                     Size = Size
                 });
         }
+
+        public static implicit operator ClothWrapProto(Cloth cloth) => cloth.CreateProto();
+        public static implicit operator ClothProto(Cloth cloth) => (ClothWrapProto)cloth;
+        public static implicit operator Cloth(ClothProto proto) => new ClothWrapProto(proto);
 
         internal override EntityDTO<ClothS> GenericConvertToDTO(EntityDTO<ClothS> entityDTO) => CreateDTO();
 

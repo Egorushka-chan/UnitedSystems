@@ -1,9 +1,9 @@
 using MasterDominaSystem.BLL;
 using MasterDominaSystem.DAL;
 using MasterDominaSystem.RMQL;
-using MasterDominaSystem.GRPC;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using MasterDominaSystem.DAL.Reports;
+using MasterDominaSystem.GRPC;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +28,9 @@ builder.Services
 
 builder.Services.InjectDAL(connectionString);
 
-builder.InjectRMQL("RabbitMQ")
-    .InjectGRPC();
+builder.InjectRMQL("RabbitMQ");
+
+builder.InjectGRPC();
 
 var app = builder.Build();
 

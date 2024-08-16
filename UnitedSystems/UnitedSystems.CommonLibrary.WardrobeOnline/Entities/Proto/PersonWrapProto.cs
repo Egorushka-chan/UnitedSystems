@@ -17,6 +17,8 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
             };
         }
 
+        public static implicit operator Person(PersonWrapProto wrap) => wrap.CreateDB();
+        public static implicit operator PersonProto(PersonWrapProto wrap) => wrap.Value;
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
         internal override EntityDB<PersonS> GenericConvertToDB(EntityDB<PersonS> entityDB) => CreateDB();

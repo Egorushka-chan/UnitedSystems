@@ -28,6 +28,10 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 MaterialID = MaterialID
             });
         }
+
+        public static implicit operator ClothHasMaterialWrapProto(ClothHasMaterials entity) => entity.CreateProto();
+        public static implicit operator ClothHasMaterialsProto(ClothHasMaterials entity) => (ClothHasMaterialWrapProto)entity;
+        public static implicit operator ClothHasMaterials(ClothHasMaterialsProto proto) => new ClothHasMaterialWrapProto(proto);
         internal override EntityProto<ClothHasMaterialsS> GenericConvertToProto(EntityProto<ClothHasMaterialsS> entityProto) => CreateProto();
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
 

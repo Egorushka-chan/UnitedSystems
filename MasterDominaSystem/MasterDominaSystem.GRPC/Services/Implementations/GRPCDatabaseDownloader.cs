@@ -1,18 +1,24 @@
-﻿using Grpc.Net.Client;
-using Grpc.Net.ClientFactory;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Runtime.ExceptionServices;
 
-using MasterDominaSystem.BLL.Services.Abstractions;
+using Grpc.Net.Client;
+
 using MasterDominaSystem.GRPC.Models;
-using MasterDominaSystem.GRPC.Services.Extensions;
 using MasterDominaSystem.GRPC.Services.Interfaces;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
+using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
+using UnitedSystems.EventBus.Interfaces;
 
 using WOSenderDB;
 
 namespace MasterDominaSystem.GRPC.Services.Implementations
 {
-    public class GRPCDatabaseDownloader(IOptions<ConnectionGRPCSettings> options, IDatabaseDenormalizer denormalizer) : IDatabaseDownloader
+    public class GRPCDatabaseDownloader(IOptions<ConnectionGRPCSettings> options, IServiceProvider serviceProvider) : IDatabaseDownloader
     {
         readonly ConnectionGRPCSettings _options = options.Value;
         public async Task DownloadDataAsync(CancellationToken cancellationToken = default)
@@ -37,35 +43,89 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
 
         private async Task ProcessMessage(ResponseDownload response)
         {
+            await HandleClothes(response);
+            await HandlePersons(response);
+            await HandleSets(response);
+        }
 
-            var clothesDB = from clothProto in response.Cloths
-                            select clothProto.ConvertToDB();
-            var personsDB = from personProto in response.Persons
-                            select personProto.ConvertToDB();
-            var physiquesDB = from physiqueProto in response.Physiques
-                              select physiqueProto.ConvertToDB();
-            var setsDB = from setsProto in response.Sets
-                         select setsProto.ConvertToDB();
-            var seasonsDB = from seasonProto in response.Seasons
-                            select seasonProto.ConvertToDB();
-            var setHasClothesDb = from setHasClothesProto in response.SetHasClothes
-                                  select setHasClothesProto.ConvertToDB();
-            var photosDB = from photoProto in response.Photos
-                           select photoProto.ConvertToDB();
-            var materialsDB = from materialProto in response.Materials
-                              select materialProto.ConvertToDB();
-            var clothMaterialsDB = from clothHasMaterialsProto in response.ClothHasMaterials
-                                   select clothHasMaterialsProto.ConvertToDB();
+        private async Task HandleClothes(ResponseDownload response)
+        {
+            foreach (var clothIE in response.ClothIEs) {
+                ClothWrapProto clothWrap = new(clothIE.Cloth);
+                Material[] materials =
+                    (from materialProto in clothIE.MaterialsValues
+                     select (Material)new MaterialWrapProto(materialProto))
+                    .ToArray();
+                ClothHasMaterials[] clothMaterials =
+                    (from clothMaterialID in clothIE.MaterialIDs
+                     select (ClothHasMaterials)new ClothHasMaterialWrapProto(clothMaterialID))
+                     .ToArray();
 
-            await denormalizer.AppendRange(personsDB);
-            await denormalizer.AppendRange(physiquesDB);
-            await denormalizer.AppendRange(setsDB);
-            await denormalizer.AppendRange(seasonsDB);
-            await denormalizer.AppendRange(setHasClothesDb);
-            await denormalizer.AppendRange(clothesDB);
-            await denormalizer.AppendRange(photosDB);
-            await denormalizer.AppendRange(clothMaterialsDB);
-            await denormalizer.AppendRange(materialsDB);
+                Photo[] photos =
+                    (from photoProto in clothIE.Photos
+                     select (Photo)new PhotoWrapProto(photoProto))
+                     .ToArray();
+
+                Cloth cloth = clothWrap;
+
+                var integration = new AppendedClothIntegrationEvent(cloth) {
+                    Materials = materials,
+                    ClothHasMaterials = clothMaterials,
+                    Photos = photos
+                };
+
+                var handlers = serviceProvider.GetKeyedServices<IIntegrationEventHandler>(integration);
+                foreach (var handler in handlers) {
+                    await handler.Handle(integration);
+                }
+            }
+        }
+
+        private async Task HandlePersons(ResponseDownload response)
+        {
+            foreach (var personIE in response.PersonIEs) {
+                PersonWrapProto personWrap = new(personIE.Person);
+                Physique[] physiques =
+                    (from physiqueProto in personIE.Physiques
+                     select (Physique)new PhysiqueWrapProto(physiqueProto))
+                    .ToArray();
+
+                Person person = personWrap;
+
+                var integration = new AppendedPersonIntegrationEvent(person) {
+                    Physiques = physiques
+                };
+
+                var handlers = serviceProvider.GetKeyedServices<IIntegrationEventHandler>(integration);
+                foreach (var handler in handlers) {
+                    await handler.Handle(integration);
+                }
+            }
+        }
+
+        private async Task HandleSets(ResponseDownload response)
+        {
+            foreach(var setIE in response.SetIEs) {
+                Set set = new SetWrapProto(setIE.Set);
+                Season season = new SeasonWrapProto(setIE.Season);
+                set.Season = season;
+                
+                SetHasClothes[] setClothesIDs = 
+                    (from proto in setIE.ClothIDs
+                     select (SetHasClothes)new SetHasClothesWrapProto(proto))
+                     .ToArray();
+                set.SetHasClothes = setClothesIDs;
+
+                var integration = new AppendedSetIntegrationEvent(set) {
+                    Season = season,
+                    SetHasClothes = setClothesIDs
+                };
+
+                var handlers = serviceProvider.GetKeyedServices<IIntegrationEventHandler>(integration);
+                foreach(var handler in handlers) {
+                    await handler.Handle(integration);
+                }
+            }
         }
     }
 }

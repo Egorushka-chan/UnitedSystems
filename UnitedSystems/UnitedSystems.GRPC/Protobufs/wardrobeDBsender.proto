@@ -7,6 +7,30 @@ service WODownloader{
 	rpc DownloadDatabaseEntities (RequestDownload) returns (stream ResponseDownload);
 }
 
+
+message ClothIntegrationIventProto{
+	ClothProto Cloth = 1;
+	repeated ClothHasMaterialsProto MaterialIDs = 2;
+	repeated MaterialProto MaterialsValues = 3;
+	repeated PhotoProto Photos = 4;
+}
+
+message PhysiqueIntegrationEventProto{
+	PhysiqueProto Physique = 1;
+	repeated SetProto Sets = 2;
+}
+
+message SetIntegrationEventProto{
+	SetProto Set = 1;
+	SeasonProto Season = 2;
+	repeated SetHasClothesProto ClothIDs = 3;
+}
+
+message PersonIntegrationEventProto{
+	PersonProto Person = 1;
+	repeated PhysiqueProto Physiques = 2;
+}
+
 message ClothProto{
 	int32 ID = 1;
 	string Name = 2;
@@ -76,13 +100,7 @@ message RequestDownload{
 message ResponseDownload{
 	int32 PackageNumber = 1;
 	int32 PackageSize = 2;
-	repeated ClothProto Cloths = 3;
-	repeated PersonProto Persons = 4;
-	repeated PhysiqueProto Physiques = 5;
-	repeated SetProto Sets = 6;
-	repeated SeasonProto Seasons = 7;
-	repeated SetHasClothesProto SetHasClothes = 8;
-    repeated MaterialProto Materials = 9;
-	repeated ClothHasMaterialsProto ClothHasMaterials = 10;
-	repeated PhotoProto Photos = 11;
+	repeated ClothIntegrationIventProto ClothIEs = 3;
+	repeated PersonIntegrationEventProto PersonIEs = 4;
+	repeated SetIntegrationEventProto SetIEs = 5;
 }

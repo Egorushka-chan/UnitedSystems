@@ -6,6 +6,7 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using System.Linq;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
+using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
@@ -61,6 +62,10 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 SeasonID = SeasonID
             });
         }
+
+        public static implicit operator SetWrapProto(Set entity) => entity.CreateProto();
+        public static implicit operator SetProto(Set entity) => (SetWrapProto)entity;
+        public static implicit operator Set(SetProto proto) => new SetWrapProto(proto);
         internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
 
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();

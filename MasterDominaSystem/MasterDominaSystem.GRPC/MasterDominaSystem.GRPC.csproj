@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\MasterDominaSystem\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />
     <ProjectReference Include="..\..\MasterDominaSystem\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj" />
+    <ProjectReference Include="..\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

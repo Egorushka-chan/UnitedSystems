@@ -19,6 +19,13 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
             };
         }
 
+        public static implicit operator Cloth(ClothWrapProto wrapProto)
+        {
+            return wrapProto.CreateDB();
+        }
+
+        public static implicit operator ClothProto(ClothWrapProto wrap) => wrap.Value;
+
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
         internal override EntityDB<ClothS> GenericConvertToDB(EntityDB<ClothS> entityDB) => CreateDB();
     }

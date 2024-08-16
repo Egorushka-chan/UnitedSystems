@@ -16,6 +16,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
                 SetID = Value.SetID
             };
         }
+
+        public static implicit operator SetHasClothes(SetHasClothesWrapProto wrap) => wrap.CreateDB();
+        public static implicit operator SetHasClothesProto(SetHasClothesWrapProto wrap) => wrap.Value;
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
 
         internal override EntityDB<SetHasClothesS> GenericConvertToDB(EntityDB<SetHasClothesS> entityDB) => CreateDB();

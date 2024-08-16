@@ -5,6 +5,8 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
 
+using WOSenderDB;
+
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
     public partial class Photo : EntityDB<PhotoS>
@@ -32,6 +34,8 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
             });
         }
 
+        public static implicit operator PhotoWrapProto(Photo entity) => entity.CreateProto();
+        public static implicit operator PhotoProto(Photo entity) => (PhotoWrapProto)entity;
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
         internal override EntityProto<PhotoS> GenericConvertToProto(EntityProto<PhotoS> entityProto) => CreateProto();
 

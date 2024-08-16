@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DTO;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto;
+
+using WOSenderDB;
 
 namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
 {
@@ -43,6 +47,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB
                 Type = Type
             });
         }
+
+        public static implicit operator PersonWrapProto(Person entity) => entity.CreateProto();
+        public static implicit operator PersonProto(Person entity) => (PersonWrapProto)entity;
         internal override EntityDTO GeneralConvertToDTO(EntityDTO entityDTO) => CreateDTO();
         internal override EntityProto GeneralConvertToProto(EntityProto entityProto) => CreateProto();
         internal override EntityDTO<PersonS> GenericConvertToDTO(EntityDTO<PersonS> entityDTO) => CreateDTO();

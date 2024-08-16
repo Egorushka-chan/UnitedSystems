@@ -19,6 +19,9 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
                 PersonID = Value.PersonID
             };
         }
+
+        public static implicit operator Physique(PhysiqueWrapProto wrap) => wrap.CreateDB();
+        public static implicit operator PhysiqueProto(PhysiqueWrapProto wrap) => wrap.Value;
         internal override EntityDB GeneralConvertToDB(EntityDB entityDB) => CreateDB();
         internal override EntityDB<PhysiqueS> GenericConvertToDB(EntityDB<PhysiqueS> entityDB) => CreateDB();
     }

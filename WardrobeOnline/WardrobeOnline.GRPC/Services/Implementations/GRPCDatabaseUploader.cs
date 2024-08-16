@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WardrobeOnline.DAL.Interfaces;
 using WardrobeOnline.GRPC.Services.Interfaces;
@@ -29,47 +28,152 @@ namespace WardrobeOnline.GRPC.Services.Implementations
 
             CancellationToken token = context.CancellationToken;
 
-            await SendAsync<Person>(responseStream, token);
-            await SendAsync<Physique>(responseStream, token);
-            await SendAsync<Set>(responseStream, token);
-            await SendAsync<Season>(responseStream, token);
-            await SendAsync<SetHasClothes>(responseStream, token);
-            await SendAsync<Cloth>(responseStream, token);
-            await SendAsync<Photo>(responseStream, token);
-            await SendAsync<ClothHasMaterials>(responseStream, token);
-            await SendAsync<Material>(responseStream, token);
-
+            await SendClothes(responseStream, token);
+            await SendPersons(responseStream, token);
+            await SendSets(responseStream, token);
         }
 
-        private async Task SendAsync<TEntity>(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
-            where TEntity : EntityDB
+        private async Task SendClothes(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
         {
             int iteration = 1;
             bool isEnd = false;
             while (!token.IsCancellationRequested && !isEnd) {
-                
                 ResponseDownload response = new() {
                     PackageNumber = iteration,
                     PackageSize = _packageSize
                 };
-                
-                var entitiesProto = (await _dbContext.DBSet<TEntity>()
+
+                var clothes = (await _dbContext.Clothes
                     .Skip(_packageSize * (iteration - 1))
                     .Take(_packageSize)
-                    .ToListAsync(token))
-                    .Select(element => ((EntityProto)element).Value);
+                    .Include(c => c.ClothHasMaterials)
+                    .ThenInclude(chm => chm.Material)
+                    .ToListAsync(token));
 
-                if (entitiesProto.Any())
-                    foreach(var entityProto in entitiesProto) {
-                        response.Cloths.Add(entityProto);
-                    }
-                else
+                if (clothes.Count == 0)
                     isEnd = true;
+
+                var clothIDs = from cloth in clothes
+                               select cloth.ID;
+
+                var photos = await _dbContext.Photos
+                   .Where(p => clothIDs.Contains(p.ID))
+                   .ToListAsync(token);
+
+
+                List<ClothIntegrationIventProto> integrationEvents = [];
+                foreach (Cloth cloth in clothes) {
+                    ClothProto clothProto = cloth;
+
+                    List<ClothHasMaterialsProto> hasMaterialsProtos = [];
+                    List<MaterialProto> materialProtos = [];
+                    List<PhotoProto> photoProtos = [];
+
+                    foreach (ClothHasMaterials hasMaterials in cloth.ClothHasMaterials) {
+                        if(hasMaterials.Material != null) {
+                            hasMaterialsProtos.Add(hasMaterials);
+                            materialProtos.Add(hasMaterials.Material);
+                        }
+                    }
+
+                    foreach (Photo photo in photos) {
+                        if (photo.ID == cloth.ID) {
+                            photoProtos.Add(photo);
+                        }
+                    }
+
+                    ClothIntegrationIventProto IE = new() {
+                        Cloth = clothProto,
+                        MaterialIDs = { hasMaterialsProtos },
+                        MaterialsValues = { materialProtos },
+                        Photos = { photoProtos }
+                    };
+
+                    response.ClothIEs.Add(IE);
+                }
 
                 await responseStream.WriteAsync(response, token);
 
                 iteration++;
             }
         }
+
+        private async Task SendPersons(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
+        {
+            int iteration = 1;
+            bool isEnd = false;
+            while (!token.IsCancellationRequested && !isEnd) {
+                ResponseDownload response = new() {
+                    PackageNumber = iteration,
+                    PackageSize = _packageSize
+                };
+
+                var persons = await _dbContext.Persons
+                    .Skip(_packageSize * (iteration - 1))
+                    .Take(_packageSize)
+                    .Include(c => c.Physiques)
+                    .ToListAsync(token);
+
+                if (persons.Count == 0)
+                    isEnd = true;
+
+                List<PersonIntegrationEventProto> integrationEvents = [];
+                foreach (Person person in persons) {
+                    PersonIntegrationEventProto IE = new() {
+                        Person = person
+                    };
+                    foreach(Physique physique in person.Physiques) {
+                        IE.Physiques.Add(physique);
+                    }
+
+                    response.PersonIEs.Add(IE);
+                }
+
+                await responseStream.WriteAsync(response, token);
+
+                iteration++;
+            }
+        }
+
+        private async Task SendSets(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
+        {
+            int iteration = 1;
+            bool isEnd = false;
+            while (!token.IsCancellationRequested && !isEnd) {
+                ResponseDownload response = new() {
+                    PackageNumber = iteration,
+                    PackageSize = _packageSize
+                };
+
+                var sets = await _dbContext.Sets
+                    .Skip(_packageSize * (iteration - 1))
+                    .Take(_packageSize)
+                    .Include(s => s.Season)
+                    .Include(s => s.SetHasClothes)
+                    .ToListAsync(token);
+
+                if (sets.Count == 0)
+                    isEnd = true;
+
+                List<PersonIntegrationEventProto> integrationEvents = [];
+                foreach (Set set in sets) {
+                    SetIntegrationEventProto IE = new() {
+                        Set = set,
+                        Season = set.Season ?? throw new InvalidOperationException($"Why relation to Set:id:{set.ID} Season is null???")
+                    };
+                    foreach (SetHasClothes hasClothes in set.SetHasClothes) {
+                        IE.ClothIDs.Add(hasClothes);
+                    }
+
+                    response.SetIEs.Add(IE);
+                }
+
+                await responseStream.WriteAsync(response, token);
+
+                iteration++;
+            }
+
+        }
+
     }
 }
