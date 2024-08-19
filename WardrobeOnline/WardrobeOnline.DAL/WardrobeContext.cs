@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using WardrobeOnline.DAL.Interfaces;
@@ -9,10 +11,11 @@ namespace WardrobeOnline.DAL
 {
     public class WardrobeContext : DbContext, IWardrobeContext
     {
-        public WardrobeContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
+        public WardrobeContext(DbContextOptions dbContextOptions, IServiceProvider serviceProvider) : base(dbContextOptions) 
         {
             if (this.Database.EnsureCreated()) {
-                
+                var seeder = serviceProvider.GetService<IDBSeeder>();
+                seeder?.Seed().Wait();
             }
         }
 

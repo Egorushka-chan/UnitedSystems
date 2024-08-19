@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Setup\cloth.json" />
+    <Content Remove="Setup\material.json" />
+    <Content Remove="Setup\persons.json" />
+    <Content Remove="Setup\physiques.json" />
+    <Content Remove="Setup\seasons.json" />
+    <Content Remove="Setup\sets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -23,6 +32,28 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Setup\cloth.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Setup\material.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator></Generator>
+    </None>
+    <None Include="Setup\persons.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Setup\physiques.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Setup\seasons.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Setup\sets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

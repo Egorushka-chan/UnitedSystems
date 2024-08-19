@@ -3,10 +3,10 @@ using UnitedSystems.EventBus.Interfaces;
 
 namespace MasterDominaSystem.RMQL.IntegrationEventHandlers
 {
-    internal class AppendedClothIntegrationEventHandler :
-        IIntegrationEventHandler<AppendedClothIntegrationEvent>
+    internal class DeletedPersonIntegrationEventHandler
+        : IIntegrationEventHandler<DeletedPersonIntegrationEvent>
     {
-        public Task Handle(AppendedClothIntegrationEvent @event)
+        public Task Handle(DeletedPersonIntegrationEvent @event)
         {
             throw new NotImplementedException();
         }

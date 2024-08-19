@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient();
 
-string connectionString = builder.Configuration["ConnectionString:Postgres"] ?? throw new InvalidCastException("Cannot start without valid connection string");
+string connectionString = builder.Configuration["ConnectionString:Postgres"] ?? "Host=localhost;Port=3000;Database=###;Username=root;Password=tobacco;";
 connectionString = connectionString.Replace("###", "mdm");
 
 // Подтягиваем библиотеки

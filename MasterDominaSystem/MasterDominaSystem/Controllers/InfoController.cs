@@ -1,11 +1,7 @@
-﻿using System.Net.Http;
-using System.Net.NetworkInformation;
-
-using MasterDominaSystem.BLL.Services.Abstractions;
+﻿using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.DAL;
 using MasterDominaSystem.GRPC.Services.Interfaces;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MasterDominaSystem.Controllers

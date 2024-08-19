@@ -116,6 +116,7 @@
   <ItemGroup>
     <Folder Include="ScriptFiles\Delete\" />
     <Folder Include="ScriptFiles\Append\" />
+    <Folder Include="ScriptFiles\Procedures\Delete\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace WardrobeOnline.DAL.Interfaces
 {
-    internal interface IDBSeeder
+    public interface IDBSeeder
     {
         /// <summary>
         /// Заполнить базу данных элементами

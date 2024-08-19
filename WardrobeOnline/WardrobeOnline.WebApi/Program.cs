@@ -9,6 +9,7 @@ using WardrobeOnline.WebApi.Settings;
 using WardrobeOnline.GRPC;
 using System.Net;
 using Microsoft.Extensions.Options;
+using WardrobeOnline.DAL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,7 @@ builder.Services.AddSwaggerGen();
 
 builder.WebHost.ConfigureKestrel((context, serverOptions) => {
     serverOptions.Listen(IPAddress.Any, 8088, listenOptions => {
-        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
     });
 });
 
@@ -59,6 +60,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGRPC();
+
+app.Map("/f", async (IDBSeeder s) => await s.Seed());
 
 app.Run();
 

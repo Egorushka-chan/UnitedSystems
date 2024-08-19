@@ -35,7 +35,7 @@ namespace MasterDominaSystem.BLL
         /// <returns></returns>
         public static IDenormalizerBuilder AddDefaultDenormalizationStrategies(this IDenormalizerBuilder builder)
         {
-            if (builder.GeneralStrategiesCreated) {
+            if (!builder.GeneralStrategiesCreated) {
                 builder.Services.TryAddKeyedTransient<IEntityDenormalizer, PersonDenormalizer>(typeof(Person).GetKey());
                 builder.Services.TryAddKeyedTransient<IEntityDenormalizer, PhysiqueDenormalizer>(typeof(Physique).GetKey());
                 builder.Services.TryAddKeyedTransient<IEntityDenormalizer, SetDenormalizer>(typeof(Set).GetKey());

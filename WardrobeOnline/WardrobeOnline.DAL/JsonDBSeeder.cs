@@ -4,9 +4,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Abstract;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
-using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 using WardrobeOnline.DAL.Interfaces;
 
@@ -16,15 +14,15 @@ namespace WardrobeOnline.DAL
         IWebHostEnvironment env,
         IWardrobeContext context) : IDBSeeder
     {
-        private readonly string _contentRootPath = env.ContentRootPath;
+        private readonly string _contentRootPath = Directory.GetCurrentDirectory();
 
         private readonly Dictionary<string, Type> JsonPairs = new() {
-            {"cloth", typeof(ClothesJson) },
-            {"material", typeof(MaterialJson) },
-            {"persons", typeof(PersonsJson) },
-            {"physiques", typeof(PhysiqueJson) },
-            {"seasons", typeof(SeasonJson) },
-            {"sets", typeof(SetJson) },
+            {"cloth.json", typeof(ClothesJson) },
+            {"material.json", typeof(MaterialJson) },
+            {"persons.json", typeof(PersonsJson) },
+            {"physiques.json", typeof(PhysiqueJson) },
+            {"seasons.json", typeof(SeasonJson) },
+            {"sets.json", typeof(SetJson) },
         };
 
         public async Task Seed()
@@ -97,7 +95,7 @@ namespace WardrobeOnline.DAL
         }
         private class SetJson : MyJson
         {
-            [JsonPropertyName("seasons")]
+            [JsonPropertyName("sets")]
             public Set[] Sets { get; set; } = [];
 
             public override async Task Append(IWardrobeContext context)

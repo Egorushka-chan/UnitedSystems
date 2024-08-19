@@ -23,7 +23,9 @@ namespace MasterDominaSystem.RMQL
                 .AddWOSubscriptionCRUD<Cloth>()
                 .AddWOSubscriptionCRUD<Physique>()
                 .AddWOSubscriptionCRUD<Set>()
-                .AddWOSubscriptionCRUD<Person>();
+                .AddWOSubscriptionCRUD<Person>()
+
+                .AddDenormalizationSubscriptions();
 
             return builder;
         }
@@ -33,6 +35,18 @@ namespace MasterDominaSystem.RMQL
             builder.AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>()
                 .AddSubscription<WODeletedCRUDEvent<TEntity>, WODeletedHandler<TEntity>>()
                 .AddSubscription<WOUpdatedCRUDEvent<TEntity>, WOUpdatedHandler<TEntity>>();
+            return builder;
+        }
+
+        private static IEventBusBuilder AddDenormalizationSubscriptions(this IEventBusBuilder builder)
+        {
+            builder.AddSubscription<AppendedClothIntegrationEvent, AppendedClothIntegrationEventHandler>();
+            builder.AddSubscription<AppendedPersonIntegrationEvent, AppendedPersonIntegrationEventHandler>();
+            builder.AddSubscription<AppendedSetIntegrationEvent, AppendedSetIntegrationEventHandler>();
+
+            builder.AddSubscription<DeletedClothIntegrationEvent, DeletedClothIntegrationEventHandler>();
+            builder.AddSubscription<DeletedPersonIntegrationEvent, DeletedPersonIntegrationEventHandler>();
+            builder.AddSubscription<DeletedSetIntegrationEvent, DeletedSetIntegrationEventHandler>();
             return builder;
         }
     }
