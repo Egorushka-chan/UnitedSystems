@@ -2,6 +2,7 @@
 
 namespace MasterDominaSystem.BLL.Services.Abstractions
 {
+    [Obsolete("Вначале у меня не было нормальных интеграционных событий")]
     public interface IDatabaseDenormalizer
     {
         Task Append<TEntity>(TEntity entity) where TEntity : IEntityDB;

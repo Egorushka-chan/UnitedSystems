@@ -3,10 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using Microsoft.EntityFrameworkCore;
 
+using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
+
 namespace MasterDominaSystem.DAL.Reports
 {
     [Index(nameof(ClothID), nameof(MaterialID), nameof(PhotoID))]
-    public class ReportCloth : IReport
+    [Report(typeof(Cloth), typeof(Material), typeof(Photo))]
+    public class ReportCloth
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GeneralID { get; set; }

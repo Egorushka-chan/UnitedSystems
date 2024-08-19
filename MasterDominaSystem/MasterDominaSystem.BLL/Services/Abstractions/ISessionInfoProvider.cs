@@ -2,6 +2,9 @@
 
 namespace MasterDominaSystem.BLL.Services.Abstractions
 {
+    /// <summary>
+    /// Тупо хранилка данных, для проверки работоспособности
+    /// </summary>
     public interface ISessionInfoProvider
     {
         List<string> MessagePool { get; set; }

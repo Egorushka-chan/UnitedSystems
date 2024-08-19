@@ -4,6 +4,7 @@ using UnitedSystems.CommonLibrary.ManyEntitiesSender.IntegrationEvents;
 
 namespace MasterDominaSystem.BLL.Services.Implementations
 {
+    /// <inheritdoc cref="ISessionInfoProvider"/>
     public class SessionInfoProvider : ISessionInfoProvider
     {
         public List<string> MessagePool { get; set; } = [];

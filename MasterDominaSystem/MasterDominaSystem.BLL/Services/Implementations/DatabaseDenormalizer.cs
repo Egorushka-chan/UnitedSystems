@@ -11,6 +11,7 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 
 namespace MasterDominaSystem.BLL.Services.Implementations
 {
+    [Obsolete("Вначале у меня не было нормальных интеграционных событий")]
     public class DatabaseDenormalizer(IServiceProvider services, ILogger<DatabaseDenormalizer> logger,
         MasterContext masterContext) : IDatabaseDenormalizer
     {
