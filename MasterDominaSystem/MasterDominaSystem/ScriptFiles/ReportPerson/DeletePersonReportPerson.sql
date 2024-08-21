@@ -1,0 +1,1 @@
+﻿Delete from "ReportPersons" WHERE "PersonID" = {id};

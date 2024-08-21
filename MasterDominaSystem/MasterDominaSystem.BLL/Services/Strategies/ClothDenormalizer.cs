@@ -1,4 +1,5 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
 using MasterDominaSystem.DAL.Reports;
@@ -9,22 +10,74 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    internal class ClothDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
-        : GeneralEntityDenormalizer<Cloth>(options, environment)
+    internal class ClothDenormalizer(IWebHostEnvironment environment,
+        IReportsCollector reportsCollector,
+        IProcedureBaker procedureBaker,
+        Action<DenormalizationOptions>? options = default) : GeneralEntityDenormalizer<Cloth>(options, environment, reportsCollector, procedureBaker)
     {
-        protected override string[] DefaultAllowedReports { get; set; } = [
-            typeof(ReportCloth).GetKey(),
-            typeof(ReportPerson).GetKey()
-        ];
+        private Dictionary<string, string> AppendReportScriptName = new() {
+            {typeof(ReportCloth).GetKey(), "AssertClothReportCloth" }
+        };
 
-        protected override string FormatAppend(string script, Cloth entity)
-        {
-            return string.Format(script, entity.ID, entity.Name, entity.Description, entity.Rating);
+        private Dictionary<string, string> DeleteReportScriptName = new() {
+            {typeof(ReportCloth).GetKey(), "DeleteClothReportCloth" },
+            {typeof(ReportPerson).GetKey(), "DeleteClothReportPerson" }
+        };
+
+        private readonly string insertPath = Path.Combine("Insert", "Cloth.json");
+        private readonly string deletePath = Path.Combine("Delete", "Cloth.json");
+
+        protected override string ThisName => nameof(ClothDenormalizer);
+        protected override async Task<string> AppendScriptFill(Cloth entityDB, string reportKey)
+        {    
+            string script = "";
+            string call = AppendReportScriptName[reportKey];
+            if (reportKey == typeof(ReportCloth).GetKey()) {
+                string myId = entityDB.ID.ToString();
+                string myName = entityDB.Name.InSQLStringQuotes();
+                string myDescription = entityDB.Description?.InSQLStringQuotes() ?? "NULL";
+                string myRating = entityDB.Rating.ToString() ?? "NULL";
+                string mySize = entityDB.Size?.InSQLStringQuotes() ?? "NULL";
+                string materialIDs = entityDB.ClothHasMaterials.Select(chm => chm.MaterialID).ToArray().ToSQLArray();
+                string photoIDs = entityDB.Photos.Select(ph => ph.ClothID).ToSQLArray();
+
+                string rawScript = $"CALL {call}({myId}, {myName}, {myDescription}, {myRating}, {mySize}, " +
+                    $"{materialIDs}, {photoIDs});";
+
+                script += rawScript;
+
+                if (!isInserted) {
+                    string insertScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, insertPath));
+                    script += insertScript.Replace("{id}", myId)
+                        .Replace("{name}", myName)
+                        .Replace("{description}", myDescription)
+                        .Replace("{rating}", myRating)
+                        .Replace("{size}", mySize);
+
+                    isInserted = true;
+                }
+            }
+
+            return script;
         }
 
-        protected override string FormatDelete(string script, Cloth entity)
+        protected override async Task<string> DeleteScriptFill(Cloth entityDB, string reportKey)
         {
-            return string.Format(script, entity.ID);
+            string script = "";
+            string myId = entityDB.ID.ToString();
+
+            string path = Path.Combine(scriptsPath, reportKey, DeleteReportScriptName[reportKey]);
+            string rawScript = await File.ReadAllTextAsync(path);
+
+            script += rawScript.Replace("{id}", myId);
+
+            if (!isDeleted) {
+                string tableScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, deletePath));
+                script += tableScript.Replace("{id}", myId);
+                isDeleted = true;
+            }
+            
+            return script;
         }
     }
 }

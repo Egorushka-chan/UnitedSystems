@@ -6,11 +6,11 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
     public interface IEntityDenormalizer<in TEntity> : IEntityDenormalizer
         where TEntity : IEntityDB
     {
-        string Append(TEntity entity);
-        string IEntityDenormalizer.Append(IEntityDB entity) => Append(entity);
+        Task<string> Append(TEntity entity, Type? report = default);
+        Task<string> IEntityDenormalizer.Append(IEntityDB entity, Type? report = default) => Append(entity, report);
 
-        string Delete(TEntity entity);
-        string IEntityDenormalizer.Delete(IEntityDB entity) => Delete(entity);
+        Task<string> Delete(TEntity entity, Type? report = default);
+        Task<string> IEntityDenormalizer.Delete(IEntityDB entity, Type? report = default) => Delete(entity, report);
     }
 
     /// <summary>
@@ -18,7 +18,7 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
     /// </summary>
     public interface IEntityDenormalizer
     {
-        string Append(IEntityDB entity);
-        string Delete(IEntityDB entity);
+        Task<string> Append(IEntityDB entity, Type? report = default);
+        Task<string> Delete(IEntityDB entity, Type? report = default);
     }
 }

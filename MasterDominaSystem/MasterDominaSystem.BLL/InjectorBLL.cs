@@ -21,6 +21,10 @@ namespace MasterDominaSystem.BLL
             services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>()
                 //.AddDefaultDenormalizationStrategies()
                 .AddScoped<IDatabaseDenormalizer, DatabaseDenormalizer>();
+
+            services.AddSingleton<IReportsCollector, ReportsCollector>();
+            services.AddSingleton<IProcedureBaker, ProcedureBaker>();
+
             return new DenormalizerBuilder(services);
         }
 

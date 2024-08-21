@@ -12,12 +12,14 @@ namespace MasterDominaSystem.DAL
         public DbSet<ReportPerson> ReportPersons { get; set; }
 
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Physique> Physique { get; set; }
+        public DbSet<Physique> Physiques { get; set; }
         public DbSet<Set> Sets { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SetHasClothes> SetHasClothes { get; set; }
         public DbSet<Cloth> Clothes { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<ClothHasMaterials> ClothHasMaterials { get; set; }
+        public DbSet<Material> Materials { get; set; }
 
         public MasterContext(DbContextOptions options) : base(options)
         {

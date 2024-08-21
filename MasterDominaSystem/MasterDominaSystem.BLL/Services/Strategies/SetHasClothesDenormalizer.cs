@@ -1,7 +1,4 @@
-﻿using MasterDominaSystem.BLL.Builder;
-using MasterDominaSystem.BLL.Services.Extensions;
-using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
-using MasterDominaSystem.DAL.Reports;
+﻿using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -9,21 +6,27 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    internal class SetHasClothesDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
-        : GeneralEntityDenormalizer<SetHasClothes>(options, environment)
+    internal class SetHasClothesDenormalizer(IWebHostEnvironment environment) : IEntityDenormalizer<SetHasClothes>
     {
-        protected override string[] DefaultAllowedReports { get; set; } = [
-            typeof(ReportPerson).GetKey()
-        ];
+        protected string ThisName => nameof(SetHasClothesDenormalizer);
+        protected readonly string insertPath = Path.Combine("Insert", "insertsethascloth.sql");
+        protected readonly string deletePath = Path.Combine("Delete", "deletesethascloth.sql");
+        protected readonly string scriptsPath = Path.Combine(environment.ContentRootPath, "ScriptFiles");
 
-        protected override string FormatAppend(string script, SetHasClothes entity)
+        public async Task<string> Append(SetHasClothes entityDB, Type? report = null)
         {
-            return string.Format(script, entity.ID, entity.ClothID, entity.SetID);
+            string script = await File.ReadAllTextAsync(Path.Combine(scriptsPath, insertPath));
+            script = script.Replace("{id}", entityDB.ID.ToString())
+                .Replace("{setID}", entityDB.SetID.ToString())
+                .Replace("{clothID}", entityDB.ClothID.ToString());
+            return script;
         }
 
-        protected override string FormatDelete(string script, SetHasClothes entity)
+        public async Task<string> Delete(SetHasClothes entityDB, Type? report = null)
         {
-            return string.Format(script, entity.ID, entity.ClothID, entity.SetID);
+            string script = await File.ReadAllTextAsync(Path.Combine(scriptsPath, deletePath));
+            script = script.Replace("{id}", entityDB.ID.ToString());
+            return script;
         }
     }
 }

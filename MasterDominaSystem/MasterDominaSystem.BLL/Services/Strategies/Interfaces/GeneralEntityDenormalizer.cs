@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Xml.Linq;
 
 using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
-using MasterDominaSystem.DAL.Reports;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -16,24 +16,24 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
     {
         protected Dictionary<string, string> ScriptsDomains { get; set; } = [];
         protected readonly DenormalizationOptions _options;
+        protected readonly IProcedureBaker _procedureBaker;
+        protected readonly string scriptsPath;
+
+        protected bool isInserted = false;
+        protected bool isDeleted = false;
+        protected abstract string ThisName { get; }
 
         protected GeneralEntityDenormalizer(Action<DenormalizationOptions>? options,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment, IReportsCollector reportsCollector, IProcedureBaker procedureBaker)
         {
             _options = new();
             options?.Invoke(_options);
 
-            string scriptsPath = Path.Combine(environment.ContentRootPath, "ScriptFiles");
+            _procedureBaker = procedureBaker;
 
-            var queries = from assembly in AppDomain.CurrentDomain.GetAssemblies().AsParallel()
-                          from type in assembly.GetTypes()
-                          let attributes = type.GetCustomAttributes<ReportAttribute>(true)
-                          where attributes != null && attributes.Any()
-                          select new { Type = type, Attributes = attributes.Cast<ReportAttribute>() };
-            
-            foreach(var query in queries) {
-                Type reportType = query.Type;
-                ReportAttribute attributeInfo = query.Attributes.Single();
+            scriptsPath = Path.Combine(environment.ContentRootPath, "ScriptFiles");
+
+            foreach(var (reportType, attributeInfo) in reportsCollector.GetReports()) {
                 if (attributeInfo.Types.Contains(typeof(TEntityDB))) {
                     ScriptsDomains.Add(reportType.GetKey(), Path.Combine(scriptsPath, reportType.GetKey()));
                 }
@@ -43,32 +43,49 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
 
             var allowed = from excluded in _options.NotDenormalizeToTables
                           let key = excluded.GetKey()
-                          where !DefaultAllowedReports.Contains(key)
+                          where !ScriptsDomains.ContainsKey(key)
                           select key;
             foreach (string key in allowed) {
-
+                ScriptsDomains.Remove(key);
             }
         }
 
-        //protected bool CheckSemicolonEnding(string value)
-        //{
-        //    value = value.Trim();
-        //    int length = value.Length;
-        //    for (int i = length - 1; i >= 0; i--) {
-        //        char letter = value[i];
-        //        if (letter == ';') {
-        //            return true;
-        //        }
-        //        else if (char.IsWhiteSpace(letter)) {
-        //            continue;
-        //        }
-        //        return false;
-        //    }
-        //    return false;
-        //}
+        public async Task<string> Append(TEntityDB entityDB, Type? report = default)
+        {
+            string script = "";
+            foreach (var (reportKey, reportPath) in ScriptsDomains) {
+                if (report != null)
+                    if (report.GetKey() != reportKey)
+                        continue;
 
-        public abstract string Append(TEntityDB entityDB);
+                await _procedureBaker.AssertBaked(reportKey);
 
-        public abstract string Delete(TEntityDB entityDB);
+                script += AppendScriptFill(entityDB, reportKey);
+            }
+            if (string.IsNullOrEmpty(script))
+                throw new InvalidOperationException($"Не удалось найти скрипты для файлов." +
+                    $" Возможно, все отчеты исключены для {nameof(ThisName)}");
+            return script;
+        }
+
+        public async Task<string> Delete(TEntityDB entityDB, Type? report = default)
+        {
+            string script = "";
+            foreach (var (reportKey, reportPath) in ScriptsDomains) {
+                if (report != null)
+                    if (report.GetKey() != reportKey)
+                        continue;
+
+                await _procedureBaker.AssertBaked(reportKey);
+
+                script += DeleteScriptFill(entityDB, reportKey);
+            }
+            if (string.IsNullOrEmpty(script))
+                throw new InvalidOperationException($"Не удалось найти скрипты для файлов." +
+                    $" Возможно, все отчеты исключены для {nameof(ThisName)}");
+            return script;
+        }
+        protected abstract Task<string> AppendScriptFill(TEntityDB entityDB, string reportKey);
+        protected abstract Task<string> DeleteScriptFill(TEntityDB entityDB, string reportKey);
     }
 }

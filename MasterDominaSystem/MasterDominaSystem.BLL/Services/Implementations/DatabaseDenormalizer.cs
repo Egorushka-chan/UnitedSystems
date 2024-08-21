@@ -48,7 +48,7 @@ namespace MasterDominaSystem.BLL.Services.Implementations
         private async Task AtomicAppend<TEntity>(TEntity entity, IEntityDenormalizer denormalizer)
             where TEntity : IEntityDB
         {
-            string query = denormalizer.Append(entity);
+            string query = await denormalizer.Append(entity);
 
             logger.LogTrace("Выполнение скрипта денормализации:\n{query}", query);
             await masterContext.Database.ExecuteSqlRawAsync(query);
