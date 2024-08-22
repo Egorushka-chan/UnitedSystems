@@ -6,4 +6,15 @@ WHEN MATCHED THEN
 		RT."PhysiqueDescription" = NULL,
 		RT."PhysiqueWeight" = NULL,
 		RT."PhysiqueGrowth" = NULL,
-		RT."PhysiqueForce" = NULL;
+		RT."PhysiqueForce" = NULL,
+		RT."SetID" = NULL,
+		RT."SetName" = NULL,
+		RT."SetDescription" = NULL,
+		RT."ClothID" = NULL,
+		RT."ClothName" = NULL,
+		RT."ClothDescription" = NULL,
+		RT."ClothRating" = NULL,
+		RT."ClothSize" = NULL,
+		RT."PhotoID" = NULL,
+		RT."PhotoName" = NULL,
+		RT."PhotoHashCode" = NULL;

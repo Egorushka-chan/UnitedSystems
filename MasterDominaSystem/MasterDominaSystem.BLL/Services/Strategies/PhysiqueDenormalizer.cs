@@ -1,4 +1,5 @@
 ﻿using MasterDominaSystem.BLL.Builder;
+using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
 using MasterDominaSystem.DAL.Reports;
@@ -9,21 +10,64 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    internal class PhysiqueDenormalizer(IWebHostEnvironment environment, Action<DenormalizationOptions>? options = default) 
-        : GeneralEntityDenormalizer<Physique>(options, environment)
+    internal class PhysiqueDenormalizer(IWebHostEnvironment environment,
+        IReportsCollector reportsCollector,
+        IProcedureBaker procedureBaker,
+        Action<DenormalizationOptions>? options = default)
+        : GeneralEntityDenormalizer<Physique>(options, environment, reportsCollector, procedureBaker)
     {
-        protected override string[] DefaultAllowedReports { get; set; } = [
-            typeof(ReportPerson).GetKey()
-        ];
+        private Dictionary<string, string> DeleteReportScriptName = new() {
+            {typeof(ReportCloth).GetKey(), "DeletePhysiqueReportPerson" }
+        };
 
-        protected override string FormatAppend(string script, Physique entity)
+        private readonly string insertPath = Path.Combine("Insert", "Physique.json");
+        private readonly string deletePath = Path.Combine("Delete", "Physique.json");
+        protected override string ThisName => nameof(PhysiqueDenormalizer);
+
+        protected override async Task<string> AppendScriptFill(Physique entityDB, string reportKey)
         {
-            return string.Format(script, entity.ID, entity.Growth, entity.Weight, entity.Force, entity.Description, entity.PersonID);
+            string script = "";
+            
+            if (!isInserted) {
+                string myId = entityDB.ID.ToString();
+                string weight = entityDB.Weight.ToString();
+                string growth = entityDB.Growth.ToString();
+                string force = entityDB.Force.ToString();
+                string description = entityDB.Description?.InSQLStringQuotes() ?? "NULL";
+                string personID = entityDB.PersonID.ToString();
+
+                string insertScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, insertPath));
+                script += insertScript.Replace("{id}", myId)
+                    .Replace("{weight}", weight)
+                    .Replace("{growth}", growth)
+                    .Replace("{force}", force)
+                    .Replace("{description}", description)
+                    .Replace("{personID}", personID);
+
+                isInserted = true;
+            }
+
+            return script;
         }
 
-        protected override string FormatDelete(string script, Physique entity)
+        protected override async Task<string> DeleteScriptFill(Physique entityDB, string reportKey)
         {
-            return string.Format(script, entity.ID);
+            string script = "";
+
+            string myId = entityDB.ID.ToString();
+            string path = Path.Combine(scriptsPath, reportKey, DeleteReportScriptName[reportKey]);
+            string rawScript = await File.ReadAllTextAsync(path);
+
+            script += rawScript.Replace("{id}", myId);
+
+            if (!isDeleted) {
+                string deleteScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, deletePath));
+                script += deleteScript.Replace("{id}", myId);
+
+                isInserted = true;
+            }
+
+            return script;
         }
     }
 }

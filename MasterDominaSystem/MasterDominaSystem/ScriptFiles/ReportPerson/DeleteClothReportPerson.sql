@@ -6,4 +6,7 @@ WHEN MATCHED THEN
 		RT."ClothName" = NULL,
 		RT."ClothDescription" = NULL,
 		RT."ClothRating" = NULL,
-		RT."ClothSize" = NULL;
+		RT."ClothSize" = NULL,
+		RT."PhotoID" = NULL,
+		RT."PhotoName" = NULL,
+		RT."PhotoHashCode" = NULL;

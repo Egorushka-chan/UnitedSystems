@@ -10,45 +10,69 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 namespace MasterDominaSystem.BLL.Services.Strategies
 {
-    internal class PhotoDenormalizer(IWebHostEnvironment environment, IReportsCollector reportsCollector,
+    internal class PhotoDenormalizer(IWebHostEnvironment environment,
+        IReportsCollector reportsCollector,
         IProcedureBaker procedureBaker,
         Action<DenormalizationOptions>? options = default)
         : GeneralEntityDenormalizer<Photo>(options, environment, reportsCollector, procedureBaker)
     {
 
         private Dictionary<string, string> AppendReportScriptName = new() {
-            {typeof(ReportCloth).GetKey(), "assertphoto_reportcloth" },
-            {typeof(ReportPerson).GetKey(), "assertphoto_reportperson" }
+            {typeof(ReportCloth).GetKey(), "AssertPhotoReportCloth" }
         };
 
         private Dictionary<string, string> DeleteReportScriptName = new() {
-            {typeof(ReportCloth).GetKey(), "deletephoto_reportcloth" },
-            {typeof(ReportPerson).GetKey(), "deletephoto_reportperson" }
+            {typeof(ReportCloth).GetKey(), "DeletePhotoReportCloth" },
+            {typeof(ReportPerson).GetKey(), "DeletePhotoReportPerson" }
         };
+
+        private readonly string insertPath = Path.Combine("Insert", "Photo.json");
+        private readonly string deletePath = Path.Combine("Delete", "Photo.json");
         protected override string ThisName => nameof(PhotoDenormalizer);
 
-        protected override string AppendScriptFill(Photo entityDB, string reportKey)
+        protected override async Task<string> AppendScriptFill(Photo entityDB, string reportKey)
         {
             string script = "";
             string call = AppendReportScriptName[reportKey];
+            string myId = entityDB.ID.ToString();
+            string myName = entityDB.Name.InSQLStringQuotes();
+            string photoHash = entityDB.HashCode.InSQLStringQuotes();
+
             if (reportKey == typeof(ReportCloth).GetKey()) {
-                int myId = entityDB.ID;
-                string myName = entityDB.Name.InSQLStringQuotes();
-                string photoHash = entityDB.HashCode.InSQLStringQuotes();
-
+                
                 string rawScript = $"CALL {call}({myId}, {myName}, {photoHash});";
-
                 script += rawScript;
             }
-            else if (reportKey == typeof(ReportPerson).GetKey()) {
 
+            if (!isInserted) {
+                string insertScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, insertPath));
+                script += insertScript.Replace("{id}", myId)
+                    .Replace("{name}", myName)
+                    .Replace("{hashcode}", photoHash)
+                    .Replace("{clothID}", entityDB.ClothID.ToString());
+
+                isInserted = true;
             }
             return script;
         }
 
-        protected override string DeleteScriptFill(Photo entityDB, string reportKey)
+        protected override async Task<string> DeleteScriptFill(Photo entityDB, string reportKey)
         {
-            throw new NotImplementedException();
+            string script = "";
+            string myId = entityDB.ID.ToString();
+
+            string path = Path.Combine(scriptsPath, reportKey, DeleteReportScriptName[reportKey]);
+            string rawScript = await File.ReadAllTextAsync(path);
+
+            script += rawScript.Replace("{id}", myId);
+
+            if (!isDeleted) {
+                string tableScript = await File.ReadAllTextAsync(Path.Combine(scriptsPath, deletePath));
+                script += tableScript.Replace("{id}", myId);
+                isDeleted = true;
+            }
+            
+            return script;
         }
     }
 }
