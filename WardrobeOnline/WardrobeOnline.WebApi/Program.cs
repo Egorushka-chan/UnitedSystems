@@ -10,13 +10,15 @@ using WardrobeOnline.GRPC;
 using System.Net;
 using Microsoft.Extensions.Options;
 using WardrobeOnline.DAL.Interfaces;
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Связь с остальными слоями
 
-string? connectionString = builder.Configuration["ConnectionString:Postgres"]?.Replace("###","wardrobe");
+string connectionString = builder.Configuration["ConnectionString:Postgres"]?.Replace("###","wardrobe") ??"Host=localhost;Port=3000;Database=###;Username=root;Password=tobacco;";
 
 builder.Services.Configure<ImageSetting>(
     builder.Configuration.GetSection("ImageSetting"));
@@ -44,7 +46,7 @@ builder.Services.AddSwaggerGen();
 
 builder.WebHost.ConfigureKestrel((context, serverOptions) => {
     serverOptions.Listen(IPAddress.Any, 8088, listenOptions => {
-        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
     });
 });
 
@@ -61,7 +63,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapGRPC();
 
-app.Map("/f", async (IDBSeeder s) => await s.Seed());
+await SeedDBIfEmpty(app);
 
 app.Run();
 
@@ -73,4 +75,20 @@ void AddBusinessLayer(WebApplicationBuilder builder)
         Configuration = configuration,
         InstanceName = packages
     });
+}
+
+async Task SeedDBIfEmpty(WebApplication app)
+{
+    IServiceScopeFactory scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+    using(var scope = app.Services.CreateScope())
+    {
+        IWardrobeContext context = scope.ServiceProvider.GetRequiredService<IWardrobeContext>();
+        int value = await context.Persons.CountAsync() + await context.Clothes.CountAsync();
+        if(value == 0)
+        {
+            IDBSeeder seeder = scope.ServiceProvider.GetRequiredService<IDBSeeder>();
+            await seeder.Seed();
+        }
+    }
+    
 }

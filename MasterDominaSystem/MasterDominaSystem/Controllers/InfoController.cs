@@ -13,25 +13,19 @@ namespace MasterDominaSystem.Controllers
         /// <summary>
         /// Просто вывод по быстрому, для проверки
         /// </summary>
-        [HttpGet]
+        [HttpGet("GeneralInfo")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ISessionInfoProvider))]
         public IResult GeneralInfo([FromServices] ISessionInfoProvider generalInfoProvider)
         {
             return TypedResults.Ok(generalInfoProvider);
         }
 
-        [HttpPost]
+        [HttpGet("AskForData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IResult> AskForData([FromServices] IDatabaseDownloader downloader, CancellationToken token = default)
         {
             await downloader.DownloadDataAsync(token);
             return TypedResults.Ok();
-        }
-
-        [HttpPut("{id?}")]
-        public async Task<IResult> CreateBaza([FromServices] MasterContext context, int? id)
-        {
-            return TypedResults.Ok(context.ReportCloths.ToList());
         }
     }
 }

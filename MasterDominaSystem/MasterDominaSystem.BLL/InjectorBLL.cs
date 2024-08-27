@@ -1,4 +1,6 @@
-﻿using MasterDominaSystem.BLL.Builder;
+﻿using System.Reflection.Metadata;
+
+using MasterDominaSystem.BLL.Builder;
 using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.BLL.Services.Implementations;
@@ -18,12 +20,10 @@ namespace MasterDominaSystem.BLL
     {
         public static IDenormalizerBuilder InjectBLL(this IServiceCollection services)
         {
-            services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>()
-                //.AddDefaultDenormalizationStrategies()
-                .AddScoped<IDatabaseDenormalizer, DatabaseDenormalizer>();
+            services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>();
 
             services.AddSingleton<IReportsCollector, ReportsCollector>();
-            services.AddSingleton<IProcedureBaker, ProcedureBaker>();
+            services.AddTransient<IProcedureBaker, ProcedureBaker>();
 
             return new DenormalizerBuilder(services);
         }
@@ -75,55 +75,73 @@ namespace MasterDominaSystem.BLL
                 case Person:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, PersonDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new PersonDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new PersonDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case Cloth:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, ClothDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new ClothDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new ClothDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case ClothHasMaterials:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, ClothHasMaterialsDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new ClothHasMaterialsDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new ClothHasMaterialsDenormalizer(env);
                     });
                     break;
                 case Material:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, MaterialDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new MaterialDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new MaterialDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case Photo:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, PhotoDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new PhotoDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new PhotoDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case Physique:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, PhysiqueDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new PhysiqueDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new PhysiqueDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case Season:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, SeasonDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new SeasonDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new SeasonDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case Set:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, SetDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new SetDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new SetDenormalizer(env, collector, baker, options);
                     });
                     break;
                 case SetHasClothes:
                     builder.Services.AddKeyedTransient<IEntityDenormalizer, SetHasClothesDenormalizer>(typeof(TEntityDB).GetKey(), (ser, obj) => {
                         IWebHostEnvironment env = ser.GetRequiredService<IWebHostEnvironment>();
-                        return new SetHasClothesDenormalizer(env, options);
+                        IReportsCollector collector = ser.GetRequiredService<IReportsCollector>();
+                        IProcedureBaker baker = ser.GetRequiredService<IProcedureBaker>();
+                        return new SetHasClothesDenormalizer(env);
                     });
                     break;
                 default:

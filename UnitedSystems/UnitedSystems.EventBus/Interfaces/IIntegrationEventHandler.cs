@@ -12,6 +12,6 @@ namespace UnitedSystems.EventBus.Interfaces
     {
         Task Handle(TIntegrationEvent @event);
 
-        Task IIntegrationEventHandler.Handle(IntegrationEvent @event) => Handle(@event);
+        Task IIntegrationEventHandler.Handle(IntegrationEvent @event) => Handle((TIntegrationEvent)@event);
     }
 }

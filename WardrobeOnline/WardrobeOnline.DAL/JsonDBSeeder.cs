@@ -1,18 +1,13 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
-
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
 using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.DAL
 {
-    internal partial class JsonDBSeeder(ILogger<JsonDBSeeder> logger,
-        IWebHostEnvironment env,
-        IWardrobeContext context) : IDBSeeder
+    internal partial class JsonDBSeeder(IWardrobeContext context) : IDBSeeder
     {
         private readonly string _contentRootPath = Directory.GetCurrentDirectory();
 

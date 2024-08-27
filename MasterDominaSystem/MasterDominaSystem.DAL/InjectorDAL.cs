@@ -9,7 +9,7 @@ namespace MasterDominaSystem.DAL
         {
             services.AddDbContext<MasterContext>(opt => {
                 opt.UseNpgsql(connectionString);
-            });
+            }, ServiceLifetime.Scoped);
             return services;
         }
     }

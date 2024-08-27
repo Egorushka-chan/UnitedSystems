@@ -4,6 +4,9 @@ using MasterDominaSystem.RMQL;
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 using MasterDominaSystem.DAL.Reports;
 using MasterDominaSystem.GRPC;
+using UnitedSystems.EventBus.Interfaces;
+using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
+using System;
 
 
 var builder = WebApplication.CreateBuilder(args);

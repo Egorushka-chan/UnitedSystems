@@ -14,8 +14,7 @@ namespace WardrobeOnline.DAL
         public WardrobeContext(DbContextOptions dbContextOptions, IServiceProvider serviceProvider) : base(dbContextOptions) 
         {
             if (this.Database.EnsureCreated()) {
-                var seeder = serviceProvider.GetService<IDBSeeder>();
-                seeder?.Seed().Wait();
+                
             }
         }
 

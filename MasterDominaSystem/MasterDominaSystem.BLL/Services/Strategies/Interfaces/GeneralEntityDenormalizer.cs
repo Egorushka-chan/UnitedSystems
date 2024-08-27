@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-using MasterDominaSystem.BLL.Builder;
+﻿using MasterDominaSystem.BLL.Builder;
 using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
 
@@ -40,7 +38,7 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
             }
 
             string typeName = typeof(TEntityDB).Name;
-
+            
             var allowed = from excluded in _options.NotDenormalizeToTables
                           let key = excluded.GetKey()
                           where !ScriptsDomains.ContainsKey(key)

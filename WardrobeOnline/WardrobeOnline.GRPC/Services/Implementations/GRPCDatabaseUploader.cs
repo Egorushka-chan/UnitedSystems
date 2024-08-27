@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.DB;
 
@@ -14,8 +15,10 @@ namespace WardrobeOnline.GRPC.Services.Implementations
     public class GRPCDatabaseUploader : WODownloader.WODownloaderBase, IDatabaseUploader
     {
         private readonly IWardrobeContext _dbContext;
-        public GRPCDatabaseUploader(IWardrobeContext dbContext)
+        private readonly ILogger<GRPCDatabaseUploader> _logger;
+        public GRPCDatabaseUploader(IWardrobeContext dbContext, ILogger<GRPCDatabaseUploader> logger)
         {
+            _logger = logger;
             _dbContext = dbContext;
         }
 
@@ -26,18 +29,24 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                 return;
             }
 
+            _logger.LogInformation("Начало выполнения запроса DownloadDatabaseEntities");
+
             CancellationToken token = context.CancellationToken;
+            _logger.LogInformation("Токен отмены: {token}", token.IsCancellationRequested ? "True" : "False");
 
             await SendClothes(responseStream, token);
             await SendPersons(responseStream, token);
             await SendSets(responseStream, token);
+            context.Status = Status.DefaultSuccess;
         }
 
         private async Task SendClothes(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
         {
+            _logger.LogInformation("Начало отправки одежды");
             int iteration = 1;
             bool isEnd = false;
             while (!token.IsCancellationRequested && !isEnd) {
+                _logger.LogInformation("Отправка одежды - итерация {iteration}", iteration);
                 ResponseDownload response = new() {
                     PackageNumber = iteration,
                     PackageSize = _packageSize
@@ -60,8 +69,6 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                    .Where(p => clothIDs.Contains(p.ID))
                    .ToListAsync(token);
 
-
-                List<ClothIntegrationIventProto> integrationEvents = [];
                 foreach (Cloth cloth in clothes) {
                     ClothProto clothProto = cloth;
 
@@ -92,17 +99,29 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                     response.ClothIEs.Add(IE);
                 }
 
-                await responseStream.WriteAsync(response, token);
+                if(!isEnd)
+                {
+                    await responseStream.WriteAsync(response, token);
+                    _logger.LogInformation("Отправка одежды - итерация {iteration} отправлена, кол-во элементов - {count}", iteration, response.ClothIEs.Count);
+                }
+                else
+                {
+                    _logger.LogInformation("Пакет пустой - {status}", isEnd ? "True" : "False");
+                }
 
                 iteration++;
             }
+
+            _logger.LogInformation("Вся одежда отправлена");
         }
 
         private async Task SendPersons(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
         {
+            _logger.LogInformation("Начало отправки персон");
             int iteration = 1;
             bool isEnd = false;
             while (!token.IsCancellationRequested && !isEnd) {
+                _logger.LogInformation("Отправка персон - итерация {iteration}", iteration);
                 ResponseDownload response = new() {
                     PackageNumber = iteration,
                     PackageSize = _packageSize
@@ -117,7 +136,6 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                 if (persons.Count == 0)
                     isEnd = true;
 
-                List<PersonIntegrationEventProto> integrationEvents = [];
                 foreach (Person person in persons) {
                     PersonIntegrationEventProto IE = new() {
                         Person = person
@@ -129,17 +147,31 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                     response.PersonIEs.Add(IE);
                 }
 
-                await responseStream.WriteAsync(response, token);
+                if(!isEnd)
+                {
+                    await responseStream.WriteAsync(response, token);
+                    _logger.LogInformation("Отправка персон - итерация {iteration} отправлена, кол-во элементов - {count}", iteration, response.PersonIEs.Count);
+
+                }
+                else
+                {
+                    _logger.LogInformation("Пакет пустой - {status}", isEnd ? "True" : "False");
+                }
 
                 iteration++;
             }
+
+            _logger.LogInformation("Все персоны отправлены");
         }
 
         private async Task SendSets(IServerStreamWriter<ResponseDownload> responseStream, CancellationToken token)
         {
+            _logger.LogInformation("Начало отправки наборов");
             int iteration = 1;
             bool isEnd = false;
             while (!token.IsCancellationRequested && !isEnd) {
+                _logger.LogInformation("Отправка наборов - итерация {iteration}", iteration);
+
                 ResponseDownload response = new() {
                     PackageNumber = iteration,
                     PackageSize = _packageSize
@@ -155,7 +187,6 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                 if (sets.Count == 0)
                     isEnd = true;
 
-                List<PersonIntegrationEventProto> integrationEvents = [];
                 foreach (Set set in sets) {
                     SetIntegrationEventProto IE = new() {
                         Set = set,
@@ -168,11 +199,19 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                     response.SetIEs.Add(IE);
                 }
 
-                await responseStream.WriteAsync(response, token);
+                if(!isEnd)
+                {
+                    await responseStream.WriteAsync(response, token);
+                    _logger.LogInformation("Отправка наборов - итерация {iteration} отправлена, кол-во элементов - {count}", iteration, response.SetIEs.Count);
+                }
+                else
+                {
+                    _logger.LogInformation("Пакет пустой - {status}", isEnd ? "True" : "False");
+                }
 
                 iteration++;
             }
-
+            _logger.LogInformation("Все наборы отправлены");
         }
 
     }
