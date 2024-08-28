@@ -1,4 +1,6 @@
-﻿using MasterDominaSystem.BLL.Services.Abstractions;
+﻿using System.Xml.Linq;
+
+using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.BLL.Services.Extensions;
 using MasterDominaSystem.DAL;
 
@@ -10,7 +12,6 @@ namespace MasterDominaSystem.BLL.Services.Implementations
 {
     internal class ProcedureBaker(IReportsCollector reportsCollector,
         IWebHostEnvironment hostEnvironment,
-        MasterContext context,
         ILogger<ProcedureBaker> logger) : IProcedureBaker
     {
         List<string> _bakedList = [];
@@ -19,52 +20,55 @@ namespace MasterDominaSystem.BLL.Services.Implementations
             return _bakedList.Contains(reportKey);
         }
 
-        public async Task BakeDefaultAsync(string? reportKey = default)
+        public async Task<string> BakeDefaultAsync(string? reportKey = default)
         {
             List<string> reports;
-            if (reportKey != null) {
-                logger.LogTrace("Запрос на запечку процедур");
+            if (reportKey == null) {
+                logger.LogInformation("Запрос на запечку процедур");
                 reports = reportsCollector.GetReports()
                     .Select(r => r.Key.GetKey())
                     .ToList();
             }
             else {
-                logger.LogTrace("Запрос на запечку процедуры {reportKey}", reportKey);
+                logger.LogInformation("Запрос на запечку процедуры {reportKey}", reportKey);
                 reports = reportsCollector.GetReports()
                     .Where(r => r.Key.GetKey() == reportKey)
                     .Select(r => r.Key.GetKey())
                     .ToList();
             }
 
-            logger.LogTrace("Кол-во отчетов на запекание: {count}", reports.Count);
+            logger.LogInformation("Кол-во отчетов на запекание: {count}", reports.Count);
             string scriptsPath = Path.Combine(hostEnvironment.ContentRootPath, "ScriptFiles");
-            logger.LogTrace("Путь к файлам скриптов: {scriptsPath}", scriptsPath);
+            logger.LogInformation("Путь к файлам скриптов: {scriptsPath}", scriptsPath);
 
+            string finalScript = string.Empty;
             foreach(string report in reports) {
-                string reportPath = Path.Combine(scriptsPath, report);
+                string reportPath = Path.Combine(scriptsPath, report.Split(".").Last());
                 var files = Directory.GetFiles(reportPath).Where(file => file.EndsWith(".sql"));
-                logger.LogTrace("Кол-во файлов скриптов: {files.Count}", files.Count());
+                logger.LogInformation("У отчёта {report} найдено {count} файлов", report, files.Count());
                 foreach (var file in files) {
+                    logger.LogInformation("Чтение файла {file}", file);
                     string script = await File.ReadAllTextAsync(file);
                     if (script.StartsWith("create or replace procedure", StringComparison.CurrentCultureIgnoreCase)
                         || script.StartsWith("create procedure", StringComparison.CurrentCultureIgnoreCase)) {
 
-                        logger.LogDebug("Выполняется скрипт процедуры: {script}", script);
-                        int count = await context.Database.ExecuteSqlRawAsync(script);
-                        if (count != 1)
-                            logger.LogWarning("Непонятное поведение: количество затронутых строк != 1: {count}", count);
-                        _bakedList.Add(report);
+                        logger.LogInformation("Процедура {report} добавлена в лист запечённых объектов.\n" +
+                            "Её файл - {file}", report, file);
+
+                        finalScript += script;
                     }
                 }
+                _bakedList.Add(report);
             }
+            return finalScript;
         }
 
-        public Task AssertBaked(string reportKey)
+        public async Task<string> AssertBaked(string reportKey)
         {
             if (!IsBaked(reportKey))
-                return BakeDefaultAsync(reportKey);
+                return await BakeDefaultAsync(reportKey);
             else
-                return Task.CompletedTask;
+                return string.Empty;
         }
     }
 }

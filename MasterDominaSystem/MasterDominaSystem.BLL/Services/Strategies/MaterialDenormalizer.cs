@@ -19,14 +19,14 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportCloth).GetKey(), "AssertMaterialReportCloth" }
         };
         protected override string ThisName => typeof(MaterialDenormalizer).Name;
-        private readonly string insertPath = Path.Combine("Insert", "Material.json");
-        private readonly string deletePath = Path.Combine("Delete", "Material.json");
+        private readonly string insertPath = Path.Combine("Insert", "Material.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Material.sql");
 
         protected override async Task<string> AppendScriptFill(Material entityDB, string reportKey)
         {
             string script = "";
-            string call = AppendReportScriptName[reportKey];
             if (reportKey == typeof(ReportCloth).GetKey()) {
+                string call = AppendReportScriptName[reportKey];
                 string myId = entityDB.ID.ToString();
                 string myName = entityDB.Name.InSQLStringQuotes();
                 string myDescription = entityDB.Description?.InSQLStringQuotes() ?? "NULL";

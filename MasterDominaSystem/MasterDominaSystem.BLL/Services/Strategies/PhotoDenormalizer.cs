@@ -26,20 +26,20 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportPerson).GetKey(), "DeletePhotoReportPerson" }
         };
 
-        private readonly string insertPath = Path.Combine("Insert", "Photo.json");
-        private readonly string deletePath = Path.Combine("Delete", "Photo.json");
+        private readonly string insertPath = Path.Combine("Insert", "Photo.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Photo.sql");
         protected override string ThisName => nameof(PhotoDenormalizer);
 
         protected override async Task<string> AppendScriptFill(Photo entityDB, string reportKey)
         {
             string script = "";
-            string call = AppendReportScriptName[reportKey];
+            
             string myId = entityDB.ID.ToString();
             string myName = entityDB.Name.InSQLStringQuotes();
             string photoHash = entityDB.HashCode.InSQLStringQuotes();
 
             if (reportKey == typeof(ReportCloth).GetKey()) {
-                
+                string call = AppendReportScriptName[reportKey];
                 string rawScript = $"CALL {call}({myId}, {myName}, {photoHash});";
                 script += rawScript;
             }

@@ -66,7 +66,7 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                                select cloth.ID;
 
                 var photos = await _dbContext.Photos
-                   .Where(p => clothIDs.Contains(p.ID))
+                   .Where(p => clothIDs.Contains(p.ClothID))
                    .ToListAsync(token);
 
                 foreach (Cloth cloth in clothes) {
@@ -84,7 +84,7 @@ namespace WardrobeOnline.GRPC.Services.Implementations
                     }
 
                     foreach (Photo photo in photos) {
-                        if (photo.ID == cloth.ID) {
+                        if(photo.ClothID == cloth.ID) {
                             photoProtos.Add(photo);
                         }
                     }

@@ -20,8 +20,8 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportCloth).GetKey(), "DeleteSeasonReportPerson" }
         };
 
-        private readonly string insertPath = Path.Combine("Insert", "Season.json");
-        private readonly string deletePath = Path.Combine("Delete", "Season.json");
+        private readonly string insertPath = Path.Combine("Insert", "Season.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Season.sql");
 
         protected override string ThisName => nameof(SeasonDenormalizer);
 

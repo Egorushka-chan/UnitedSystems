@@ -22,9 +22,17 @@ namespace MasterDominaSystem.Controllers
 
         [HttpGet("AskForData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IResult> AskForData([FromServices] IDatabaseDownloader downloader, CancellationToken token = default)
         {
-            await downloader.DownloadDataAsync(token);
+            try {
+                await downloader.DownloadDataAsync(token);
+            }
+            catch(Grpc.Core.RpcException ex) {
+                if(ex.InnerException?.Message.Contains("Connection refused") ?? true) {
+                    return Results.Forbid();
+                }
+            }
             return TypedResults.Ok();
         }
     }

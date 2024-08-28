@@ -12,7 +12,7 @@ namespace UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Proto
         {
             return new() {
                 ID = Value.ID,
-                ClothID = Value.ID,
+                ClothID = Value.ClothID,
                 Name = Value.Name,
                 HashCode = Value.HashCode,
                 IsDBStored = Value.IsDBStored

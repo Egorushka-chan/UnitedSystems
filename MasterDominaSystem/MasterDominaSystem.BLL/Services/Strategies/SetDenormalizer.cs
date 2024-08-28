@@ -20,8 +20,8 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportCloth).GetKey(), "DeleteSetReportPerson" }
         };
 
-        private readonly string insertPath = Path.Combine("Insert", "Set.json");
-        private readonly string deletePath = Path.Combine("Delete", "Set.json");
+        private readonly string insertPath = Path.Combine("Insert", "Set.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Set.sql");
 
         protected override string ThisName => nameof(SetDenormalizer);
 

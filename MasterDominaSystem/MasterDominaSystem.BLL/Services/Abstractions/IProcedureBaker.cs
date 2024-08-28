@@ -2,8 +2,8 @@
 {
     public interface IProcedureBaker
     {
-        Task AssertBaked(string reportKey);
+        Task<string> AssertBaked(string reportKey);
         bool IsBaked(string reportKey);
-        Task BakeDefaultAsync(string? reportKey = default);
+        Task<string> BakeDefaultAsync(string? reportKey = default);
     }
 }

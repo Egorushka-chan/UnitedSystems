@@ -5,33 +5,33 @@ DECLARE
 	mID integer;
 	pID integer;
 BEGIN
-	Delete From "ReportCloth" where "ClothID" = MyClothID;
+	Delete From "ReportCloths" where "ClothID" = MyClothID;
 	MERGE INTO "ReportCloths" as RT
 	USING (Select MyClothID, MyClothName, MyClothRating, MyClothSize) AS Q
-	ON MyClothID = RT."ClothID"
+	ON Q.MyClothID = RT."ClothID"
 		WHEN MATCHED THEN
 			DELETE
 		WHEN NOT MATCHED THEN
-			INSERT (RT."ClothName", RT."ClothRating", RT."ClothSize")
-			VALUES (MyClothName, MyClothRating, MyClothSize);
+			INSERT ("ClothID", "ClothName", "ClothRating", "ClothSize")
+			VALUES (Q.MyClothID, Q.MyClothName, Q.MyClothRating, Q.MyClothSize);
 
-	IF COALESCE(MyClothDescription, -9) != -9
+	IF COALESCE(MyClothDescription, 'Rofls') != 'Rofls'
 		THEN UPDATE "ReportCloths" as RT
-			 SET RT."ClothDescription" = MyClothDescription
+			 SET "ClothDescription" = MyClothDescription
 			 WHERE RT."ClothID" = MyClothID;
 	END IF;
 
-	FOREACH mID in ARRAY materialIDs
+	FOREACH mID in ARRAY materialsIDs
 	LOOP
 		MERGE INTO "ReportCloths" as RT
 		USING (Select MyClothID) as Q
-		ON RT."ClothID" = MyClothID AND RT."MaterialID" IS NULL
+		ON RT."ClothID" = Q.MyClothID AND RT."MaterialID" IS NULL
 			WHEN MATCHED THEN
-				UPDATE SET RT."MaterialID" = mID
+				UPDATE SET "MaterialID" = mID
 			WHEN NOT MATCHED THEN
-				INSERT (RT."ClothID", RT."ClothName", RT."ClothDescription", RT."ClothRating", RT."ClothSize",
-						RT."MaterialID")
-				VALUES (MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
+				INSERT ("ClothID", "ClothName", "ClothDescription", "ClothRating", "ClothSize",
+						"MaterialID")
+				VALUES (Q.MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
 						mID);
 	END LOOP;
 
@@ -40,27 +40,27 @@ BEGIN
 		BEGIN
 			MERGE INTO "ReportCloths" as RT
 			USING (Select MyClothID) as Q
-			ON RT."ClothID" = MyClothID and RT."PhotoID" IS NULL
+			ON RT."ClothID" = Q.MyClothID and RT."PhotoID" IS NULL
 				WHEN MATCHED THEN
-					UPDATE SET RT."PhotoID" = pID
+					UPDATE SET "PhotoID" = pID
 				WHEN NOT MATCHED THEN
-					INSERT (RT."ClothID", RT."ClothName", RT."ClothDescription", RT."ClothRating", RT."ClothSize",
-							RT."PhotoID")
-					VALUES (MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
+					INSERT ("ClothID", "ClothName", "ClothDescription", "ClothRating", "ClothSize",
+							"PhotoID")
+					VALUES (Q.MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
 							pID);
-			FOREACH mID in ARRAY materialIDs
+			FOREACH mID in ARRAY materialsIDs
 			LOOP
 				MERGE INTO "ReportCloths" as RT
 				USING (Select MyClothID, pID) as Q
-				ON RT."ClothID" = MyClothID AND RT."PhotoID" = pID AND RT."MaterialID" IS NULL
+				ON RT."ClothID" = Q.MyClothID AND RT."PhotoID" = Q.pID AND RT."MaterialID" IS NULL
 					WHEN MATCHED THEN
-						UPDATE SET RT."MaterialID" = mID
+						UPDATE SET "MaterialID" = mID
 					WHEN NOT MATCHED THEN
-						INSERT (RT."ClothID", RT."ClothName", RT."ClothDescription", RT."ClothRating", RT."ClothSize",
-								RT."MaterialID", RT."PhotoID")
-						VALUES (MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
-								mID, pID);
+						INSERT ("ClothID", "ClothName", "ClothDescription", "ClothRating", "ClothSize",
+								"MaterialID", "PhotoID")
+						VALUES (Q.MyClothID, MyClothName, MyClothDescription, MyClothRating, MyClothSize,
+								mID, Q.pID);
 			END LOOP;
 		END;
 	END LOOP;
-END $$ LANGUAGE plpgsql
+END $$ LANGUAGE plpgsql;

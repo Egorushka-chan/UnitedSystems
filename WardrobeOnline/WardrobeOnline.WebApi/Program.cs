@@ -46,6 +46,9 @@ builder.Services.AddSwaggerGen();
 
 builder.WebHost.ConfigureKestrel((context, serverOptions) => {
     serverOptions.Listen(IPAddress.Any, 8088, listenOptions => {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
+    });
+    serverOptions.Listen(IPAddress.Any, 8089, listenOptions => {
         listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
     });
 });

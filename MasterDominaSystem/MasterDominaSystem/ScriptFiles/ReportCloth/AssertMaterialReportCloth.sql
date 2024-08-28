@@ -1,9 +1,9 @@
 ﻿CREATE OR REPLACE PROCEDURE AssertMaterialReportCloth
 (MyMaterialID integer, MyMaterialName text, MyMaterialDescription text) as $$
 BEGIN
-	MERGE INTO "ReportCloth" as RT
+	MERGE INTO "ReportCloths" as RT
 	USING (SELECT MyMaterialID, MyMaterialName, MyMaterialDescription) as Q
-	ON RT."MaterialID" = MyMaterialID
+	ON RT."MaterialID" = Q.MyMaterialID
 		WHEN MATCHED THEN
-			UPDATE SET RT."MaterialName" = MyMaterialName, RT."MaterialDescription" = MyMaterialDescription;
-END $$ LANGUAGE plpgsql
+			UPDATE SET "MaterialName" = Q.MyMaterialName, "MaterialDescription" = Q.MyMaterialDescription;
+END $$ LANGUAGE plpgsql;

@@ -7,10 +7,10 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
         where TEntity : IEntityDB
     {
         Task<string> Append(TEntity entity, Type? report = default);
-        Task<string> IEntityDenormalizer.Append(IEntityDB entity, Type? report = default) => Append(entity, report);
+        Task<string> IEntityDenormalizer.Append(IEntityDB entity, Type? report = default) => Append((TEntity)entity, report);
 
         Task<string> Delete(TEntity entity, Type? report = default);
-        Task<string> IEntityDenormalizer.Delete(IEntityDB entity, Type? report = default) => Delete(entity, report);
+        Task<string> IEntityDenormalizer.Delete(IEntityDB entity, Type? report = default) => Delete((TEntity)entity, report);
     }
 
     /// <summary>

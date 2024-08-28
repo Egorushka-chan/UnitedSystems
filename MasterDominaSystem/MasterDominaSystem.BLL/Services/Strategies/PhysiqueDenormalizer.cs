@@ -20,8 +20,8 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportCloth).GetKey(), "DeletePhysiqueReportPerson" }
         };
 
-        private readonly string insertPath = Path.Combine("Insert", "Physique.json");
-        private readonly string deletePath = Path.Combine("Delete", "Physique.json");
+        private readonly string insertPath = Path.Combine("Insert", "Physique.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Physique.sql");
         protected override string ThisName => nameof(PhysiqueDenormalizer);
 
         protected override async Task<string> AppendScriptFill(Physique entityDB, string reportKey)

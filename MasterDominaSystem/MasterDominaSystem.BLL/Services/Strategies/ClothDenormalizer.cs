@@ -24,22 +24,22 @@ namespace MasterDominaSystem.BLL.Services.Strategies
             {typeof(ReportPerson).GetKey(), "DeleteClothReportPerson" }
         };
 
-        private readonly string insertPath = Path.Combine("Insert", "Cloth.json");
-        private readonly string deletePath = Path.Combine("Delete", "Cloth.json");
+        private readonly string insertPath = Path.Combine("Insert", "Cloth.sql");
+        private readonly string deletePath = Path.Combine("Delete", "Cloth.sql");
 
         protected override string ThisName => nameof(ClothDenormalizer);
         protected override async Task<string> AppendScriptFill(Cloth entityDB, string reportKey)
         {    
             string script = "";
-            string call = AppendReportScriptName[reportKey];
             if (reportKey == typeof(ReportCloth).GetKey()) {
+                string call = AppendReportScriptName[reportKey];
                 string myId = entityDB.ID.ToString();
                 string myName = entityDB.Name.InSQLStringQuotes();
                 string myDescription = entityDB.Description?.InSQLStringQuotes() ?? "NULL";
                 string myRating = entityDB.Rating.ToString() ?? "NULL";
                 string mySize = entityDB.Size?.InSQLStringQuotes() ?? "NULL";
                 string materialIDs = entityDB.ClothHasMaterials.Select(chm => chm.MaterialID).ToArray().ToSQLArray();
-                string photoIDs = entityDB.Photos.Select(ph => ph.ClothID).ToSQLArray();
+                string photoIDs = entityDB.Photos.Select(ph => ph.ClothID).ToArray().ToSQLArray();
 
                 string rawScript = $"CALL {call}({myId}, {myName}, {myDescription}, {myRating}, {mySize}, " +
                     $"{materialIDs}, {photoIDs});";

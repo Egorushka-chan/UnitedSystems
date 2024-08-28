@@ -37,7 +37,7 @@ namespace MasterDominaSystem.RMQL.IntegrationEventHandlers
 
             using(var scope = serviceProvider.CreateScope())
             {
-                MasterContext context = serviceProvider.GetRequiredService<MasterContext>();
+                MasterContext context = scope.ServiceProvider.GetRequiredService<MasterContext>();
                 await context.Database.ExecuteSqlRawAsync(unitedScript);
             }
             _logger.LogDebug("Скрипт выполнен");

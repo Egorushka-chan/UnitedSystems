@@ -23,7 +23,7 @@ namespace MasterDominaSystem.BLL
             services.AddSingleton<ISessionInfoProvider, SessionInfoProvider>();
 
             services.AddSingleton<IReportsCollector, ReportsCollector>();
-            services.AddTransient<IProcedureBaker, ProcedureBaker>();
+            services.AddSingleton<IProcedureBaker, ProcedureBaker>();
 
             return new DenormalizerBuilder(services);
         }

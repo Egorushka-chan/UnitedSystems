@@ -56,9 +56,9 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
                     if (report.GetKey() != reportKey)
                         continue;
 
-                await _procedureBaker.AssertBaked(reportKey);
+                script += await _procedureBaker.AssertBaked(reportKey);
 
-                script += AppendScriptFill(entityDB, reportKey);
+                script += await AppendScriptFill(entityDB, reportKey);
             }
             if (string.IsNullOrEmpty(script))
                 throw new InvalidOperationException($"Не удалось найти скрипты для файлов." +
@@ -74,9 +74,9 @@ namespace MasterDominaSystem.BLL.Services.Strategies.Interfaces
                     if (report.GetKey() != reportKey)
                         continue;
 
-                await _procedureBaker.AssertBaked(reportKey);
+                script += await _procedureBaker.AssertBaked(reportKey);
 
-                script += DeleteScriptFill(entityDB, reportKey);
+                script += await DeleteScriptFill(entityDB, reportKey);
             }
             if (string.IsNullOrEmpty(script))
                 throw new InvalidOperationException($"Не удалось найти скрипты для файлов." +

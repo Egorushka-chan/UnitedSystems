@@ -2,6 +2,6 @@
 {
     public class ConnectionGRPCSettings
     {
-        public string ConnectionString {get;set;} = "http://WardrobeWebApi:8088/";
+        public string ConnectionString {get;set;} = "http://WardrobeWebApi:8089/";
     }
 }

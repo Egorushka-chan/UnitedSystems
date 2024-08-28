@@ -4,7 +4,7 @@
     {
         internal static string ToSQLArray(this IEnumerable<int> array)
         {
-            string result = "{";
+            string result = "'{{";
             bool isBegin = true;
 
             foreach (int item in array) {
@@ -17,7 +17,7 @@
                 }
             }
 
-            result += "}";
+            result += "}}'";
 
             return result;
         }
