@@ -14,21 +14,17 @@ namespace UnitedSystems.EventBus
             // Регистрирую сервис по ключу из типа интеграционного ивента
             // консьюмер сможет использовать IKeyedServiceProvider.GetKeyedService<IIntegrationEventHandler>(typeof(T)) 
             // что бы получить все подходящие обработчики для данного типа
-
-            builder.Services.AddKeyedSingleton<IIntegrationEventHandler, THandler>(typeof(TIntegration));
-
-            //switch (contextLifeTime)
-            //{
-            //    case ServiceLifetime.Singleton:
-            //        builder.Services.AddKeyedSingleton<THandler>(typeof(TIntegration));
-            //        break;
-            //    case ServiceLifetime.Scoped:
-            //        builder.Services.AddKeyedScoped<THandler>(typeof(TIntegration));
-            //        break;
-            //    case ServiceLifetime.Transient:
-            //        builder.Services.AddKeyedTransient<THandler>(typeof(TIntegration));
-            //        break;
-            //}
+            switch (contextLifeTime) {
+                case ServiceLifetime.Singleton:
+                    builder.Services.AddKeyedSingleton<IIntegrationEventHandler, THandler>(typeof(TIntegration));
+                    break;
+                case ServiceLifetime.Scoped:
+                    builder.Services.AddKeyedScoped<IIntegrationEventHandler, THandler>(typeof(TIntegration));
+                    break;
+                case ServiceLifetime.Transient:
+                    builder.Services.AddKeyedTransient<IIntegrationEventHandler, THandler>(typeof(TIntegration));
+                    break;
+            }
 
             builder.Services.Configure<EventBusSubscriptionInfo>(o =>
             {
