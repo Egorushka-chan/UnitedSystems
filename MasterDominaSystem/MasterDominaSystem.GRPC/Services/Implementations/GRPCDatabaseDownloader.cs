@@ -1,8 +1,10 @@
 ﻿using Grpc.Net.Client;
 
+using MasterDominaSystem.DAL;
 using MasterDominaSystem.GRPC.Models;
 using MasterDominaSystem.GRPC.Services.Interfaces;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -19,7 +21,8 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
     public class GRPCDatabaseDownloader(
         IOptions<ConnectionGRPCSettings> options,
         IServiceProvider serviceProvider,
-        ILogger<GRPCDatabaseDownloader> logger
+        ILogger<GRPCDatabaseDownloader> logger,
+        MasterContext context
         ) : IDatabaseDownloader
     {
         readonly ConnectionGRPCSettings _options = options.Value;
@@ -45,6 +48,7 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
 
             if (hasAnything)
             {
+                await TruncateDataTables(context);
                 while (!isEnd)
                 {
                     ResponseDownload response = responseStream.Current;
@@ -67,6 +71,19 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
             {
                 logger.LogInformation("GRPC ничего не прислал");
             }
+        }
+
+        private async Task TruncateDataTables(MasterContext context)
+        {
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Persons)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Physiques)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Sets)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Seasons)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.SetHasClothes)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Clothes)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Photos)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.ClothHasMaterials)} RESTART IDENTITY CASCADE");
+            await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Materials)} RESTART IDENTITY CASCADE");
         }
 
         private async Task<bool> ProcessMessage(ResponseDownload response)
