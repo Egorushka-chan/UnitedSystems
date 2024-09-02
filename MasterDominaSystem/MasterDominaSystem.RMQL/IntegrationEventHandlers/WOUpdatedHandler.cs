@@ -1,18 +1,27 @@
-﻿using MasterDominaSystem.BLL.Services.Abstractions;
+﻿using MasterDominaSystem.BLL.Services.Strategies.Interfaces;
+using MasterDominaSystem.RMQL.IntegrationEventHandlers.Abstractions;
+
+using Microsoft.Extensions.Logging;
+
 using UnitedSystems.CommonLibrary.WardrobeOnline.Entities.Interfaces;
 using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
-using UnitedSystems.EventBus.Interfaces;
 
 namespace MasterDominaSystem.RMQL.IntegrationEventHandlers
 {
-    public class WOUpdatedHandler<TEntity>(ISessionInfoProvider sessionInfo)
-        : IIntegrationEventHandler<WOUpdatedCRUDEvent<TEntity>>
+    internal class WOUpdatedHandler<TEntity>(
+        ILogger<WOUpdatedHandler<TEntity>> logger,
+        IServiceProvider services
+        ) : AbstractCRUDHandler<TEntity, WOUpdatedCRUDEvent<TEntity>>(logger, services)
         where TEntity : IEntityDB
     {
-        public Task Handle(WOUpdatedCRUDEvent<TEntity> @event)
+        protected override string ThisName => "WOUpdatedHandler";
+        protected override string GenerateScript(WOUpdatedCRUDEvent<TEntity> @event, IEntityDenormalizer<TEntity> denormalizer)
         {
-            sessionInfo.PutRequestsWO.Add($"{typeof(TEntity).Name}: id: {@event.Entities.First().ID}");
-            return Task.CompletedTask;
+            string script = "";
+            foreach (var entity in @event.Entities) {
+                script += denormalizer.Append(entity);
+            }
+            return script;
         }
     }
 }
