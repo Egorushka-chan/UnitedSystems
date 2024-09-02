@@ -1,5 +1,6 @@
 ﻿using MasterDominaSystem.RMQL.IntegrationEventHandlers;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,14 +11,16 @@ using UnitedSystems.CommonLibrary.WardrobeOnline.IntegrationEvents;
 using UnitedSystems.EventBus;
 using UnitedSystems.EventBus.Interfaces;
 using UnitedSystems.EventBus.RabbitMQ;
+using UnitedSystems.EventBus.Kafka;
 
 namespace MasterDominaSystem.RMQL
 {
     public static class InjectorRMQL
     {
-        public static IHostApplicationBuilder InjectRMQL(this IHostApplicationBuilder builder, string connectionString)
+        private const string RabbitConnectionString = "RabbitMQ";
+        public static IHostApplicationBuilder InjectRMQL(this IHostApplicationBuilder builder)
         {
-            builder.AddRabbitMQEventBus(connectionString)
+            builder.SelectEventBus()
                 // ManyEntitiesSender
                 .AddSubscription<MESReturnedObjectsEvent, ReturnedObjectsHandler>()
                 // WardrobeOnline
@@ -44,11 +47,51 @@ namespace MasterDominaSystem.RMQL
             builder.AddSubscription<AppendedClothIntegrationEvent, AppendedClothIntegrationEventHandler>();
             builder.AddSubscription<AppendedPersonIntegrationEvent, AppendedPersonIntegrationEventHandler>();
             builder.AddSubscription<AppendedSetIntegrationEvent, AppendedSetIntegrationEventHandler>();
-
-            builder.AddSubscription<DeletedClothIntegrationEvent, DeletedClothIntegrationEventHandler>();
-            builder.AddSubscription<DeletedPersonIntegrationEvent, DeletedPersonIntegrationEventHandler>();
-            builder.AddSubscription<DeletedSetIntegrationEvent, DeletedSetIntegrationEventHandler>();
             return builder;
+        }
+
+        private static IEventBusBuilder SelectEventBus(this IHostApplicationBuilder builder)
+        {
+            if (builder.IsPreferRabbitMQ()) {
+                return builder.AddRabbitMQEventBus(RabbitConnectionString);
+            }
+            else {
+                return builder.AddKafkaEventBus();
+            }
+        }
+
+        private static bool IsPreferRabbitMQ(this IHostApplicationBuilder builder)
+        {
+            string errorMessage = "PreferRabbitMQOverKafka must be 1,0,true,false";
+            bool preferRabbit = false;
+
+            string? value = builder.Configuration["PreferRabbitMQOverKafka"];
+            if (value != null) {
+                bool converted = int.TryParse(value, out int number);
+                if (converted) {
+                    switch (number) {
+                        case 0:
+                            preferRabbit = false;
+                            break;
+                        case 1:
+                            preferRabbit = true;
+                            break;
+                        default:
+                            throw new InvalidOperationException(errorMessage);
+                    }
+                }
+                else {
+                    converted = bool.TryParse(value, out bool second);
+                    if (converted) {
+                        preferRabbit = second;
+                    }
+                    else {
+                        throw new InvalidOperationException(errorMessage);
+                    }
+                }
+            }
+
+            return preferRabbit;
         }
     }
 }

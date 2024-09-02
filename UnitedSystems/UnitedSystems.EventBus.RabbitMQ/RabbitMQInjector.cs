@@ -14,10 +14,10 @@ namespace UnitedSystems.EventBus.RabbitMQ
 
         public static IEventBusBuilder AddRabbitMQEventBus(this IHostApplicationBuilder builder, string connectionString)
         {
-            builder.Services.Configure<EventBusSettings>(builder.Configuration.GetSection(SettingPath));
+            builder.Services.Configure<RabbitEventBusSettings>(builder.Configuration.GetSection(SettingPath));
 
             builder.Services.AddSingleton(opt => {
-                EventBusSettings configuration = opt.GetRequiredService<IOptions<EventBusSettings>>().Value;
+                RabbitEventBusSettings configuration = opt.GetRequiredService<IOptions<RabbitEventBusSettings>>().Value;
 
                 ConnectionFactory connectionFactory = new() {
                     DispatchConsumersAsync = true,

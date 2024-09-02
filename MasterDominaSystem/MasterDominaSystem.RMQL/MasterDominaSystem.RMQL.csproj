@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="2.5.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
@@ -16,6 +15,7 @@
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.Kafka\UnitedSystems.EventBus.Kafka.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj" />
     <ProjectReference Include="..\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj" />

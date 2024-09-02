@@ -1,6 +1,6 @@
 ﻿namespace UnitedSystems.EventBus.RabbitMQ
 {
-    public class EventBusSettings
+    public class RabbitEventBusSettings
     {
         public string ServiceQueueName { get; set; } = "NotSpecified";
         public string UserName { get; set; } = "root";

@@ -15,7 +15,7 @@ using UnitedSystems.EventBus.Models;
 namespace UnitedSystems.EventBus.RabbitMQ
 {
     public class RabbitMQEventBus
-        (IOptions<EventBusSettings> busSettings,
+        (IOptions<RabbitEventBusSettings> busSettings,
         IServiceProvider services,
         IOptions<EventBusSubscriptionInfo> subscriptionsOptions) 
         : BackgroundService, IEventBus, IDisposable
@@ -23,7 +23,7 @@ namespace UnitedSystems.EventBus.RabbitMQ
         private IModel _consumerChannel;
         private IConnection _rabbitConnection;
 
-        private readonly EventBusSettings busSettings = busSettings.Value;
+        private readonly RabbitEventBusSettings busSettings = busSettings.Value;
         private readonly EventBusSubscriptionInfo subscriptions = subscriptionsOptions.Value;
 
         private readonly string _consumerChannelQueue = busSettings.Value.ServiceQueueName;
