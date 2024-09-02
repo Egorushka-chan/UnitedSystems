@@ -3,6 +3,7 @@ using UnitedSystems.EventBus.Interfaces;
 
 namespace MasterDominaSystem.RMQL.IntegrationEventHandlers
 {
+    [Obsolete("Бесполезный класс, в текущей бизнес логике, его функционал спокойно заменяет WODeletedCRUDEvent")]
     internal class DeletedSetIntegrationEventHandler
         : IIntegrationEventHandler<DeletedSetIntegrationEvent>
     {
