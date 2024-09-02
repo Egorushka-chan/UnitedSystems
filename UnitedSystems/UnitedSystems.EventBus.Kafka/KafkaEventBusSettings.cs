@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitedSystems.EventBus.Kafka
+﻿namespace UnitedSystems.EventBus.Kafka
 {
-    internal class KafkaEventBusSettings
+    public class KafkaEventBusSettings
     {
+        public string ServiceQueueName { get; set; } = "NotSpecified";
+        public string HostName { get; set; } = "Kafka";
+        public string UserName { get; set; } = "root";
+        public string Password { get; set; } = "tobacco";
+        public int RetryCount = 5;
     }
 }
