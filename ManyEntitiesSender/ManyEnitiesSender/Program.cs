@@ -6,6 +6,7 @@ using ManyEntitiesSender.PL.Settings;
 using ManyEntitiesSender.RAL;
 
 using UnitedSystems.EventBus.RabbitMQ;
+using UnitedSystems.EventBus.Kafka;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,12 @@ AddDataAccessLayer(builder);
 AddRedisLayer(builder);
 AddBusinessLayer(builder);
 
-builder.AddRabbitMQEventBus("RabbitMQ");
+if (IsPreferRabbitMQ(builder)) {
+    builder.AddRabbitMQEventBus("RabbitMQ");
+}
+else {
+    builder.AddKafkaEventBus();
+}
 
 var app = builder.Build();
 
@@ -72,4 +78,38 @@ void AddOptions(WebApplicationBuilder builder)
     // RabbitMQ
     builder.Services.Configure<BrokerSettings>(
         builder.Configuration.GetSection("Broker:RabbitMQ"));
+}
+
+bool IsPreferRabbitMQ(WebApplicationBuilder builder)
+{
+    string errorMessage = "PreferRabbitMQOverKafka must be 1,0,true,false";
+    bool preferRabbit = false;
+
+    string? value = builder.Configuration["PreferRabbitMQOverKafka"];
+    if (value != null) {
+        bool converted = int.TryParse(value, out int number);
+        if (converted) {
+            switch (number) {
+                case 0:
+                    preferRabbit = false;
+                    break;
+                case 1:
+                    preferRabbit = true;
+                    break;
+                default:
+                    throw new InvalidOperationException(errorMessage);
+            }
+        }
+        else {
+            converted = bool.TryParse(value, out bool second);
+            if (converted) {
+                preferRabbit = second;
+            }
+            else {
+                throw new InvalidOperationException(errorMessage);
+            }
+        }
+    }
+
+    return preferRabbit;
 }

@@ -60,7 +60,7 @@ namespace UnitedSystems.EventBus.Kafka
                 while (!stoppingToken.IsCancellationRequested) {
                     try {
                         var consumeResult = consumer.Consume(stoppingToken);
-
+                        logger.LogDebug("Успешно получено сообщение Kafka. Начинается обратотка");
                         await OnMessageReceive(consumeResult);
                     }
                     catch (OperationCanceledException) {
@@ -84,6 +84,7 @@ namespace UnitedSystems.EventBus.Kafka
 
             }, stoppingToken, TaskCreationOptions.LongRunning, TaskScheduler.Current);
 
+            logger.LogInformation("Kafka consumer is now online");
             return Task.CompletedTask;
         }
 
@@ -91,6 +92,9 @@ namespace UnitedSystems.EventBus.Kafka
         {
             string routingKey = consumeResult.Topic;
             string message = consumeResult.Message.Value;
+
+            logger.LogInformation("Получено сообщение из топика {topic}. Message:\n" +
+                "{message}", routingKey, message);
 
             if (!subscriptions.EventTypes.TryGetValue(routingKey, out var valueType)) {
                 throw new InvalidOperationException("Нет подобных зарегистрированных обработчиков");
@@ -115,6 +119,9 @@ namespace UnitedSystems.EventBus.Kafka
             var message = new Message<Null, string>() {
                 Value = body
             };
+
+            logger.LogInformation("Оправка сообщения в топик {topic}:\n" +
+                "{body}", topic, body);
 
             var result = await producer.ProduceAsync(topic, message);
 

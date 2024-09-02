@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.Kafka\UnitedSystems.EventBus.Kafka.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj" />
     <ProjectReference Include="..\ManyEnitiesSender.DAL\ManyEntitiesSender.DAL.csproj" />
