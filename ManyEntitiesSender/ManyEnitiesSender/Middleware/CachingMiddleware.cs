@@ -11,19 +11,15 @@ using UnitedSystems.EventBus.Interfaces;
 
 namespace ManyEntitiesSender.Middleware
 {
-    public class CachingMiddleware
+    public class CachingMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public CachingMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+        private readonly RequestDelegate _next = next;
 
         // Мьютексы, мониторы, lock - они все требуют работы в синхронном контексте - т.е между wait и release не должно быть await
         //private static ConcurrentDictionary<string, Mutex> monitors = new();
 
         // А SemaphoreSlim вообще нормально
-        private static ConcurrentDictionary<string, SemaphoreSlim> semaphores = new();
+        private readonly static ConcurrentDictionary<string, SemaphoreSlim> semaphores = new();
 
         // Подсчет количества обработанных элементов для отправки в MDM
         private int _entityProcessedCount = 0;
@@ -118,9 +114,9 @@ namespace ManyEntitiesSender.Middleware
         private async Task<bool> CheckRedis(HttpContext httpContext, IRedisProvider redis, string requestedTable, string? filterValue)
         {
             bool redisReturnedValue = false;
-            if (requestedTable.ToLower() == "body")
+            if (requestedTable.Equals("body", StringComparison.CurrentCultureIgnoreCase))
             {
-                List<Body> values = new List<Body>();
+                List<Body> values = [];
                 await foreach (var package in redis.TryGetAsync<Body>(filterValue))
                 {
                     if (package is null)
@@ -138,9 +134,9 @@ namespace ManyEntitiesSender.Middleware
                     await httpContext.Response.WriteAsJsonAsync(values);
                 }
             }
-            if (requestedTable.ToLower() == "hand")
+            if (requestedTable.Equals("hand", StringComparison.CurrentCultureIgnoreCase))
             {
-                List<Hand> values = new List<Hand>();
+                List<Hand> values = [];
                 await foreach (var package in redis.TryGetAsync<Hand>(filterValue))
                 {
                     if (package is null)
@@ -159,9 +155,9 @@ namespace ManyEntitiesSender.Middleware
                 }
                     
             }
-            if (requestedTable.ToLower() == "leg")
+            if (requestedTable.Equals("leg", StringComparison.CurrentCultureIgnoreCase))
             {
-                List<Leg> values = new List<Leg>();
+                List<Leg> values = [];
                 await foreach (var package in redis.TryGetAsync<Leg>(filterValue))
                 {
                     if (package is null)

@@ -89,16 +89,12 @@ bool IsPreferRabbitMQ(WebApplicationBuilder builder)
     if (value != null) {
         bool converted = int.TryParse(value, out int number);
         if (converted) {
-            switch (number) {
-                case 0:
-                    preferRabbit = false;
-                    break;
-                case 1:
-                    preferRabbit = true;
-                    break;
-                default:
-                    throw new InvalidOperationException(errorMessage);
-            }
+            preferRabbit = number switch
+            {
+                0 => false,
+                1 => true,
+                _ => throw new InvalidOperationException(errorMessage),
+            };
         }
         else {
             converted = bool.TryParse(value, out bool second);

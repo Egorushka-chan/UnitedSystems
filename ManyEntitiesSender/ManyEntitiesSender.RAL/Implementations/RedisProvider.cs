@@ -166,7 +166,7 @@ namespace ManyEntitiesSender.RAL.Implementations
 
                         HashEntry[] values = await GetDatabase().HashGetAllAsync(new RedisKey($"{type.Name}:{filterValue}:{element}"));
 
-                        TEntity entity = assertValues(values) as TEntity;
+                        TEntity entity = assertValues(values) as TEntity ?? throw new InvalidOperationException("Непонятная ошибка преобразования");
                         packageList.Add(entity);
                     }
 
@@ -201,7 +201,7 @@ namespace ManyEntitiesSender.RAL.Implementations
 
                             HashEntry[] values = await GetDatabase().HashGetAllAsync(new RedisKey($"{type.Name}:{uniqueValue}:{element}"));
 
-                            TEntity entity = assertValues(values) as TEntity;
+                            TEntity entity = assertValues(values) as TEntity ?? throw new InvalidOperationException("Непонятная ошибка преобразования");
                             packageList.Add(entity);
                         }
 
@@ -267,6 +267,8 @@ namespace ManyEntitiesSender.RAL.Implementations
         /// <exception cref="ArgumentException"></exception>
         private static Func<HashEntry[], IEntity> SelectFieldAssertionAlgorithm(Type type)
         {
+            // Не ошибка, а дебилизм. entry.Value анализатор принимает за nullable тип, хотя это value-тип. Т.е по факту ошибки нет
+            #pragma warning disable CS8604, CS8601 // Возможно, аргумент-ссылка, допускающий значение NULL
             return (HashEntry[] values) =>
             {
                 if (type == typeof(Body))
@@ -301,6 +303,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                         if (entry.Name == "id")
                             leg.ID = int.Parse(entry.Value);
                         else if (entry.Name == "state")
+
                             leg.State = entry.Value;
                     }
                     return leg;
@@ -308,6 +311,7 @@ namespace ManyEntitiesSender.RAL.Implementations
                 else
                     throw new ArgumentException($"Type {type.Name} can't be gotten from Redis (Not Implemented)");
             };
+            #pragma warning restore CS8604, CS8601 // Возможно, аргумент-ссылка, допускающий значение NULL.
         }
     }
 }

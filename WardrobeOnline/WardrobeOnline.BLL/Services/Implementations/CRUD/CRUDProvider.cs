@@ -40,7 +40,8 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 return null;
 
             _context.DBSet<TEntityDB>().Add(entityDB);
-            int result = await SaveChangesAsync();
+
+            await SaveChangesAsync();
 
             await _eventBus.PublishAsync(new WOCreatedCRUDEvent<TEntityDB>() {
                 Entities = [

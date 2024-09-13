@@ -9,17 +9,11 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
-    public class SetProvider : CRUDProvider<SetDTO, Set>
+    public class SetProvider(IWardrobeContext context, IPaginationService<Set> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus) : CRUDProvider<SetDTO, Set>(context, pagination, castHelper, imageProvider, eventBus)
     {
-        public SetProvider(IWardrobeContext context, IPaginationService<Set> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
-            : base(context, pagination, castHelper, imageProvider, eventBus)
+        protected override Task<Set?> AddTranslateToDB(SetDTO entityDTO)
         {
-
-        }
-
-        protected override async Task<Set?> AddTranslateToDB(SetDTO entityDTO)
-        {
-            entityDTO.TranslateToDB(out Set? setDB, _castHelper);
+            entityDTO.TranslateToDB(out Set? setDB);
             _castHelper.AssertSetSeason(entityDTO.Season, setDB);
 
             if (entityDTO.ClothIDs != null)
@@ -27,13 +21,13 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 _castHelper.AssertSetClothes(entityDTO.ClothIDs, setDB);
             }
 
-            return setDB;
+            return Task.FromResult<Set?>(setDB);
         }
 
-        protected override async Task<SetDTO?> AddTranslateToDTO(Set entityDB)
+        protected override Task<SetDTO?> AddTranslateToDTO(Set entityDB)
         {
-            entityDB.TranslateToDTO(out SetDTO resultDTO, _castHelper);
-            return resultDTO;
+            entityDB.TranslateToDTO(out SetDTO? resultDTO, _castHelper);
+            return Task.FromResult(resultDTO);
         }
 
         protected override Task<Set?> GetFromDBbyID(int id)
@@ -45,10 +39,10 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 .FirstOrDefaultAsync();
         }
 
-        protected override async Task<SetDTO?> GetTranslateToDTO(Set entityDB)
+        protected override Task<SetDTO?> GetTranslateToDTO(Set entityDB)
         {
-            entityDB.TranslateToDTO(out SetDTO resultDTO, _castHelper);
-            return resultDTO;
+            entityDB.TranslateToDTO(out SetDTO? resultDTO, _castHelper);
+            return Task.FromResult(resultDTO);
         }
 
         protected override async Task<Set?> UpdateTranslateToDB(SetDTO entityDTO)
@@ -75,10 +69,10 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             return setDB;
         }
 
-        protected override async Task<SetDTO?> UpdateTranslateToDTO(Set entityDB)
+        protected override Task<SetDTO?> UpdateTranslateToDTO(Set entityDB)
         {
-            entityDB.TranslateToDTO(out SetDTO resultDTO, _castHelper);
-            return resultDTO;
+            entityDB.TranslateToDTO(out SetDTO? resultDTO, _castHelper);
+            return Task.FromResult(resultDTO);
         }
     }
 }

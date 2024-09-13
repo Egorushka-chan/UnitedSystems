@@ -12,7 +12,7 @@ using UnitedSystems.CommonLibrary.ManyEntitiesSender.Interfaces;
 
 namespace ManyEntitiesSender.BLL.Services.Implementations
 {
-    public class PackageGetter(IPackageContext context, IRedisProvider redis, IOptions<PackageSettings> packageOptions) : IPackageGetter
+    public class PackageGetter(IPackageContext context, IOptions<PackageSettings> packageOptions) : IPackageGetter
     {
         /// <inheritdoc/>
         public async IAsyncEnumerable<List<TEntity>> GetPackageAsync<TEntity>(EntityFilterOptions filterOptions) where TEntity : class, IEntity, new()

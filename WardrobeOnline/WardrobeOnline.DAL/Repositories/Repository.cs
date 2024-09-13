@@ -9,7 +9,7 @@ namespace WardrobeOnline.DAL.Repositories
     /// Это классный паттерн, если у тебя с базой происходят только какие то элементарные процессы.
     /// Однако мне в этом проекте понадобилось усложнить получение и применение данных, из-за чего он стал меня сильно ограничивать
     /// </summary>
-    [Obsolete]
+    [Obsolete("Это классный паттерн, если у тебя с базой происходят только какие то элементарные процессы.")]
     public class Repository<T>(IWardrobeContext wardrobeContext) : IRepository<T> where T : class, IEntityDB
     {
         private readonly IWardrobeContext _wardrobeContext = wardrobeContext ?? throw new ArgumentNullException(nameof(wardrobeContext));
@@ -29,7 +29,7 @@ namespace WardrobeOnline.DAL.Repositories
 
         public async Task<bool> TryAdd(T entity)
         {
-            var added = _wardrobeContext.DBSet<T>().Add(entity);
+            //var added = _wardrobeContext.DBSet<T>().Add(entity);
             //int createdID = added.Entity.ID;
 
             var changes = await _wardrobeContext.SaveChangesAsync();

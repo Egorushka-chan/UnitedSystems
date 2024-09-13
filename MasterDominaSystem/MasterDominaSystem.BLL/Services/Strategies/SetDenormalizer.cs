@@ -16,7 +16,7 @@ namespace MasterDominaSystem.BLL.Services.Strategies
         Action<DenormalizationOptions>? options = default)
         : GeneralEntityDenormalizer<Set>(options, environment, reportsCollector, procedureBaker)
     {
-        private Dictionary<string, string> DeleteReportScriptName = new() {
+        private readonly Dictionary<string, string> DeleteReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "DeleteSetReportPerson" }
         };
 

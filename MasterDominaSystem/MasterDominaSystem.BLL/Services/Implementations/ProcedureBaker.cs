@@ -14,7 +14,7 @@ namespace MasterDominaSystem.BLL.Services.Implementations
         IWebHostEnvironment hostEnvironment,
         ILogger<ProcedureBaker> logger) : IProcedureBaker
     {
-        List<string> _bakedList = [];
+        readonly List<string> _bakedList = [];
         public bool IsBaked(string reportKey)
         {
             return _bakedList.Contains(reportKey);

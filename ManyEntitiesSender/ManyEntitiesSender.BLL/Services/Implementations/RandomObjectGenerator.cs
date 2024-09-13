@@ -38,28 +38,61 @@ namespace ManyEntitiesSender.BLL.Services.Implementations
 
         protected override Body CreateBody(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Length);
+            int selected = _random.Next(0, 10);
+            if(_properties.Mightiness != null)
+            {
+                selected = _random.Next(0, _properties.Mightiness.Length);
+            }
+            
+            string mightiness = "NULL";
+            if(_properties.Mightiness != null)
+            {
+                mightiness = _properties.Mightiness[selected];
+            }
+
             return new Body()
             {
-                Mightiness = _properties.Mightiness[selected]
+                Mightiness = mightiness
             };
         }
 
         protected override Hand CreateHand(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Length);
+            int selected = _random.Next(0, 10);
+            if(_properties.Mightiness != null)
+            {
+                selected = _random.Next(0, _properties.Mightiness.Length);
+            }
+
+            string state = "NULL";
+            if(_properties.Mightiness != null)
+            {
+                state = _properties.Mightiness[selected];
+            }
+
             return new Hand()
             {
-                State = _properties.State[selected]
+                State = state
             };
         }
 
         protected override Leg CreateLeg(int testNo)
         {
-            int selected = _random.Next(0, _properties.Mightiness.Length);
+            int selected = _random.Next(0, 10);
+            if(_properties.Mightiness != null)
+            {
+                selected = _random.Next(0, _properties.Mightiness.Length);
+            }
+
+            string state = "NULL";
+            if(_properties.Mightiness != null)
+            {
+                state = _properties.Mightiness[selected];
+            }
+
             return new Leg()
             {
-                State = _properties.State[selected]
+                State = state
             };
         }
     }

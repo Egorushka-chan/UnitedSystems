@@ -15,6 +15,9 @@ using UnitedSystems.EventBus.Interfaces;
 
 namespace MasterDominaSystem.RMQL.IntegrationEventHandlers.Abstractions
 {
+    /// <summary>
+    /// Применяется для обработчиков, которые должны выполнить определённый скрипт в базе
+    /// </summary>
     internal abstract class AbstractIntegrationHandler<TEvent>(
         ILogger logger,
         IServiceProvider serviceProvider
@@ -65,8 +68,7 @@ namespace MasterDominaSystem.RMQL.IntegrationEventHandlers.Abstractions
             }
             _logger.LogInformation("Скрипт выполнен");
         }
-
-        private FormatException SpecifyZeroBasedException(string script, FormatException exception)
+        private static FormatException SpecifyZeroBasedException(string script, FormatException exception)
         {
             string message = "Обнаружено неопределённое значение:";
             foreach (int index in script.AllIndexesOf("{"))

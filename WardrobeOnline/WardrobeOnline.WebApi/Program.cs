@@ -57,8 +57,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.Services.GetRequiredService<ILogger<Program>>().LogInformation(connectionString);
-
 app.UseAuthorization();
 
 app.MapControllers();
@@ -81,17 +79,15 @@ void AddBusinessLayer(WebApplicationBuilder builder)
 async Task SeedDBIfEmpty(WebApplication app)
 {
     IServiceScopeFactory scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-    using(var scope = app.Services.CreateScope())
+    using var scope = app.Services.CreateScope();
+    IWardrobeContext context = scope.ServiceProvider.GetRequiredService<IWardrobeContext>();
+    int value = await context.Persons.CountAsync() + await context.Clothes.CountAsync();
+    if (value == 0)
     {
-        IWardrobeContext context = scope.ServiceProvider.GetRequiredService<IWardrobeContext>();
-        int value = await context.Persons.CountAsync() + await context.Clothes.CountAsync();
-        if(value == 0)
-        {
-            IDBSeeder seeder = scope.ServiceProvider.GetRequiredService<IDBSeeder>();
-            await seeder.Seed();
-        }
+        IDBSeeder seeder = scope.ServiceProvider.GetRequiredService<IDBSeeder>();
+        await seeder.Seed();
     }
-    
+
 }
 
 bool IsPreferRabbitMQ(WebApplicationBuilder builder)
@@ -103,16 +99,12 @@ bool IsPreferRabbitMQ(WebApplicationBuilder builder)
     if(value != null) {
         bool converted = int.TryParse(value, out int number);
         if (converted) {
-            switch (number) {
-                case 0:
-                    preferRabbit = false;
-                    break;
-                case 1:
-                    preferRabbit = true;
-                    break;
-                default:
-                    throw new InvalidOperationException(errorMessage);
-            }
+            preferRabbit = number switch
+            {
+                0 => false,
+                1 => true,
+                _ => throw new InvalidOperationException(errorMessage),
+            };
         }
         else {
             converted = bool.TryParse(value, out bool second);

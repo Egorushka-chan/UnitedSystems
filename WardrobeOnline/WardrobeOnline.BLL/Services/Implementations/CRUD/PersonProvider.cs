@@ -9,29 +9,23 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.CRUD
 {
-    public class PersonProvider : CRUDProvider<PersonDTO, Person>
+    public class PersonProvider(IWardrobeContext context, IPaginationService<Person> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus) : CRUDProvider<PersonDTO, Person>(context, pagination, castHelper, imageProvider, eventBus)
     {
-        public PersonProvider(IWardrobeContext context, IPaginationService<Person> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus)
-            : base(context, pagination, castHelper, imageProvider, eventBus)
+        protected override Task<Person?> AddTranslateToDB(PersonDTO entityDTO)
         {
-
-        }
-
-        protected override async Task<Person?> AddTranslateToDB(PersonDTO entityDTO)
-        {
-            entityDTO.TranslateToDB(out Person? personDB, _castHelper);
-            if (entityDTO.PhysiqueIDs != null)
+            entityDTO.TranslateToDB(out Person? personDB);
+            if (entityDTO.PhysiqueIDs != null && personDB != null)
             {
                 _castHelper.AssertPersonPhysiques(entityDTO.PhysiqueIDs, personDB);
             }
 
-            return personDB;
+            return Task.FromResult(personDB);
         }
 
-        protected override async Task<PersonDTO?> AddTranslateToDTO(Person entityDB)
+        protected override Task<PersonDTO?> AddTranslateToDTO(Person entityDB)
         {
             entityDB.TranslateToDTO(out PersonDTO? resultDTO, _castHelper);
-            return resultDTO;
+            return Task.FromResult(resultDTO);
         }
 
         protected override Task<Person?> GetFromDBbyID(int id)
@@ -40,11 +34,11 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 .Include(ent => ent.Physiques).FirstOrDefaultAsync();
         }
 
-        protected override async Task<PersonDTO?> GetTranslateToDTO(Person entityDB)
+        protected override Task<PersonDTO?> GetTranslateToDTO(Person entityDB)
         {
             entityDB.TranslateToDTO(out PersonDTO? resultDTO, _castHelper);
             if (resultDTO == null)
-                return null;
+                return Task.FromResult(resultDTO);
 
             if (entityDB.Physiques.Count > 0) {
                 List<int> physiqueIDs = (from Physique physique in entityDB.Physiques
@@ -58,7 +52,7 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 };
             }
 
-            return resultDTO;
+            return Task.FromResult<PersonDTO?>(resultDTO);
         }
 
         protected override async Task<Person?> UpdateTranslateToDB(PersonDTO entityDTO)
@@ -79,10 +73,10 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             return personDB;
         }
 
-        protected override async Task<PersonDTO?> UpdateTranslateToDTO(Person entityDB)
+        protected override Task<PersonDTO?> UpdateTranslateToDTO(Person entityDB)
         {
             entityDB.TranslateToDTO(out PersonDTO? resultDTO, _castHelper);
-            return resultDTO;
+            return Task.FromResult(resultDTO);
         }
     }
 }

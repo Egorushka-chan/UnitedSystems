@@ -48,7 +48,7 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
 
             if (hasAnything)
             {
-                await TruncateDataTables(context);
+                await TruncateDataTables();
                 while (!isEnd)
                 {
                     ResponseDownload response = responseStream.Current;
@@ -73,7 +73,7 @@ namespace MasterDominaSystem.GRPC.Services.Implementations
             }
         }
 
-        private async Task TruncateDataTables(MasterContext context)
+        private async Task TruncateDataTables()
         {
             await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Persons)} RESTART IDENTITY CASCADE");
             await context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(context.Physiques)} RESTART IDENTITY CASCADE");

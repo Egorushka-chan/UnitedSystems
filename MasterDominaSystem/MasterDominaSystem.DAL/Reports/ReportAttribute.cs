@@ -5,15 +5,13 @@ namespace MasterDominaSystem.DAL.Reports
     /// <summary>
     /// Обозначает отчет как доступный для генерации кода
     /// </summary>
+    /// <remarks>
+    /// Конструктор определяет, какие таблицы есть у отчета 
+    /// </remarks>
+    /// <param name="types">Типы должны быть наследованы от <see cref="IEntityDB"/></param>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ReportAttribute : Attribute
+    public class ReportAttribute(params Type[] types) : Attribute
     {
-        /// <summary>
-        /// Конструктор определяет, какие таблицы есть у отчета 
-        /// </summary>
-        /// <param name="types">Типы должны быть наследованы от <see cref="IEntityDB"/></param>
-        public ReportAttribute(params Type[] types) => Types = types;
-
-        public Type[] Types { get; set; }
+        public Type[] Types { get; set; } = types;
     }
 }

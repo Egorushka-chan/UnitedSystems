@@ -70,12 +70,12 @@ namespace MasterDominaSystem.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ReportCloths_ClothID_MaterialID_PhotoID",
                 table: "ReportCloths",
-                columns: new[] { "ClothID", "MaterialID", "PhotoID" });
+                columns: ["ClothID", "MaterialID", "PhotoID"]);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReportPersons_PersonID_PhysiqueID_SetID_SeasonID_ClothID_Ph~",
                 table: "ReportPersons",
-                columns: new[] { "PersonID", "PhysiqueID", "SetID", "SeasonID", "ClothID", "PhotoID" });
+                columns: ["PersonID", "PhysiqueID", "SetID", "SeasonID", "ClothID", "PhotoID"]);
         }
 
         /// <inheritdoc />

@@ -15,7 +15,7 @@ namespace MasterDominaSystem.BLL.Services.Strategies
         Action<DenormalizationOptions>? options = default)
         : GeneralEntityDenormalizer<Material>(options, environment, reportsCollector, procedureBaker)
     {
-        private Dictionary<string, string> AppendReportScriptName = new() {
+        private readonly Dictionary<string, string> AppendReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "AssertMaterialReportCloth" }
         };
         protected override string ThisName => typeof(MaterialDenormalizer).Name;

@@ -35,7 +35,7 @@ namespace ManyEntitiesSender.Controllers
 
             if(packageRequest.Table == "body")
             {
-                List<Body> bodies = new List<Body>();
+                List<Body> bodies = [];
                 await foreach(var package in getter.GetPackageAsync<Body>(options))
                 {
                     bodies.AddRange(package);
@@ -50,7 +50,7 @@ namespace ManyEntitiesSender.Controllers
             }
             else if(packageRequest.Table == "hand")
             {
-                List<Hand> hands = new List<Hand>();
+                List<Hand> hands = [];
                 await foreach(var package in getter.GetPackageAsync<Hand>(options))
                 {
                     hands.AddRange(package);
@@ -65,7 +65,7 @@ namespace ManyEntitiesSender.Controllers
             }
             else if (packageRequest.Table == "leg")
             {
-                List<Leg> legs = new List<Leg>();
+                List<Leg> legs = [];
                 await foreach(var package in getter.GetPackageAsync<Leg>(options))
                 {
                     legs.AddRange(package);
@@ -82,11 +82,11 @@ namespace ManyEntitiesSender.Controllers
                 return Results.BadRequest();
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [HttpPost("ensure")]
-        public async Task<IActionResult> Ensure(IObjectGenerator generator)
-        {
-            return Ok();
-        }
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[HttpPost("ensure")]
+        //public async Task<IActionResult> Ensure()
+        //{
+        //    return Ok();
+        //}
     }
 }

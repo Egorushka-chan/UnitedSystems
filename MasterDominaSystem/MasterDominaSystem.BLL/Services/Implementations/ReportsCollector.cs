@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.ObjectModel;
+using System.Reflection;
 
 using MasterDominaSystem.BLL.Services.Abstractions;
 using MasterDominaSystem.DAL.Reports;
@@ -8,7 +9,7 @@ namespace MasterDominaSystem.BLL.Services.Implementations
     /// <inheritdoc cref="IReportsCollector"/>
     internal class ReportsCollector : IReportsCollector
     {
-        Dictionary<Type, ReportAttribute> Types = [];
+        readonly Dictionary<Type, ReportAttribute> Types = [];
 
         public ReportsCollector()
         {

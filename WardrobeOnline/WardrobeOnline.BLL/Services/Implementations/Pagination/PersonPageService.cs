@@ -5,13 +5,9 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.Pagination
 {
-    public class PersonPageService : GeneralPageService<Person>
+    public class PersonPageService(IWardrobeContext context, IGeneralInfoProvider generalInfoProvider) : GeneralPageService<Person>(context)
     {
-        private IGeneralInfoProvider _generalInfoProvider;
-        public PersonPageService(IWardrobeContext context, IGeneralInfoProvider generalInfoProvider) : base(context)
-        {
-            _generalInfoProvider = generalInfoProvider;
-        }
+        private readonly IGeneralInfoProvider _generalInfoProvider = generalInfoProvider;
 
         protected override Task<List<Person>> GetEntities(int pageIndex, int pageSize)
         {

@@ -4,15 +4,11 @@ using ManyEntitiesSender.RAL.Abstractions;
 
 namespace ManyEntitiesSender.Middleware
 {
-    public class CachingValidationMiddleware
+    public class CachingValidationMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public CachingValidationMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+        private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext httpContext, IRedisProvider redis)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
             Endpoint? endpoint = httpContext.GetEndpoint();
             if(endpoint is not null) {
@@ -27,7 +23,7 @@ namespace ManyEntitiesSender.Middleware
                     }
 
                     requestedTable = requestedTable.ToLower();
-                    string[] allowedTables = {"body", "hand", "leg"};
+                    string[] allowedTables = ["body", "hand", "leg"];
 
                     if (!allowedTables.Contains(requestedTable))
                     {

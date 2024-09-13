@@ -14,10 +14,5 @@ namespace WardrobeOnline.DAL
             services.AddDbContext<IWardrobeContext, WardrobeContext>(opt => opt.UseNpgsql(connectionString), contextLifetime: ServiceLifetime.Scoped);
             services.AddTransient<IDBSeeder, JsonDBSeeder>(); 
         }
-
-        private static void ConfigureEntity<T>(this IServiceCollection services) where T : class, IEntityDB
-        {
-            services.AddTransient<IRepository<T>, Repository<T>>();
-        }
     }
 }

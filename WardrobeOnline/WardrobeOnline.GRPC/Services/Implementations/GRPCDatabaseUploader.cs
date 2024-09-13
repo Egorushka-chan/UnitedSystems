@@ -12,16 +12,10 @@ using WOSenderDB;
 
 namespace WardrobeOnline.GRPC.Services.Implementations
 {
-    public class GRPCDatabaseUploader : WODownloader.WODownloaderBase, IDatabaseUploader
+    public class GRPCDatabaseUploader(IWardrobeContext dbContext, ILogger<GRPCDatabaseUploader> logger) : WODownloader.WODownloaderBase, IDatabaseUploader
     {
-        private readonly IWardrobeContext _dbContext;
-        private readonly ILogger<GRPCDatabaseUploader> _logger;
-        public GRPCDatabaseUploader(IWardrobeContext dbContext, ILogger<GRPCDatabaseUploader> logger)
-        {
-            _logger = logger;
-            _dbContext = dbContext;
-        }
-
+        private readonly IWardrobeContext _dbContext = dbContext;
+        private readonly ILogger<GRPCDatabaseUploader> _logger = logger;
         private readonly int _packageSize = 100;
         public override async Task DownloadDatabaseEntities(RequestDownload request, IServerStreamWriter<ResponseDownload> responseStream, ServerCallContext context)
         {

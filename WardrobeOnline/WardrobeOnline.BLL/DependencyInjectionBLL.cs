@@ -33,12 +33,7 @@ namespace WardrobeOnline.BLL
             services.AddTransient<IPaginationService<Physique>, GeneralPageService<Physique>>();
             services.AddTransient<IPaginationService<Cloth>, GeneralPageService<Cloth>>();
 
-            if (false) {
-                services.AddSingleton<IImageProvider, WebImageProvider>();
-            }
-            else {
-                services.AddSingleton<IImageProvider, LocalImageProvider>();
-            }
+            services.AddSingleton<IImageProvider, LocalImageProvider>();
 
             services.AddTransient<ICastHelper, CastHelper>();
 

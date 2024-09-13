@@ -26,18 +26,18 @@ namespace WardrobeOnline.BLL.Services.Implementations
 
         public async Task<int> GetPersonClothCount(int id, CancellationToken token = default)
         {
-            logger.LogTrace("Getting cloths count from person with ID: {0} from GeneralInfoProvider", id);
+            logger.LogTrace("Getting cloths count from person with ID: {id} from GeneralInfoProvider", id);
 
             byte[]? response = await cache.GetAsync($"person_cloth_count_{id}", token);
             if (response != null)
             {
                 int clothes = BitConverter.ToInt32(response, 0);
-                logger.LogDebug("Found person: {0} cloth count: {1} in cache!", id, clothes);
+                logger.LogDebug("Found person: {id} cloth count: {clothes} in cache!", id, clothes);
                 return clothes;
             }
             else
             {
-                logger.LogTrace("Cache info about person {0} clothes wasn't found, sending query to context", id);
+                logger.LogTrace("Cache info about person {id} clothes wasn't found, sending query to context", id);
 
                 var physiques = from Person person in context.Persons
                                 select person.Physiques;
@@ -49,9 +49,9 @@ namespace WardrobeOnline.BLL.Services.Implementations
                                  select set.SetHasClothes;
 
                 int clothes = await (from SetHasClothes setCloth in setClothes
-                                     select setCloth.ClothID).Distinct().CountAsync();
+                                     select setCloth.ClothID).Distinct().CountAsync(cancellationToken: token);
 
-                logger.LogTrace("Get person: {0} cloth count: {1} from context", id, clothes);
+                logger.LogTrace("Get person: {id} cloth count: {clothes} from context", id, clothes);
 
                 var setter = cache.SetAsync($"person_cloth_count_{id}",
                     BitConverter.GetBytes(clothes),
@@ -60,7 +60,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3)
                     },
                     token);
-                logger.LogDebug("Put person: {0} cloth count: {1} into cache!", id, clothes);
+                logger.LogDebug("Put person: {id} cloth count: {clothes} into cache!", id, clothes);
                 await setter;
 
                 return clothes;
@@ -69,26 +69,26 @@ namespace WardrobeOnline.BLL.Services.Implementations
 
         public async Task<int> GetPersonSetCount(int id, CancellationToken token = default)
         {
-            logger.LogTrace("Getting set count from person with ID: {0} from GeneralInfoProvider", id);
+            logger.LogTrace("Getting set count from person with ID: {id} from GeneralInfoProvider", id);
 
             byte[]? response = await cache.GetAsync($"person_set_count_{id}", token);
             if (response != null)
             {
                 int sets = BitConverter.ToInt32(response, 0);
-                logger.LogDebug("Found person: {0} set count: {1} in cache!", id, sets);
+                logger.LogDebug("Found person: {id} set count: {sets} in cache!", id, sets);
                 return sets;
             }
             else
             {
-                logger.LogTrace("Cache info about person {0} sets wasn't found, sending query to context", id);
+                logger.LogTrace("Cache info about person {id} sets wasn't found, sending query to context", id);
 
                 var physiques = from Person person in context.Persons
                                 select person.Physiques;
 
                 int sets = await (from Physique physique in physiques
-                                  select physique.Sets).Distinct().CountAsync();
+                                  select physique.Sets).Distinct().CountAsync(cancellationToken: token);
 
-                logger.LogTrace("Get person: {0} sets count: {1} from context", id, sets);
+                logger.LogTrace("Get person: {id} sets count: {sets} from context", id, sets);
 
                 var setter = cache.SetAsync($"person_set_count_{id}",
                     BitConverter.GetBytes(sets),
@@ -97,7 +97,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3)
                     },
                     token);
-                logger.LogDebug("Put person: {0} set count: {1} into cache!", id, sets);
+                logger.LogDebug("Put person: {id} set count: {sets} into cache!", id, sets);
                 await setter;
 
                 return sets;
@@ -112,7 +112,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
             if (response != null)
             {
                 int total = BitConverter.ToInt32(response, 0);
-                logger.LogDebug("Found total person count: {1} in cache!", total);
+                logger.LogDebug("Found total person count: {total} in cache!", total);
                 return total;
             }
             else
@@ -121,7 +121,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
 
                 int total = context.Persons.Count();
 
-                logger.LogTrace("Get total person count: {0} from context", total);
+                logger.LogTrace("Get total person count: {total} from context", total);
 
                 var setter = cache.SetAsync("total_person_count",
                     BitConverter.GetBytes(total),
@@ -130,7 +130,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
                     },
                     token);
-                logger.LogDebug("Put total person count: {0} into cache!", total);
+                logger.LogDebug("Put total person count: {total} into cache!", total);
                 await setter;
 
                 return total;

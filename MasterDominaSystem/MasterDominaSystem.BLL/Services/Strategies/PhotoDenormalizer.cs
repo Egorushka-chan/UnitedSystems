@@ -17,11 +17,11 @@ namespace MasterDominaSystem.BLL.Services.Strategies
         : GeneralEntityDenormalizer<Photo>(options, environment, reportsCollector, procedureBaker)
     {
 
-        private Dictionary<string, string> AppendReportScriptName = new() {
+        private readonly Dictionary<string, string> AppendReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "AssertPhotoReportCloth" }
         };
 
-        private Dictionary<string, string> DeleteReportScriptName = new() {
+        private readonly Dictionary<string, string> DeleteReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "DeletePhotoReportCloth" },
             {typeof(ReportPerson).GetKey(), "DeletePhotoReportPerson" }
         };

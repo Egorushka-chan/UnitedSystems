@@ -15,11 +15,11 @@ namespace MasterDominaSystem.BLL.Services.Strategies
         Action<DenormalizationOptions>? options = default)
         : GeneralEntityDenormalizer<Person>(options, environment, reportsCollector, procedureBaker)
     {
-        private Dictionary<string, string> AppendReportScriptName = new() {
+        private readonly Dictionary<string, string> AppendReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "AssertPersonReportPerson" }
         };
 
-        private Dictionary<string, string> DeleteReportScriptName = new() {
+        private readonly Dictionary<string, string> DeleteReportScriptName = new() {
             {typeof(ReportPerson).GetKey(), "DeletePersonReportPerson" }
         };
 
@@ -46,7 +46,7 @@ namespace MasterDominaSystem.BLL.Services.Strategies
                 string myName = entityDB.Name.InSQLStringQuotes();
                 string myType = entityDB.Type?.InSQLStringQuotes() ?? "NULL";
 
-                script += insertPath.Replace("{id}", myId)
+                script += insertScript.Replace("{id}", myId)
                     .Replace("{name}", myName)
                     .Replace("{type}", myType);
 

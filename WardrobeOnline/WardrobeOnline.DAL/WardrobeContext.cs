@@ -9,15 +9,8 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.DAL
 {
-    public class WardrobeContext : DbContext, IWardrobeContext
+    public class WardrobeContext(DbContextOptions dbContextOptions) : DbContext(dbContextOptions), IWardrobeContext
     {
-        public WardrobeContext(DbContextOptions dbContextOptions, IServiceProvider serviceProvider) : base(dbContextOptions) 
-        {
-            if (this.Database.EnsureCreated()) {
-                
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Photo>()
@@ -39,8 +32,6 @@ namespace WardrobeOnline.DAL
 
         public Task<int> SaveChangesAsync()
         {
-            var changeTracker = this.ChangeTracker;
-            
             return base.SaveChangesAsync();
         }
 

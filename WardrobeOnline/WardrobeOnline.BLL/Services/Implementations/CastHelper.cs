@@ -49,7 +49,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                                     select dbCloth;
 
             IEnumerable<int> notMatchedDTOCloths;
-            if (dbClothes.Count() == 0)
+            if (!dbClothes.Any())
             {
                 notMatchedDTOCloths = clothIDs;
             }
@@ -78,7 +78,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
             }
         }
 
-        public void AssertPhysiqueSets(IReadOnlyList<int> setIDs, Physique? physiqueDB)
+        public void AssertPhysiqueSets(IReadOnlyList<int> setIDs, Physique physiqueDB)
         {
             var dbSets = from set in physiqueDB.Sets
                          select set;
@@ -98,7 +98,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                 physiqueDB.Sets.Remove(nonMatched);
             }
 
-            if (notMatchedDTOSets.Count() > 0)
+            if (notMatchedDTOSets.Any())
             {
                 throw new FormatException("Can't add physique sets through PhysiqueDTO");
             }
@@ -124,7 +124,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
                 personDB.Physiques.Remove(nonMatched);
             }
 
-            if (notMatchedDTOPhysiques.Count() > 0)
+            if (notMatchedDTOPhysiques.Any())
             {
                 throw new FormatException("Can't add person physiques through PersonDTO");
             }
@@ -152,7 +152,7 @@ namespace WardrobeOnline.BLL.Services.Implementations
 
             foreach (string nonMatched in notMatchedDTOMaterials)
             {
-                Material newMaterial = new Material()
+                Material newMaterial = new()
                 {
                     Name = nonMatched
                 };

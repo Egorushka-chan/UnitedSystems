@@ -18,35 +18,35 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 .Include(ent => ent.ClothHasMaterials).ThenInclude(ent => ent.Material).FirstOrDefaultAsync();
         }
 
-        protected override async Task<ClothDTO?> GetTranslateToDTO(Cloth clothDB)
+        protected override Task<ClothDTO?> GetTranslateToDTO(Cloth clothDB)
         {
-            return new ClothDTO()
+            return Task.FromResult<ClothDTO?>(new ClothDTO()
             {
                 ID = clothDB.ID,
                 Name = clothDB.Name,
                 Materials = (from clothMaterial in clothDB.ClothHasMaterials
-                             select clothMaterial.Material.Name).ToList(),
+                             select clothMaterial.Material?.Name).ToList(),
                 Rating = clothDB.Rating,
                 Size = clothDB.Size,
                 PhotoPaths = _castHelper.GetPhotoPaths(clothDB.Photos)
-            };
+            });
         }
 
-        protected override async Task<Cloth?> AddTranslateToDB(ClothDTO clothDTO)
+        protected override Task<Cloth?> AddTranslateToDB(ClothDTO clothDTO)
         {
-            clothDTO.TranslateToDB(out Cloth? clothDB, _castHelper);
-            if (clothDTO.Materials != null)
+            clothDTO.TranslateToDB(out Cloth? clothDB);
+            if (clothDTO.Materials != null && clothDB != null)
             {
                 _castHelper.AssertClothMaterials(clothDTO.Materials, clothDB);
             }
 
-            return clothDB;
+            return Task.FromResult(clothDB);
         }
 
-        protected override async Task<ClothDTO?> AddTranslateToDTO(Cloth clothDB)
+        protected override Task<ClothDTO?> AddTranslateToDTO(Cloth clothDB)
         {
             clothDB.TranslateToDTO(out ClothDTO? clothDTO, _castHelper);
-            return clothDTO;
+            return Task.FromResult(clothDTO);
         }
 
         protected override async Task<Cloth?> UpdateTranslateToDB(ClothDTO clothDTO)
@@ -73,10 +73,10 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             return cloth;
         }
 
-        protected override async Task<ClothDTO?> UpdateTranslateToDTO(Cloth clothDB)
+        protected override Task<ClothDTO?> UpdateTranslateToDTO(Cloth clothDB)
         {
             clothDB.TranslateToDTO(out ClothDTO? clothDTO, _castHelper);
-            return clothDTO;
+            return Task.FromResult(clothDTO);
         }
     }
 }

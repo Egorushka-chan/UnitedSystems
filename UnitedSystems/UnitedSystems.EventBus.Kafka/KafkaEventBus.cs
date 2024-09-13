@@ -33,8 +33,10 @@ namespace UnitedSystems.EventBus.Kafka
                 Acks = Acks.All
             };
 
-            consumerConfig = new ConsumerConfig(producerConfig);
-            consumerConfig.GroupId = this.busSettings.ServiceQueueName;
+            consumerConfig = new ConsumerConfig(producerConfig)
+            {
+                GroupId = this.busSettings.ServiceQueueName
+            };
         }
 
         private readonly KafkaEventBusSettings busSettings;

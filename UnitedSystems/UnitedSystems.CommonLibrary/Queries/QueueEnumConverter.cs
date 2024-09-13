@@ -4,14 +4,12 @@
     {
         public static string GetChannelName(QueueType queueType)
         {
-            switch (queueType) {
-                case QueueType.MESToMDM:
-                    return "FromMESToMDMQueue";
-                case QueueType.WOtoMDM:
-                    return "FromWOToMDMQueue";
-                default:
-                    return queueType.ToString();
-            }
+            return queueType switch
+            {
+                QueueType.MESToMDM => "FromMESToMDMQueue",
+                QueueType.WOtoMDM => "FromWOToMDMQueue",
+                _ => queueType.ToString(),
+            };
         }
     }
 }

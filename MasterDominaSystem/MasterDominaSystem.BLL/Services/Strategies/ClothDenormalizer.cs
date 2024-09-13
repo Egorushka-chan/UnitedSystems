@@ -15,11 +15,11 @@ namespace MasterDominaSystem.BLL.Services.Strategies
         IProcedureBaker procedureBaker,
         Action<DenormalizationOptions>? options = default) : GeneralEntityDenormalizer<Cloth>(options, environment, reportsCollector, procedureBaker)
     {
-        private Dictionary<string, string> AppendReportScriptName = new() {
+        private readonly Dictionary<string, string> AppendReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "AssertClothReportCloth" }
         };
 
-        private Dictionary<string, string> DeleteReportScriptName = new() {
+        private readonly Dictionary<string, string> DeleteReportScriptName = new() {
             {typeof(ReportCloth).GetKey(), "DeleteClothReportCloth" },
             {typeof(ReportPerson).GetKey(), "DeleteClothReportPerson" }
         };

@@ -11,7 +11,7 @@ namespace WardrobeOnline.BLL.Services.Interfaces
         IReadOnlyList<int> GetPhysiqueSetIDs(Physique physique);
         IReadOnlyList<int> GetSetClothesIDs(Set set);
         void AssertPersonPhysiques(IReadOnlyList<int> physiqueIDs, Person personDB);
-        void AssertPhysiqueSets(IReadOnlyList<int> setIDs, Physique? physiqueDB);
+        void AssertPhysiqueSets(IReadOnlyList<int> setIDs, Physique physiqueDB);
         void AssertSetSeason(string season, Set setDB);
         void AssertSetClothes(IReadOnlyList<int> clothIDs, Set setDB);
     }

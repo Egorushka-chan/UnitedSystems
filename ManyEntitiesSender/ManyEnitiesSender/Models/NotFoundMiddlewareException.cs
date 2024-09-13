@@ -1,10 +1,6 @@
 ﻿namespace ManyEntitiesSender.Models
 {
-    public class NotFoundMiddlewareException : Exception
+    public class NotFoundMiddlewareException(string message = "UseMyCaching must be after UseMyCachingValidation") : Exception(message)
     {
-        public NotFoundMiddlewareException(string message = "UseMyCaching must be after UseMyCachingValidation") : base(message)
-        {
-            
-        }
     }
 }

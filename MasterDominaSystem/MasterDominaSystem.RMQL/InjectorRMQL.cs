@@ -34,7 +34,7 @@ namespace MasterDominaSystem.RMQL
             return builder;
         }
 
-        private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntityDB
+        private static IEventBusBuilder AddWOSubscriptionCRUD<TEntity>(this IEventBusBuilder builder) where TEntity : IEntityDB, new()
         {
             builder.AddSubscription<WOCreatedCRUDEvent<TEntity>, WOCreatedHandler<TEntity>>()
                 .AddSubscription<WODeletedCRUDEvent<TEntity>, WODeletedHandler<TEntity>>()
@@ -69,16 +69,12 @@ namespace MasterDominaSystem.RMQL
             if (value != null) {
                 bool converted = int.TryParse(value, out int number);
                 if (converted) {
-                    switch (number) {
-                        case 0:
-                            preferRabbit = false;
-                            break;
-                        case 1:
-                            preferRabbit = true;
-                            break;
-                        default:
-                            throw new InvalidOperationException(errorMessage);
-                    }
+                    preferRabbit = number switch
+                    {
+                        0 => false,
+                        1 => true,
+                        _ => throw new InvalidOperationException(errorMessage),
+                    };
                 }
                 else {
                     converted = bool.TryParse(value, out bool second);

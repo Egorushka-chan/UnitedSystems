@@ -5,14 +5,10 @@ using WardrobeOnline.DAL.Interfaces;
 
 namespace WardrobeOnline.BLL.Services.Implementations.Pagination
 {
-    public class GeneralPageService<TEntity> : IPaginationService<TEntity>
+    public class GeneralPageService<TEntity>(IWardrobeContext context) : IPaginationService<TEntity>
         where TEntity : class, IEntityDB
     {
-        protected IWardrobeContext _context;
-        public GeneralPageService(IWardrobeContext context)
-        {
-            _context = context;
-        }
+        protected IWardrobeContext _context = context;
 
         public async Task<List<TEntity>> GetPagedQuantityOf(int pageIndex, int pageSize)
         {

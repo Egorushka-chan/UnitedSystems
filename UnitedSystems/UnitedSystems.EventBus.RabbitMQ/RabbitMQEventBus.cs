@@ -37,7 +37,7 @@ namespace UnitedSystems.EventBus.RabbitMQ
                     try {
                         _rabbitConnection = services.GetRequiredService<IConnection>();
                     }
-                    catch (SocketException ex) {
+                    catch (SocketException) {
                         retryCount--;
                         if (retryCount <= 0)
                             throw;

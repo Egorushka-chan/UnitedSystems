@@ -8,7 +8,7 @@ namespace WardrobeOnline.DAL.Repositories.Interfaces
     /// Однако мне в этом проекте понадобилось усложнить получение и применение данных, из-за чего он стал меня сильно ограничивать.
     /// Интерфейс КРУДа реализован в бизнес логике, не здесь
     /// </summary>
-    [Obsolete]
+    [Obsolete("Интерфейс КРУДа реализован в бизнес логике, не здесь")]
     public interface IRepository<T> where T : class, IEntityDB
     {
         public IReadOnlyCollection<T> GetAll();

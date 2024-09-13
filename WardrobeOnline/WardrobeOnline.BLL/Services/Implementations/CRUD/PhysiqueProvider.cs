@@ -12,22 +12,22 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
     public class PhysiqueProvider(IWardrobeContext context, IPaginationService<Physique> pagination, ICastHelper castHelper, IImageProvider imageProvider, IEventBus eventBus) 
         : CRUDProvider<PhysiqueDTO, Physique>(context, pagination, castHelper, imageProvider, eventBus)
     {
-        protected override async Task<Physique?> AddTranslateToDB(PhysiqueDTO entityDTO)
+        protected override Task<Physique?> AddTranslateToDB(PhysiqueDTO entityDTO)
         {
-            entityDTO.TranslateToDB(out Physique? physiqueDB, _castHelper);
+            entityDTO.TranslateToDB(out Physique? physiqueDB);
 
-            if (entityDTO.SetIDs != null)
+            if (entityDTO.SetIDs != null && physiqueDB != null)
             {
                 _castHelper.AssertPhysiqueSets(entityDTO.SetIDs, physiqueDB);
             }
 
-            return physiqueDB;
+            return Task.FromResult(physiqueDB);
         }
 
-        protected override async Task<PhysiqueDTO?> AddTranslateToDTO(Physique entityDB)
+        protected override Task<PhysiqueDTO?> AddTranslateToDTO(Physique entityDB)
         {
             entityDB.TranslateToDTO(out PhysiqueDTO? physiqueDTO, _castHelper);
-            return physiqueDTO;
+            return Task.FromResult(physiqueDTO);
         }
 
         protected override Task<Physique?> GetFromDBbyID(int id)
@@ -36,11 +36,11 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 .Include(ent => ent.Sets).FirstOrDefaultAsync();
         }
 
-        protected override async Task<PhysiqueDTO?> GetTranslateToDTO(Physique entityDB)
+        protected override Task<PhysiqueDTO?> GetTranslateToDTO(Physique entityDB)
         {
             entityDB.TranslateToDTO(out PhysiqueDTO? resultDTO, _castHelper);
             if (resultDTO == null)
-                return null;
+                return Task.FromResult(resultDTO);
 
             if (entityDB.Sets.Count > 0)
             {
@@ -59,7 +59,7 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
                 };
             }
 
-            return resultDTO;
+            return Task.FromResult<PhysiqueDTO?>(resultDTO);
         }
 
         protected override async Task<Physique?> UpdateTranslateToDB(PhysiqueDTO entityDTO)
@@ -89,10 +89,10 @@ namespace WardrobeOnline.BLL.Services.Implementations.CRUD
             return physiqueDB;
         }
 
-        protected override async Task<PhysiqueDTO?> UpdateTranslateToDTO(Physique entityDB)
+        protected override Task<PhysiqueDTO?> UpdateTranslateToDTO(Physique entityDB)
         {
             entityDB.TranslateToDTO(out PhysiqueDTO? physiqueDTO, _castHelper);
-            return physiqueDTO;
+            return Task.FromResult(physiqueDTO);
         }
     }
 }
