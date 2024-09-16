@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.EventBus.Kafka\UnitedSystems.EventBus.Kafka.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj" />
+    <ProjectReference Include="..\..\src\UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

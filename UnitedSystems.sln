@@ -5,68 +5,81 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManyEntitiesSender", "ManyEntitiesSender", "{161AD461-35EE-40F2-A0B8-D80ED3B3A88D}"
 	ProjectSection(SolutionItems) = preProject
-		ManyEntitiesSender\Readme.md = ManyEntitiesSender\Readme.md
+		src\ManyEntitiesSender\Readme.md = src\ManyEntitiesSender\Readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MasterDominaSystem", "MasterDominaSystem", "{0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WardrobeOnline", "WardrobeOnline", "{EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}"
 	ProjectSection(SolutionItems) = preProject
-		WardrobeOnline\README.md = WardrobeOnline\README.md
+		src\WardrobeOnline\README.md = src\WardrobeOnline\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{D9C595D0-7327-4883-B74F-39527A2BD0E7}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "Docker\docker-compose.dcproj", "{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "src\Docker\docker-compose.dcproj", "{B1E28BCB-4978-4D73-BE20-EA454AFD74E3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{AAE50F85-2481-44AB-B6F4-C2F2887B84C4}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem", "MasterDominaSystem\MasterDominaSystem\MasterDominaSystem.csproj", "{E061D02D-1A85-4215-9850-0FCEBDC7AFF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem", "src\MasterDominaSystem\MasterDominaSystem\MasterDominaSystem.csproj", "{E061D02D-1A85-4215-9850-0FCEBDC7AFF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.WebApi", "WardrobeOnline\WardrobeOnline.WebApi\WardrobeOnline.WebApi.csproj", "{75791A70-3F97-444A-9B88-DB353E582AE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.WebApi", "src\WardrobeOnline\WardrobeOnline.WebApi\WardrobeOnline.WebApi.csproj", "{75791A70-3F97-444A-9B88-DB353E582AE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.DAL", "WardrobeOnline\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj", "{58DE0ED2-0897-449C-B85C-C7C371377FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.DAL", "src\WardrobeOnline\WardrobeOnline.DAL\WardrobeOnline.DAL.csproj", "{58DE0ED2-0897-449C-B85C-C7C371377FF6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.BLL", "WardrobeOnline\WardrobeOnline.BLL\WardrobeOnline.BLL.csproj", "{8BED21CC-9FF7-41AA-8B49-F0B099383F5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.BLL", "src\WardrobeOnline\WardrobeOnline.BLL\WardrobeOnline.BLL.csproj", "{8BED21CC-9FF7-41AA-8B49-F0B099383F5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender", "ManyEntitiesSender\ManyEnitiesSender\ManyEntitiesSender.csproj", "{F793164F-842D-4D10-8B87-FD70A4F92E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender", "src\ManyEntitiesSender\ManyEnitiesSender\ManyEntitiesSender.csproj", "{F793164F-842D-4D10-8B87-FD70A4F92E1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.DAL", "ManyEntitiesSender\ManyEnitiesSender.DAL\ManyEntitiesSender.DAL.csproj", "{9CD359AE-3BAE-4425-A984-E855CCA260F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.DAL", "src\ManyEntitiesSender\ManyEnitiesSender.DAL\ManyEntitiesSender.DAL.csproj", "{9CD359AE-3BAE-4425-A984-E855CCA260F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.BLL", "ManyEntitiesSender\ManyEntitiesSender.BLL\ManyEntitiesSender.BLL.csproj", "{814DFD69-5802-4DC4-971C-A44EAF8CDF8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.BLL", "src\ManyEntitiesSender\ManyEntitiesSender.BLL\ManyEntitiesSender.BLL.csproj", "{814DFD69-5802-4DC4-971C-A44EAF8CDF8C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.PL", "ManyEntitiesSender\ManyEntitiesSender.PL\ManyEntitiesSender.PL.csproj", "{C4B791B5-9320-411C-9D77-F8BD074AA9B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.PL", "src\ManyEntitiesSender\ManyEntitiesSender.PL\ManyEntitiesSender.PL.csproj", "{C4B791B5-9320-411C-9D77-F8BD074AA9B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.RAL", "ManyEntitiesSender\ManyEntitiesSender.RAL\ManyEntitiesSender.RAL.csproj", "{5065D913-962E-4283-B6AD-94CB2E9C7B10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManyEntitiesSender.RAL", "src\ManyEntitiesSender\ManyEntitiesSender.RAL\ManyEntitiesSender.RAL.csproj", "{5065D913-962E-4283-B6AD-94CB2E9C7B10}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.RMQL", "MasterDominaSystem\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj", "{F52BBD57-5B0A-41C9-AC14-512A13807B47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.RMQL", "src\MasterDominaSystem\MasterDominaSystem.RMQL\MasterDominaSystem.RMQL.csproj", "{F52BBD57-5B0A-41C9-AC14-512A13807B47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.BLL", "MasterDominaSystem\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj", "{4587FEDF-7B91-4B01-9484-3972B4E73CEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.BLL", "src\MasterDominaSystem\MasterDominaSystem.BLL\MasterDominaSystem.BLL.csproj", "{4587FEDF-7B91-4B01-9484-3972B4E73CEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitedSystems", "UnitedSystems", "{187AE593-767A-4747-B94D-D2C871A7E984}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary", "UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj", "{AC244908-CFC0-4971-BC87-9800D4F58AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary", "src\UnitedSystems\UnitedSystems.CommonLibrary\UnitedSystems.CommonLibrary.csproj", "{AC244908-CFC0-4971-BC87-9800D4F58AF2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.DAL", "MasterDominaSystem\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj", "{D2132788-9A22-4182-A27B-82F557EE215D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.DAL", "src\MasterDominaSystem\MasterDominaSystem.DAL\MasterDominaSystem.DAL.csproj", "{D2132788-9A22-4182-A27B-82F557EE215D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus", "UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj", "{F4974AB0-4129-48C5-B20F-9921B8821448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus", "src\UnitedSystems\UnitedSystems.EventBus\UnitedSystems.EventBus.csproj", "{F4974AB0-4129-48C5-B20F-9921B8821448}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus.RabbitMQ", "UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj", "{366F3BE5-D498-4400-BADC-484C3153AEFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus.RabbitMQ", "src\UnitedSystems\UnitedSystems.EventBus.RabbitMQ\UnitedSystems.EventBus.RabbitMQ.csproj", "{366F3BE5-D498-4400-BADC-484C3153AEFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.ManyEntitiesSender", "UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj", "{B89AAF12-CC69-4447-B663-2479D9B55323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.ManyEntitiesSender", "src\UnitedSystems\UnitedSystems.CommonLibrary.ManyEntitiesSender\UnitedSystems.CommonLibrary.ManyEntitiesSender.csproj", "{B89AAF12-CC69-4447-B663-2479D9B55323}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.WardrobeOnline", "UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj", "{460B8BEE-37BF-4A2A-9C05-96CD14375D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.CommonLibrary.WardrobeOnline", "src\UnitedSystems\UnitedSystems.CommonLibrary.WardrobeOnline\UnitedSystems.CommonLibrary.WardrobeOnline.csproj", "{460B8BEE-37BF-4A2A-9C05-96CD14375D47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.GRPC", "MasterDominaSystem\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj", "{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterDominaSystem.GRPC", "src\MasterDominaSystem\MasterDominaSystem.GRPC\MasterDominaSystem.GRPC.csproj", "{DD5E70FC-28CE-4AD0-B37A-ECE3D7CC4065}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.GRPC", "WardrobeOnline\WardrobeOnline.GRPC\WardrobeOnline.GRPC.csproj", "{F0EDE189-C330-494D-B66D-DD832892FFB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeOnline.GRPC", "src\WardrobeOnline\WardrobeOnline.GRPC\WardrobeOnline.GRPC.csproj", "{F0EDE189-C330-494D-B66D-DD832892FFB4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.GRPC", "UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj", "{043BFE66-2F3F-45E0-865B-5E12BAE95BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.GRPC", "src\UnitedSystems\UnitedSystems.GRPC\UnitedSystems.GRPC.csproj", "{043BFE66-2F3F-45E0-865B-5E12BAE95BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitedSystems.EventBus.Kafka", "UnitedSystems\UnitedSystems.EventBus.Kafka\UnitedSystems.EventBus.Kafka.csproj", "{F98E26C7-40C0-4F08-82AA-8874F2507F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.EventBus.Kafka", "src\UnitedSystems\UnitedSystems.EventBus.Kafka\UnitedSystems.EventBus.Kafka.csproj", "{F98E26C7-40C0-4F08-82AA-8874F2507F28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1744D60B-722A-410E-87EE-A85B1ADB95D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitedSystems.UnitTests", "tests\UnitedSystems.UnitTests\UnitedSystems.UnitTests.csproj", "{D185A78E-9551-4DDA-9011-8469A1B6276F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02789261-5BE9-4FC3-A6FC-43468AA303B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeOnline.UnitTests", "tests\WardrobeOnline.UnitTests\WardrobeOnline.UnitTests.csproj", "{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterDominaSystem.UnitTests", "tests\MasterDominaSystem.UnitTests\MasterDominaSystem.UnitTests.csproj", "{25393CCE-1602-44A7-A851-412AFC89753E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManyEntitiesSender.UnitTests", "tests\ManyEntitiesSender.UnitTests\ManyEntitiesSender.UnitTests.csproj", "{03D602B7-18BE-4BD8-948F-089C0DE0820D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,11 +175,31 @@ Global
 		{F98E26C7-40C0-4F08-82AA-8874F2507F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F98E26C7-40C0-4F08-82AA-8874F2507F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F98E26C7-40C0-4F08-82AA-8874F2507F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D185A78E-9551-4DDA-9011-8469A1B6276F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D185A78E-9551-4DDA-9011-8469A1B6276F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D185A78E-9551-4DDA-9011-8469A1B6276F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D185A78E-9551-4DDA-9011-8469A1B6276F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25393CCE-1602-44A7-A851-412AFC89753E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25393CCE-1602-44A7-A851-412AFC89753E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25393CCE-1602-44A7-A851-412AFC89753E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25393CCE-1602-44A7-A851-412AFC89753E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D602B7-18BE-4BD8-948F-089C0DE0820D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D602B7-18BE-4BD8-948F-089C0DE0820D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D602B7-18BE-4BD8-948F-089C0DE0820D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D602B7-18BE-4BD8-948F-089C0DE0820D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{161AD461-35EE-40F2-A0B8-D80ED3B3A88D} = {02789261-5BE9-4FC3-A6FC-43468AA303B0}
+		{0B3D2FF7-840D-4DAF-89F4-34D7AAE35397} = {02789261-5BE9-4FC3-A6FC-43468AA303B0}
+		{EE4F0911-1C73-46EB-93AA-97CB05DA2EA0} = {02789261-5BE9-4FC3-A6FC-43468AA303B0}
+		{D9C595D0-7327-4883-B74F-39527A2BD0E7} = {02789261-5BE9-4FC3-A6FC-43468AA303B0}
 		{B1E28BCB-4978-4D73-BE20-EA454AFD74E3} = {D9C595D0-7327-4883-B74F-39527A2BD0E7}
 		{E061D02D-1A85-4215-9850-0FCEBDC7AFF1} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 		{75791A70-3F97-444A-9B88-DB353E582AE0} = {EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}
@@ -179,6 +212,7 @@ Global
 		{5065D913-962E-4283-B6AD-94CB2E9C7B10} = {161AD461-35EE-40F2-A0B8-D80ED3B3A88D}
 		{F52BBD57-5B0A-41C9-AC14-512A13807B47} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 		{4587FEDF-7B91-4B01-9484-3972B4E73CEA} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
+		{187AE593-767A-4747-B94D-D2C871A7E984} = {02789261-5BE9-4FC3-A6FC-43468AA303B0}
 		{AC244908-CFC0-4971-BC87-9800D4F58AF2} = {187AE593-767A-4747-B94D-D2C871A7E984}
 		{D2132788-9A22-4182-A27B-82F557EE215D} = {0B3D2FF7-840D-4DAF-89F4-34D7AAE35397}
 		{F4974AB0-4129-48C5-B20F-9921B8821448} = {187AE593-767A-4747-B94D-D2C871A7E984}
@@ -189,6 +223,10 @@ Global
 		{F0EDE189-C330-494D-B66D-DD832892FFB4} = {EE4F0911-1C73-46EB-93AA-97CB05DA2EA0}
 		{043BFE66-2F3F-45E0-865B-5E12BAE95BDA} = {187AE593-767A-4747-B94D-D2C871A7E984}
 		{F98E26C7-40C0-4F08-82AA-8874F2507F28} = {187AE593-767A-4747-B94D-D2C871A7E984}
+		{D185A78E-9551-4DDA-9011-8469A1B6276F} = {1744D60B-722A-410E-87EE-A85B1ADB95D4}
+		{E3C137C7-A293-4EF4-B2DF-3D7C5D503C1A} = {1744D60B-722A-410E-87EE-A85B1ADB95D4}
+		{25393CCE-1602-44A7-A851-412AFC89753E} = {1744D60B-722A-410E-87EE-A85B1ADB95D4}
+		{03D602B7-18BE-4BD8-948F-089C0DE0820D} = {1744D60B-722A-410E-87EE-A85B1ADB95D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7460B4C6-2EC6-41A1-B2A9-3FE67DAB0942}
